@@ -1,0 +1,98 @@
+<resources>
+    <string name="app_name">文阅</string>
+    <string name="action_main">设置</string>
+
+    <!--主界面的菜单-->
+    <string name="main_book">图书阅读器</string>
+    <string name="main_code">代码阅读器</string>
+    <string name="main_rss">RSS阅读器</string>
+    <string name="main_welfare">福利</string>
+    <string name="main_music">音乐</string>
+    <string name="main_weather">天气预报</string>
+    <string name="main_funny">搞笑段子</string>
+
+    <string-array name="main_names">
+        <item>图书阅读器</item>
+        <item>代码阅读器</item>
+        <item>RSS阅读器</item>
+        <item>福利</item>
+        <item>音乐</item>
+        <item>天气预报</item>
+        <item>搞笑段子</item>
+    </string-array>
+    <!--侧滑菜单-->
+    <string name="ic_menu_home">主界面</string>
+    <string name="ic_menu_book">小说阅读</string>
+    <string name="ic_menu_code">代码阅读器</string>
+    <string name="ic_menu_rss">RSS阅读器</string>
+    <string name="ic_menu_music">音乐</string>
+    <string name="ic_menu_weather">天气</string>
+    <string name="ic_menu_welfare">福利</string>
+    <string name="ic_menu_funny">搞笑段子</string>
+
+    <!--小说阅读的action menu菜单-->
+    <string name="book_action_login">登录</string>
+    <string name="book_action_sync">同步书架</string>
+    <string name="book_action_local">扫描本地书籍</string>
+    <string name="book_action_wifi_book">WIFI传书</string>
+    <string name="book_action_night">夜间模式</string>
+    <string name="book_action_feedback">反馈建议</string>
+    <string name="book_action_setting">设置</string>
+    <array name="book_tabs">
+        <item>书架</item>
+        <item>发现</item>
+    </array>
+    <string name="title_activity_book">BookActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="book_search">搜索</string>
+
+    <!--排行榜-->
+    <string name="sub_ran_cate_msg">%1$d人在追 |&#160; %2$s%%读者留存</string>
+
+    <string-array name="sub_rank_tabs">
+        <item>周榜</item>
+        <item>月榜</item>
+        <item>总榜</item>
+    </string-array>
+
+    <!--书籍详情相关-->
+    <string name="add_tag">Add Tag</string>
+    <string name="book_detail">书籍详情</string>
+    <string name="book_detail_author">%1$s</string>
+    <string name="book_detail_category"> &#160;|&#160;%1$s |&#160;</string>
+    <string name="book_detail_user_lv">&#160;lv.%1$d</string>
+    <string name="book_detail_remove_collection">不追了</string>
+    <string name="book_detail_join_collection">追更新</string>
+    <string name="book_detail_start_read">开始阅读</string>
+    <string name="book_detail_retention_ratio">%1$s%%</string>
+    <string name="book_detail_hot_reviews">热门书评</string>
+    <string name="book_detail_community">%1$s的社区</string>
+    <string name="book_detail_post_count">共有%1$d个帖子</string>
+    <string name="book_detail_recommend_book_list">推荐书单</string>
+    <string name="book_detail_recommend_book_list_book_count">共%1$d本书 |&#160;</string>
+    <string name="book_detail_recommend_book_list_collector_count">%1$d人收藏</string>
+    <string name="book_detail_is_joined_the_book_shelf">是否将《%1$s》加入书架</string>
+    <string name="book_detail_has_joined_the_book_shelf">《%1$s》成功加入书架</string>
+    <string name="book_detail_has_remove_the_book_shelf">已移除《%1$s》</string>
+
+    <!--主题书单相关-->
+    <string name="subject_book_list">主题书单</string>
+    <string name="subject_book_list_my_book_list">我的书单</string>
+    <string name="subject_book_list_detail">书单详情</string>
+    <string name="subject_book_list_detail_book_lately_follower">%1$d&#160;人在追</string>
+    <string name="subject_book_list_detail_book_word_count">|&#160;%1$d&#160;万字</string>
+
+    <string name="permission_get_accounts_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_GET_ACCOUNTS</string>
+    <string name="permission_read_phone_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_READ_PHONE_STATE</string>
+    <string name="permission_call_phone_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_CALL_PHONE</string>
+    <string name="permission_camera_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_CAMERA</string>
+    <string name="permission_access_fine_location_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_ACCESS_FINE_LOCATION</string>
+    <string name="permission_access_coarse_location_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_ACCESS_COARSE_LOCATION</string>
+    <string name="permission_read_external_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_READ_EXTERNAL_STORAGE</string>
+    <string name="permission_white_external_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_WRITE_EXTERNAL_STORAGE</string>
+    <string name="permission_recode_audio_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_RECORD_AUDIO</string>
+</resources>

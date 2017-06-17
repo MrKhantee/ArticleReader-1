@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.article.core.book.ui.activity.TopRankActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_top_rank"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
+        app:theme="@style/Theme.ToolBar.Menu"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="男生"
+                android:textColor="@color/common_h1"
+                android:textSize="18dp"/>
+
+            <com.article.widget.CustomExpandableListView
+                android:id="@+id/elv_male"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:childDivider="@drawable/shape_common_dash_divide"
+                android:groupIndicator="@null"
+                android:listSelector="@drawable/shape_common_selector"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="女生"
+                android:textColor="@color/common_h1"
+                android:textSize="18dp"/>
+
+            <com.article.widget.CustomExpandableListView
+                android:id="@+id/elv_female"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:childDivider="@drawable/shape_common_dash_divide"
+                android:groupIndicator="@null"
+                android:listSelector="@drawable/shape_common_selector"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

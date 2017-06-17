@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.article.core.book.ui.activity.SubRankActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/sub_rank_tb"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
+            app:theme="@style/Theme.ToolBar.Menu"/>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/sub_rank_tl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="#5b4b09"
+            app:tabMode="fixed"
+            app:tabTextColor="#99FFFFFF"
+            app:tabSelectedTextColor="#FFFFFF"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/sub_rank_vp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

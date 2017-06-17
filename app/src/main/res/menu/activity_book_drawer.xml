@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_book_home"
+            android:icon="@drawable/ic_menu_home"
+            android:title="@string/ic_menu_home"/>
+        <item
+            android:checkable="false"
+            android:title="@string/ic_menu_book">
+            <menu>
+
+                <item
+                    android:checkable="false"
+                    android:title="书架"/>
+                <item
+                    android:checkable="false"
+                    android:title="书架"/>
+                <item
+                    android:checkable="false"
+                    android:title="书架"/>
+                <item
+                    android:checkable="false"
+                    android:title="书架"/>
+                <item
+                    android:checkable="false"
+                    android:title="书架"/>
+                <item
+                    android:checkable="false"
+                    android:title="书架"/>
+                <item
+                    android:checkable="false"
+                    android:title="书架"/>
+                <item
+                    android:checkable="false"
+                    android:title="书架"/>
+
+            </menu>
+        </item>
+
+    </group>
+
+    <item android:title="功能模块">
+        <menu>
+            <item
+                android:id="@+id/nav_book_code"
+                android:icon="@drawable/ic_menu_code"
+                android:title="@string/ic_menu_code"/>
+            <item
+                android:id="@+id/nav_book_rss"
+                android:icon="@drawable/ic_menu_rss"
+                android:title="@string/ic_menu_rss"/>
+            <item
+                android:id="@+id/nav_book_music"
+                android:icon="@drawable/ic_menu_music"
+                android:title="@string/ic_menu_music"/>
+            <item
+                android:id="@+id/nav_book_weather"
+                android:icon="@drawable/ic_menu_weather"
+                android:title="@string/ic_menu_weather"/>
+            <item
+                android:id="@+id/nav_book_welfare"
+                android:icon="@drawable/ic_menu_welfare"
+                android:title="@string/ic_menu_welfare"/>
+            <item
+                android:id="@+id/nav_book_funny"
+                android:icon="@drawable/ic_menu_funny"
+                android:title="@string/ic_menu_funny"/>
+        </menu>
+    </item>
+
+</menu>
