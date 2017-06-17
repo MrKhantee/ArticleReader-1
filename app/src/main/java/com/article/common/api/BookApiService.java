@@ -4,6 +4,7 @@ import com.article.core.book.bean.BookDetail;
 import com.article.core.book.bean.BookListDetail;
 import com.article.core.book.bean.BookListTags;
 import com.article.core.book.bean.BookLists;
+import com.article.core.book.bean.CategoryList;
 import com.article.core.book.bean.RecommendBookList;
 import com.article.core.book.bean.SubRankList;
 import com.article.core.book.bean.TopRankList;
@@ -96,5 +97,14 @@ public interface BookApiService {
      */
     @GET("/book-list/tagType")
     Flowable<BookListTags> getBookListTags();
+
+    /**
+     * 获取小说顶级分类
+     * http://api.zhuishushenqi.com/cats/lv2/statistics
+     *
+     * @return
+     */
+    @GET("/cats/lv2/statistics")
+    Flowable<CategoryList> getTopCategoryList();
 
 }

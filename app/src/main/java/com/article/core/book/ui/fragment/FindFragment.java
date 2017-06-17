@@ -11,6 +11,7 @@ import com.article.common.listener.OnRvItemClickListener;
 import com.article.core.MainBean;
 import com.article.core.book.adapter.FragmentFindAdapter;
 import com.article.core.book.ui.activity.BookListActivity;
+import com.article.core.book.ui.activity.TopCategoryActivity;
 import com.article.core.book.ui.activity.TopRankActivity;
 import com.article.di.component.AppComponent;
 import com.article.widget.SupportDividerItemDecoration;
@@ -85,6 +86,7 @@ public class FindFragment extends BaseFragment {
                     break;
                 case 1:
                     //分类
+                    TopCategoryActivity.startActivity(mContext);
                     break;
                 case 2:
                     //书单

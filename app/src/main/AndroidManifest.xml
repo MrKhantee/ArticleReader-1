@@ -34,6 +34,7 @@
         <activity android:name=".core.book.ui.activity.RecommendBookListActivity"/>
         <activity android:name=".core.book.ui.activity.BookListDetailActivity"/>
         <activity android:name=".core.book.ui.activity.BookListActivity"/>
+        <activity android:name=".core.book.ui.activity.TopCategoryActivity"/>
     </application>
 
 </manifest>

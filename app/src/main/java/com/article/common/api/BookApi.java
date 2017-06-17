@@ -5,6 +5,7 @@ import com.article.core.book.bean.BookDetail;
 import com.article.core.book.bean.BookListDetail;
 import com.article.core.book.bean.BookListTags;
 import com.article.core.book.bean.BookLists;
+import com.article.core.book.bean.CategoryList;
 import com.article.core.book.bean.RecommendBookList;
 import com.article.core.book.bean.SubRankList;
 import com.article.core.book.bean.TopRankList;
@@ -119,5 +120,14 @@ public class BookApi {
      */
     public Flowable<BookListTags> getBookListTags() {
         return mApiService.getBookListTags();
+    }
+
+    /**
+     * 小说分类
+     *
+     * @return
+     */
+    public Flowable<CategoryList> getCategoryList() {
+        return mApiService.getTopCategoryList();
     }
 }
