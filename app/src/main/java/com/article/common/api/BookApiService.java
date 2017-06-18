@@ -4,7 +4,9 @@ import com.article.core.book.bean.BookDetail;
 import com.article.core.book.bean.BookListDetail;
 import com.article.core.book.bean.BookListTags;
 import com.article.core.book.bean.BookLists;
+import com.article.core.book.bean.BooksByCats;
 import com.article.core.book.bean.CategoryList;
+import com.article.core.book.bean.CategoryListLv2;
 import com.article.core.book.bean.RecommendBookList;
 import com.article.core.book.bean.SubRankList;
 import com.article.core.book.bean.TopRankList;
@@ -106,5 +108,32 @@ public interface BookApiService {
      */
     @GET("/cats/lv2/statistics")
     Flowable<CategoryList> getTopCategoryList();
+
+    /**
+     * 获取小说的二级分类
+     * http://api.zhuishushenqi.com/cats/lv2
+     *
+     * @return
+     */
+    @GET("/cats/lv2")
+    Flowable<CategoryListLv2> getCategoryListLv2();
+
+    /**
+     * 根据小说类型获取数据
+     * http://api.zhuishushenqi.com/book/by-categories?gender=male&type=hot&major=玄幻&minjor=东方玄幻&limit=50
+     *
+     * @param gender male、female
+     * @param type   hot(热门)、new(新书)、reputation(好评)、over(完结)
+     * @param major  顶级分类：玄幻
+     * @param minjor 二级分类：东方玄幻、异界大陆、异界争霸、远古神话
+     * @param limit  请求数据条数，默认是：50
+     * @return
+     */
+    @GET("//book/by-categories")
+    Flowable<BooksByCats> getBooksByCats(@Query("gender") String gender,
+                                         @Query("type") String type,
+                                         @Query("major") String major,
+                                         @Query("minjor") String minjor,
+                                         @Query("limit") String limit);
 
 }

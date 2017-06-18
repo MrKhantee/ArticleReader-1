@@ -18,4 +18,11 @@
         <item>最新发布</item>
         <item>最多收藏</item>
     </string-array>
+    <!--第二季分类页面-->
+    <string-array name="sub_cate_list">
+        <item>新书</item>
+        <item>热门</item>
+        <item>口碑</item>
+        <item>完结</item>
+    </string-array>
 </resources>

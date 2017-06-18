@@ -5,6 +5,7 @@ import android.content.Context;
 import com.article.R;
 import com.article.base.BaseRVAdapter;
 import com.article.base.BaseRVHolder;
+import com.article.common.listener.OnRvItemClickListener;
 import com.article.core.book.bean.CategoryList;
 
 import java.util.List;
@@ -16,6 +17,13 @@ import java.util.List;
 
 public class TopCategoryActivityAdapter extends BaseRVAdapter<CategoryList.MaleBean> {
 
+
+    public void setClickListener(OnRvItemClickListener clickListener) {
+        mClickListener = clickListener;
+    }
+
+    private OnRvItemClickListener mClickListener;
+
     public TopCategoryActivityAdapter(Context context, List<CategoryList.MaleBean> list
             , int... layoutIds) {
         super(context, list, R.layout.item_top_category);
@@ -26,5 +34,10 @@ public class TopCategoryActivityAdapter extends BaseRVAdapter<CategoryList.MaleB
         viewHolder.setText(R.id.top_cate_item_name_tv, item.name)
                 .setText(R.id.top_cate_item_count_tv, String.format(mContext.getString(R.string
                         .category_book_count), item.bookCount));
+        viewHolder.itemView.setOnClickListener(v -> {
+            if (mClickListener != null) {
+                mClickListener.onItemClick(v, position);
+            }
+        });
     }
 }

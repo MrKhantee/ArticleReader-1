@@ -35,6 +35,7 @@
         <activity android:name=".core.book.ui.activity.BookListDetailActivity"/>
         <activity android:name=".core.book.ui.activity.BookListActivity"/>
         <activity android:name=".core.book.ui.activity.TopCategoryActivity"/>
+        <activity android:name=".core.book.ui.activity.SubCategoryActivity"/>
     </application>
 
 </manifest>

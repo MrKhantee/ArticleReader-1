@@ -5,7 +5,9 @@ import com.article.core.book.bean.BookDetail;
 import com.article.core.book.bean.BookListDetail;
 import com.article.core.book.bean.BookListTags;
 import com.article.core.book.bean.BookLists;
+import com.article.core.book.bean.BooksByCats;
 import com.article.core.book.bean.CategoryList;
+import com.article.core.book.bean.CategoryListLv2;
 import com.article.core.book.bean.RecommendBookList;
 import com.article.core.book.bean.SubRankList;
 import com.article.core.book.bean.TopRankList;
@@ -18,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Amos on 2017/6/9.
- * Desc：
+ * Desc：请求数据的入口
  */
 
 public class BookApi {
@@ -129,5 +131,29 @@ public class BookApi {
      */
     public Flowable<CategoryList> getCategoryList() {
         return mApiService.getTopCategoryList();
+    }
+
+    /**
+     * 获取小说的二级分类
+     *
+     * @return
+     */
+    public Flowable<CategoryListLv2> getCategoryListLv2() {
+        return mApiService.getCategoryListLv2();
+    }
+
+    /**
+     * 根据小说分类获取小说内容
+     *
+     * @param gender
+     * @param type
+     * @param major
+     * @param minjor
+     * @param limit
+     * @return
+     */
+    public Flowable<BooksByCats> getBooksByCats(String gender, String type, String major,
+                                                String minjor, String limit) {
+        return mApiService.getBooksByCats(gender, type, major, minjor, limit);
     }
 }

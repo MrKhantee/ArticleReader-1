@@ -6,9 +6,12 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.article.R;
 import com.article.base.BaseActivity;
+import com.article.common.Constant;
+import com.article.common.listener.OnRvItemClickListener;
 import com.article.core.book.adapter.TopCategoryActivityAdapter;
 import com.article.core.book.bean.CategoryList;
 import com.article.core.book.contract.TopCategoryActivityContract;
@@ -109,6 +112,9 @@ public class TopCategoryActivity extends BaseActivity implements TopCategoryActi
         mTopCateFemaleRv.setLayoutManager(new GridLayoutManager(this, 3));
         mTopCateFemaleRv.addItemDecoration(new SupportGridItemDecoration(this));
         mTopCateFemaleRv.setAdapter(mFemaleAdapter);
+
+        mMaleAdapter.setClickListener(new OnItemClickListener(Constant.Gender.MALE));
+        mFemaleAdapter.setClickListener(new OnItemClickListener(Constant.Gender.FEMALE));
     }
 
     @Override
@@ -120,5 +126,25 @@ public class TopCategoryActivity extends BaseActivity implements TopCategoryActi
         mFemaleList.clear();
         mFemaleList.addAll(categoryList.female);
         mFemaleAdapter.notifyDataSetChanged();
+    }
+
+    class OnItemClickListener implements OnRvItemClickListener {
+        private String gender = "";
+
+        public OnItemClickListener(@Constant.Gender String gender) {
+            this.gender = gender;
+        }
+
+        @Override
+        public void onItemClick(View view, int position) {
+            String name;
+            if (Constant.Gender.MALE.equals(gender)) {
+                name = mMaleList.get(position).name;
+                SubCategoryActivity.startActivity(TopCategoryActivity.this, name, Constant.Gender.MALE);
+            } else {
+                name = mFemaleList.get(position).name;
+                SubCategoryActivity.startActivity(TopCategoryActivity.this, name, Constant.Gender.FEMALE);
+            }
+        }
     }
 }

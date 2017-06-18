@@ -4,6 +4,7 @@ import com.article.core.book.ui.activity.BookDetailActivity;
 import com.article.core.book.ui.activity.BookListActivity;
 import com.article.core.book.ui.activity.BookListDetailActivity;
 import com.article.core.book.ui.activity.RecommendBookListActivity;
+import com.article.core.book.ui.activity.SubCategoryActivity;
 import com.article.core.book.ui.activity.SubOtherRankActivity;
 import com.article.core.book.ui.activity.TopCategoryActivity;
 import com.article.core.book.ui.activity.TopRankActivity;
@@ -32,6 +33,8 @@ public interface BookComponent {
     BookListActivity inject(BookListActivity bookListActivity);
 
     TopCategoryActivity inject(TopCategoryActivity topCategoryActivity);
+
+    SubCategoryActivity inject(SubCategoryActivity subCategoryActivity);
 
     SubRankFragment inject(SubRankFragment subRankFragment);
 
