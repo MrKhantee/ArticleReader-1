@@ -9,6 +9,7 @@ import com.article.core.book.ui.activity.SubOtherRankActivity;
 import com.article.core.book.ui.activity.TopCategoryActivity;
 import com.article.core.book.ui.activity.TopRankActivity;
 import com.article.core.book.ui.fragment.BookListFragment;
+import com.article.core.book.ui.fragment.SubCategoryFragment;
 import com.article.core.book.ui.fragment.SubRankFragment;
 
 import dagger.Component;
@@ -39,4 +40,6 @@ public interface BookComponent {
     SubRankFragment inject(SubRankFragment subRankFragment);
 
     BookListFragment inject(BookListFragment bookListFragment);
+
+    SubCategoryFragment inject(SubCategoryFragment subCategoryFragment);
 }

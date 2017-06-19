@@ -129,11 +129,12 @@ public interface BookApiService {
      * @param limit  请求数据条数，默认是：50
      * @return
      */
-    @GET("//book/by-categories")
+    @GET("/book/by-categories")
     Flowable<BooksByCats> getBooksByCats(@Query("gender") String gender,
                                          @Query("type") String type,
                                          @Query("major") String major,
                                          @Query("minjor") String minjor,
-                                         @Query("limit") String limit);
+                                         @Query("start") int start,
+                                         @Query("limit") int limit);
 
 }

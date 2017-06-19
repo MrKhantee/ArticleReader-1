@@ -31,7 +31,8 @@ public class SubRankFragmentAdapter extends BaseRVAdapter<BooksByCats.BooksBean>
 
     @Override
     protected void onBindData(BaseRVHolder viewHolder, int position, BooksByCats.BooksBean item) {
-        viewHolder.setRoundImageUrl(R.id.sub_rank_cover_ic, Constant.BOOK_IMAGE_BASE_URL + item.cover, R.drawable.cover_default);
+        viewHolder.setRoundImageUrl(R.id.sub_rank_cover_ic, Constant.BOOK_IMAGE_BASE_URL + item.cover,
+                R.drawable.cover_default);
         viewHolder.setText(R.id.sub_rank_cate_title_tv, item.title)
                 .setText(R.id.sub_rank_cate_author_tv, (item.author == null ? "未知" : item.author) +
                         " | " + (item.majorCate == null ? "未知" : item.majorCate))

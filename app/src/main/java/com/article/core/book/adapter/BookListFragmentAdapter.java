@@ -113,16 +113,13 @@ public class BookListFragmentAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public int getItemCount() {
-        return mBeanList.size() + 1;
+        return mBeanList != null ? mBeanList.size() : 0;
     }
+
 
     @Override
     public int getItemViewType(int position) {
-        if (position - mBeanList.size() >= 0) {
-            return ITEM_MORE;
-        } else {
-            return ITEM_NORMAL;
-        }
+        return mBeanList.get(position) != null ? ITEM_NORMAL : ITEM_MORE;
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {

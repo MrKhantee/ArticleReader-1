@@ -153,7 +153,7 @@ public class BookApi {
      * @return
      */
     public Flowable<BooksByCats> getBooksByCats(String gender, String type, String major,
-                                                String minjor, String limit) {
-        return mApiService.getBooksByCats(gender, type, major, minjor, limit);
+                                                String minjor, int start, int limit) {
+        return mApiService.getBooksByCats(gender, type, major, minjor, start, limit);
     }
 }
