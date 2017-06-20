@@ -6,6 +6,7 @@ import com.article.core.book.bean.BookListDetail;
 import com.article.core.book.bean.BookListTags;
 import com.article.core.book.bean.BookLists;
 import com.article.core.book.bean.BookMixAToc;
+import com.article.core.book.bean.BooksByAuthor;
 import com.article.core.book.bean.BooksByCats;
 import com.article.core.book.bean.BooksByTag;
 import com.article.core.book.bean.CategoryList;
@@ -191,5 +192,15 @@ public class BookApi {
      */
     public Flowable<BooksByTag> getBooksByTag(String tag, String start, String limit) {
         return mApiService.getBooksByTag(tag, start, limit);
+    }
+
+    /**
+     * 根据作者查找小说
+     *
+     * @param author
+     * @return
+     */
+    public Flowable<BooksByAuthor> getBooksByAuthor(String author) {
+        return mApiService.getBooksByAuthor(author);
     }
 }

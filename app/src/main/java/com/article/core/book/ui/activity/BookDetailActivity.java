@@ -147,7 +147,7 @@ public class BookDetailActivity extends BaseMVPActivity<BookDetailActivityPresen
 
         mPresenter.attachView(this);
         mPresenter.getBookDetail(bookId);
-        mPresenter.getRecommendBookList(bookId, "5");
+        mPresenter.getRecommendBookList(bookId, "3");
 
         mBookDetailTagTg.setOnTagClickListener(tag -> BooksByTagActivity.startActivity(BookDetailActivity.this, tag));
 
@@ -336,7 +336,8 @@ public class BookDetailActivity extends BaseMVPActivity<BookDetailActivityPresen
      */
     @OnClick(R.id.book_detail_author_iv)
     public void searchByAuthor() {
-
+        String author = mBookDetailAuthorIv.getText().toString().trim();
+        BooksByAuthorActivity.startActivity(BookDetailActivity.this, author);
     }
 
     @Override
@@ -356,6 +357,6 @@ public class BookDetailActivity extends BaseMVPActivity<BookDetailActivityPresen
      */
     @Override
     public void onItemClick(View view, int position) {
-
+        BookListDetailActivity.startActivity(this, mBookList.get(position).id);
     }
 }

@@ -3,6 +3,7 @@ package com.article.di.component;
 import com.article.core.book.ui.activity.BookDetailActivity;
 import com.article.core.book.ui.activity.BookListActivity;
 import com.article.core.book.ui.activity.BookListDetailActivity;
+import com.article.core.book.ui.activity.BooksByAuthorActivity;
 import com.article.core.book.ui.activity.BooksByTagActivity;
 import com.article.core.book.ui.activity.RecommendBookListActivity;
 import com.article.core.book.ui.activity.SubCategoryActivity;
@@ -39,6 +40,8 @@ public interface BookComponent {
     SubCategoryActivity inject(SubCategoryActivity subCategoryActivity);
 
     BooksByTagActivity inject(BooksByTagActivity booksByTagActivity);
+
+    BooksByAuthorActivity inject(BooksByAuthorActivity booksByAuthorActivity);
 
     SubRankFragment inject(SubRankFragment subRankFragment);
 

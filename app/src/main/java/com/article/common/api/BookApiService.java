@@ -5,6 +5,7 @@ import com.article.core.book.bean.BookListDetail;
 import com.article.core.book.bean.BookListTags;
 import com.article.core.book.bean.BookLists;
 import com.article.core.book.bean.BookMixAToc;
+import com.article.core.book.bean.BooksByAuthor;
 import com.article.core.book.bean.BooksByCats;
 import com.article.core.book.bean.BooksByTag;
 import com.article.core.book.bean.CategoryList;
@@ -174,5 +175,15 @@ public interface BookApiService {
     Flowable<BooksByTag> getBooksByTag(@Query("tags") String tags,
                                        @Query("start") String start,
                                        @Query("limit") String limit);
+
+    /**
+     * 根据小说作者查找小说
+     * http://api.zhuishushenqi.com/book/accurate-search?author=MP3
+     *
+     * @param author
+     * @return
+     */
+    @GET("/book/accurate-search")
+    Flowable<BooksByAuthor> getBooksByAuthor(@Query("author") String author);
 
 }
