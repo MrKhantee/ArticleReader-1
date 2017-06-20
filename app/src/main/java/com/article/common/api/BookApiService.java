@@ -4,9 +4,12 @@ import com.article.core.book.bean.BookDetail;
 import com.article.core.book.bean.BookListDetail;
 import com.article.core.book.bean.BookListTags;
 import com.article.core.book.bean.BookLists;
+import com.article.core.book.bean.BookMixAToc;
 import com.article.core.book.bean.BooksByCats;
+import com.article.core.book.bean.BooksByTag;
 import com.article.core.book.bean.CategoryList;
 import com.article.core.book.bean.CategoryListLv2;
+import com.article.core.book.bean.ChapterRead;
 import com.article.core.book.bean.RecommendBookList;
 import com.article.core.book.bean.SubRankList;
 import com.article.core.book.bean.TopRankList;
@@ -136,5 +139,40 @@ public interface BookApiService {
                                          @Query("minjor") String minjor,
                                          @Query("start") int start,
                                          @Query("limit") int limit);
+
+    /**
+     * 获取小说的源
+     * http://api.zhuishushenqi.com/toc?view=summary&book=51d11d802de6405c4500005c
+     *
+     * @param view summary
+     * @param book 小说的ID
+     * @return
+     */
+    @GET("/toc")
+    Flowable<BookMixAToc> getBookToc(@Query("view") String view,
+                                     @Query("book") String book);
+
+    /**
+     * 小说阅读
+     *
+     * @param strUrl
+     * @return
+     */
+    @GET("/http://chapter2.zhuishushenqi.com/chapter/{strUrl}")
+    Flowable<ChapterRead> getChapterRead(@Path("strUrl") String strUrl);
+
+    /**
+     * 根据tag获取小说
+     * http://api.zhuishushenqi.com/book/by-tags?tags=%E7%8E%84%E5%B9%BB&start=0&limit=20
+     *
+     * @param tags  标签
+     * @param start 开始
+     * @param limit 限制
+     * @return
+     */
+    @GET("/book/by-tags")
+    Flowable<BooksByTag> getBooksByTag(@Query("tags") String tags,
+                                       @Query("start") String start,
+                                       @Query("limit") String limit);
 
 }

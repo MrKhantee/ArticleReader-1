@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'realm-android'
 
-
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
@@ -75,10 +74,10 @@ dependencies {
     compile rootProject.ext.dependencies["logger"]
     compile rootProject.ext.dependencies["fragmentation"]
     //eventbus
-    compile rootProject.ext.dependencies["eventBus"]
-    compile 'com.android.support.constraint:constraint-layout:1.0.1'
-    testCompile 'junit:junit:4.12'
+//    compile rootProject.ext.dependencies["eventBus"]
+    compile 'org.greenrobot:eventbus:3.0.0'
 
     //ultimaterecyclerview
     compile rootProject.ext.dependencies["ultimaterecyclerview"]
+    testCompile 'junit:junit:4.12'
 }

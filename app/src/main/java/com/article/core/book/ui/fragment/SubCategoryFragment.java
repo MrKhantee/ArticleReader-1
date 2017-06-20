@@ -10,10 +10,16 @@ import com.article.base.BaseFragment;
 import com.article.common.Constant;
 import com.article.core.book.adapter.SubCategoryFragmentAdapter;
 import com.article.core.book.bean.BooksByCats;
+import com.article.core.book.bean.support.SubEvent;
 import com.article.core.book.contract.SubCategoryFragmentContract;
 import com.article.core.book.presenter.SubCategoryFragmentPresenter;
+import com.article.core.book.ui.activity.BookDetailActivity;
 import com.article.di.component.AppComponent;
 import com.article.di.component.DaggerBookComponent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,15 +83,16 @@ public class SubCategoryFragment extends BaseFragment implements SubCategoryFrag
 
     @Override
     public void initData() {
+        EventBus.getDefault().register(this);
         Bundle arguments = getArguments();
         major = arguments.getString(BUNDLE_MAJOR);
         minor = arguments.getString(BUNDLE_MINOR);
         gender = arguments.getString(BUNDLE_GENDER);
         type = arguments.getString(BUNDLE_TYPE);
-
-
     }
+
     boolean isLoading;
+
     @Override
     public void configViews() {
         mSubCateSrl.measure(0, 0);
@@ -112,7 +119,7 @@ public class SubCategoryFragment extends BaseFragment implements SubCategoryFrag
                 super.onScrolled(recyclerView, dx, dy);
                 int itemCount = mAdapter.getItemCount();
                 int lastVisibleItemPosition = manager.findLastVisibleItemPosition();
-                if (lastVisibleItemPosition == (itemCount - 1)){
+                if (lastVisibleItemPosition == (itemCount - 1)) {
                     boolean isRefreshing = mSubCateSrl.isRefreshing();
                     if (isRefreshing) {
                         mAdapter.notifyItemRemoved(mAdapter.getItemCount());
@@ -127,6 +134,10 @@ public class SubCategoryFragment extends BaseFragment implements SubCategoryFrag
                     }
                 }
             }
+        });
+        mAdapter.setClickListener((view, position) -> {
+            String bookId = mBeanList.get(position)._id;
+            BookDetailActivity.startActivity(mContext,bookId);
         });
     }
 
@@ -175,9 +186,20 @@ public class SubCategoryFragment extends BaseFragment implements SubCategoryFrag
         mPresenter.getCategoryList(gender, this.type, major, minor, start, limit);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void initCategory(SubEvent event) {
+        minor = event.minor;
+        String type = event.type;
+        if (this.type.equals(type)) {
+            mSubCateSrl.setRefreshing(true);
+            onRefresh();
+        }
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        EventBus.getDefault().unregister(this);
         if (mPresenter != null) {
             mPresenter.detachView();
         }

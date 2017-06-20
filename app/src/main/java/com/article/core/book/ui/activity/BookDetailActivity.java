@@ -149,6 +149,8 @@ public class BookDetailActivity extends BaseMVPActivity<BookDetailActivityPresen
         mPresenter.getBookDetail(bookId);
         mPresenter.getRecommendBookList(bookId, "5");
 
+        mBookDetailTagTg.setOnTagClickListener(tag -> BooksByTagActivity.startActivity(BookDetailActivity.this, tag));
+
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.article.R;
 import com.article.common.Constant;
+import com.article.common.listener.OnRvItemClickListener;
 import com.article.core.book.bean.BooksByCats;
 import com.bumptech.glide.Glide;
 
@@ -33,6 +34,12 @@ public class SubCategoryFragmentAdapter extends RecyclerView.Adapter<RecyclerVie
     private static final int CONTENT_VIEW = 2;
 
     private boolean isRefresh = false;
+
+    private OnRvItemClickListener mClickListener;
+
+    public void setClickListener(OnRvItemClickListener clickListener) {
+        mClickListener = clickListener;
+    }
 
     public void setRefresh(boolean refresh) {
         isRefresh = refresh;
@@ -72,9 +79,15 @@ public class SubCategoryFragmentAdapter extends RecyclerView.Adapter<RecyclerVie
             viewHolder.mTitleTv.setText(booksBean.title);
             viewHolder.mShortTv.setText(booksBean.shortIntro);
             viewHolder.mMsgTv.setText(String.format(mContext.getResources().getString(R.string.sub_ran_cate_msg),
-                    booksBean.latelyFollower, booksBean.retentionRatio.equals("") ? booksBean.retentionRatio : "0"));
+                    booksBean.latelyFollower, !booksBean.retentionRatio.equals("") ? booksBean.retentionRatio : "0"));
+
             Glide.with(mContext).load(Constant.BOOK_IMAGE_BASE_URL + booksBean.cover)
                     .placeholder(R.drawable.cover_default).into(viewHolder.mCoverIv);
+            viewHolder.itemView.setOnClickListener(v -> {
+                if (mClickListener!=null){
+                    mClickListener.onItemClick(v,position);
+                }
+            });
 
         }
 

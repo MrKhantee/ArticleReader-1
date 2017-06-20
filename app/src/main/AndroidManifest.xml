@@ -36,6 +36,8 @@
         <activity android:name=".core.book.ui.activity.BookListActivity"/>
         <activity android:name=".core.book.ui.activity.TopCategoryActivity"/>
         <activity android:name=".core.book.ui.activity.SubCategoryActivity"/>
+        <activity android:name=".core.book.ui.activity.BookReadActivity"/>
+        <activity android:name=".core.book.ui.activity.BooksByTagActivity"/>
     </application>
 
 </manifest>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp"
+    android:background="@drawable/touch_bg"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:padding="10dp"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="3dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp">
+
+
+        <ImageView
+            android:id="@+id/books_tag_cover_iv"
+            android:layout_width="45dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/cover_default"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/books_tag_cover_iv"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/books_tag_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="大主宰"
+                android:textColor="@color/common_h1"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/books_tag_author_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="天蚕土豆|玄幻"
+                android:textColor="@color/common_h2"/>
+
+            <TextView
+                android:id="@+id/books_tag_short_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="大千世界，位面交汇，万族林立"
+                android:textColor="@color/common_h2"/>
+
+            <TextView
+                android:id="@+id/books_tag_msg_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="427123人在追|61.57%读者留存"
+                android:textColor="@color/common_h3"/>
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

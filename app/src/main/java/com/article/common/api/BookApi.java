@@ -5,9 +5,12 @@ import com.article.core.book.bean.BookDetail;
 import com.article.core.book.bean.BookListDetail;
 import com.article.core.book.bean.BookListTags;
 import com.article.core.book.bean.BookLists;
+import com.article.core.book.bean.BookMixAToc;
 import com.article.core.book.bean.BooksByCats;
+import com.article.core.book.bean.BooksByTag;
 import com.article.core.book.bean.CategoryList;
 import com.article.core.book.bean.CategoryListLv2;
+import com.article.core.book.bean.ChapterRead;
 import com.article.core.book.bean.RecommendBookList;
 import com.article.core.book.bean.SubRankList;
 import com.article.core.book.bean.TopRankList;
@@ -155,5 +158,38 @@ public class BookApi {
     public Flowable<BooksByCats> getBooksByCats(String gender, String type, String major,
                                                 String minjor, int start, int limit) {
         return mApiService.getBooksByCats(gender, type, major, minjor, start, limit);
+    }
+
+    /**
+     * 获取小说的源
+     *
+     * @param view
+     * @param book
+     * @return
+     */
+    public Flowable<BookMixAToc> getBookToc(String view, String book) {
+        return mApiService.getBookToc(view, book);
+    }
+
+    /**
+     * 小说阅读
+     *
+     * @param strUrl
+     * @return
+     */
+    public Flowable<ChapterRead> getChapterRead(String strUrl) {
+        return mApiService.getChapterRead(strUrl);
+    }
+
+    /**
+     * 根据标签获取小说
+     *
+     * @param tag
+     * @param start
+     * @param limit
+     * @return
+     */
+    public Flowable<BooksByTag> getBooksByTag(String tag, String start, String limit) {
+        return mApiService.getBooksByTag(tag, start, limit);
     }
 }
