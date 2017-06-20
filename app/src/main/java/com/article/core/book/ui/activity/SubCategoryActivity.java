@@ -177,6 +177,7 @@ public class SubCategoryActivity extends BaseActivity implements SubCategoryActi
                     } else {
                         currentMinor = "";
                     }
+                    mSubCateTb.setTitle(currentMinor);
                     int currentItem = mSubCateVp.getCurrentItem();
                     EventManager.refreshSubCategory(currentMinor, type[currentItem]);
                     mListPopupWindow.dismiss();
@@ -199,13 +200,14 @@ public class SubCategoryActivity extends BaseActivity implements SubCategoryActi
     public void initToolBar() {
         setSupportActionBar(mSubCateTb);
         mSubCateTb.setNavigationOnClickListener(v -> finish());
+        getSupportActionBar().setTitle(cate);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mSubCateTb.setTitle(cate);
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        mSubCateTb.setTitle(cate);
+//    }
 
     @Override
     public void showError() {

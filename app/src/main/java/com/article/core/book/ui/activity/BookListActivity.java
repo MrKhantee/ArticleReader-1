@@ -21,6 +21,7 @@ import com.article.base.BaseActivity;
 import com.article.common.utils.SnackBarUtils;
 import com.article.core.book.adapter.BookListTagAdapter;
 import com.article.core.book.bean.BookListTags;
+import com.article.core.book.bean.support.TagEvent;
 import com.article.core.book.contract.BookListActivityContract;
 import com.article.core.book.presenter.BookListActivityPresenter;
 import com.article.core.book.ui.fragment.BookListFragment;
@@ -28,6 +29,8 @@ import com.article.di.component.AppComponent;
 import com.article.di.component.DaggerBookComponent;
 import com.article.widget.ReboundScrollView;
 import com.article.widget.SupportDividerItemDecoration;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -182,7 +185,9 @@ public class BookListActivity extends BaseActivity implements BookListActivityCo
         mBookListTagsRv.setAdapter(mTagAdapter);
 
         mTagAdapter.setListener((view, position, data) -> {
-            SnackBarUtils.showLongSnackbar(view, data.toString(), Color.WHITE, R.color.colorPrimary);
+            hideTagGroup();
+            mBookListTb.setTitle(data);
+            EventBus.getDefault().post(new TagEvent(data));
         });
 
         mPresenter.attachView(this);

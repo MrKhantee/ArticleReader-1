@@ -80,6 +80,12 @@ public class BooksByAuthorActivity extends BaseActivity implements BooksByAuthor
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mAuthorTb.setTitle(author);
+    }
+
+    @Override
     public void configViews() {
         mBeanList = new ArrayList<>();
         mAuthorAdapter = new BooksByAuthorAdapter(this, mBeanList);

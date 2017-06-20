@@ -9,12 +9,17 @@ import com.article.R;
 import com.article.base.BaseMVPFragment;
 import com.article.core.book.adapter.BookListFragmentAdapter;
 import com.article.core.book.bean.BookLists;
+import com.article.core.book.bean.support.TagEvent;
 import com.article.core.book.contract.BookListFragmentContract;
 import com.article.core.book.manager.SettingManager;
 import com.article.core.book.presenter.BookListFragmentPresenter;
 import com.article.core.book.ui.activity.BookListDetailActivity;
 import com.article.di.component.AppComponent;
 import com.article.di.component.DaggerBookComponent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +71,7 @@ public class BookListFragment extends BaseMVPFragment<BookListFragmentPresenter>
 
     @Override
     public void initData() {
+        EventBus.getDefault().register(this);
         currentTab = getArguments().getInt(BUNDLE_TAB);
         mListsBeen = new ArrayList<>();
         mAdapter = new BookListFragmentAdapter(getContext(), mListsBeen);
@@ -152,6 +158,15 @@ public class BookListFragment extends BaseMVPFragment<BookListFragmentPresenter>
                 .inject(this);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void initCategoryList(TagEvent event) {
+        currentTag = event.tag;
+        if (getUserVisibleHint()) {
+            mPresenter.getBookLists(duration, sort, 0, limit, currentTag,
+                    SettingManager.getInstance().getUserChooseSex());
+        }
+    }
+
     @Override
     public void showError() {
         dismissDialog();
@@ -181,5 +196,11 @@ public class BookListFragment extends BaseMVPFragment<BookListFragmentPresenter>
         }
         mAdapter.addAll(bookLists);
         start = start + bookLists.size();
+    }
+
+    @Override
+    public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroyView();
     }
 }
