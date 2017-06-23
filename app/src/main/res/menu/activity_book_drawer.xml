@@ -10,32 +10,18 @@
             android:checkable="false"
             android:title="@string/ic_menu_book">
             <menu>
-
                 <item
+                    android:id="@+id/nav_book_rank"
                     android:checkable="false"
-                    android:title="书架"/>
+                    android:title="排行榜"/>
                 <item
+                    android:id="@+id/nav_book_cate"
                     android:checkable="false"
-                    android:title="书架"/>
+                    android:title="分类"/>
                 <item
+                    android:id="@+id/nav_book_list"
                     android:checkable="false"
-                    android:title="书架"/>
-                <item
-                    android:checkable="false"
-                    android:title="书架"/>
-                <item
-                    android:checkable="false"
-                    android:title="书架"/>
-                <item
-                    android:checkable="false"
-                    android:title="书架"/>
-                <item
-                    android:checkable="false"
-                    android:title="书架"/>
-                <item
-                    android:checkable="false"
-                    android:title="书架"/>
-
+                    android:title="主题书单"/>
             </menu>
         </item>
 

@@ -19,6 +19,9 @@ import android.view.WindowManager;
 
 import com.article.R;
 import com.article.base.BaseActivity;
+import com.article.core.book.ui.activity.BookListActivity;
+import com.article.core.book.ui.activity.TopCategoryActivity;
+import com.article.core.book.ui.activity.TopRankActivity;
 import com.article.core.book.ui.fragment.BookShelfFragment;
 import com.article.core.book.ui.fragment.FindFragment;
 import com.article.di.component.AppComponent;
@@ -128,27 +131,7 @@ public class BookActivity extends BaseActivity
 
     @Override
     public void configViews() {
-        mVpBook.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-//                if (position == 1) {
-//                    mFab.setVisibility(View.INVISIBLE);
-//                } else if (position == 0) {
-//                    mFab.setVisibility(View.VISIBLE);
-//                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-//        mFab.setOnClickListener(v -> mVpBook.setCurrentItem(1));
     }
 
 
@@ -235,6 +218,15 @@ public class BookActivity extends BaseActivity
             case R.id.nav_book_welfare:
                 break;
             case R.id.nav_book_funny:
+                break;
+            case R.id.nav_book_rank:
+                TopRankActivity.startActivity(this);
+                break;
+            case R.id.nav_book_cate:
+                TopCategoryActivity.startActivity(this);
+                break;
+            case R.id.nav_book_list:
+                BookListActivity.startActivity(this);
                 break;
         }
         mDlBook.closeDrawer(GravityCompat.START);
