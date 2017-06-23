@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="3dp"
+    android:layout_marginStart="3dp"
+    android:layout_marginTop="5dp"
+    android:background="@drawable/touch_bg"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="3dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/book_shelf_cover_iv"
+            android:layout_width="45dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/cover_default"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:layout_toEndOf="@+id/book_shelf_cover_iv"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/book_shelf_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxEms="15"
+                android:maxLines="1"
+                android:textColor="@color/common_h1"
+                android:textSize="16sp"
+                tools:text="逆鳞"/>
+
+            <TextView
+                android:id="@+id/book_shelf_lately_update_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/book_shelf_title_tv"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/common_h2"
+                android:textSize="12sp"
+                tools:text="17小时前:"/>
+
+            <TextView
+                android:id="@+id/book_shelf_short_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/book_shelf_lately_update_tv"
+                android:layout_marginTop="4dp"
+                android:layout_toEndOf="@id/book_shelf_lately_update_tv"
+                android:ellipsize="end"
+                android:maxEms="14"
+                android:maxLines="1"
+                android:textColor="@color/common_h2"
+                android:textSize="12sp"
+                tools:text="第二卷、逆水行舟！第四百六十五章、打蛇七寸！"/>
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/book_shelf_top_label_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/label_book_top"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <CheckBox
+            android:id="@+id/book_shelf_select_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <ImageView
+            android:id="@+id/book_shelf_unread_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/notification_red_dot"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

@@ -1,6 +1,9 @@
 package com.article.di.component;
 
+import android.content.Context;
+
 import com.article.CoreApplication;
+import com.article.base.RealmHelper;
 import com.article.common.api.BookApi;
 import com.article.di.module.AppModule;
 import com.article.di.module.BookApiModule;
@@ -17,4 +20,8 @@ public interface AppComponent {
     CoreApplication getApplication();
 
     BookApi getBookApi();
+
+    RealmHelper getRealmHelper();
+
+    Context getContext();
 }

@@ -43,7 +43,8 @@ public class BookActivity extends BaseActivity
     NavigationView mNvBook;
     @BindView(R.id.vp_book)
     ViewPager mVpBook;
-
+//    @BindView(R.id.fab)
+//    FloatingActionButton mFab;
 
     private List<Fragment> mTabContents;
     private FragmentPagerAdapter mAdapter;
@@ -97,10 +98,16 @@ public class BookActivity extends BaseActivity
             public CharSequence getPageTitle(int position) {
                 return mList.get(position);
             }
+
+
         };
         mVpBook.setAdapter(mAdapter);
         mTlBook.setTabMode(TabLayout.MODE_FIXED);
         mTlBook.setupWithViewPager(mVpBook);
+    }
+
+    public void setCurrentItem(int position) {
+        mVpBook.setCurrentItem(position);
     }
 
     @Override
@@ -121,7 +128,27 @@ public class BookActivity extends BaseActivity
 
     @Override
     public void configViews() {
+        mVpBook.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+//                if (position == 1) {
+//                    mFab.setVisibility(View.INVISIBLE);
+//                } else if (position == 0) {
+//                    mFab.setVisibility(View.VISIBLE);
+//                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+//        mFab.setOnClickListener(v -> mVpBook.setCurrentItem(1));
     }
 
 

@@ -1,5 +1,8 @@
 package com.article.di.module;
 
+import android.content.Context;
+
+import com.article.base.RealmHelper;
 import com.article.common.api.BookApi;
 import com.article.common.api.support.HeaderInterceptor;
 import com.article.common.api.support.Logger;
@@ -37,5 +40,10 @@ public class BookApiModule {
     @Provides
     protected BookApi provideBookService(OkHttpClient okHttpClient) {
         return BookApi.getInstance(okHttpClient);
+    }
+
+    @Provides
+    protected RealmHelper providesRealmHelper(Context context) {
+        return new RealmHelper(context);
     }
 }

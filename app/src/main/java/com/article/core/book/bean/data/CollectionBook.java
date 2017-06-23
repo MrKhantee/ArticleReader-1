@@ -1,4 +1,4 @@
-package com.article.core.book.data;
+package com.article.core.book.bean.data;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -63,5 +63,17 @@ public class CollectionBook extends RealmObject {
 
     public void setLastChapter(String lastChapter) {
         this.lastChapter = lastChapter;
+    }
+
+    @Override
+    public String toString() {
+        return "CollectionBook{" +
+                "_id='" + _id + '\'' +
+                ", author='" + author + '\'' +
+                ", cover='" + cover + '\'' +
+                ", title='" + title + '\'' +
+                ", updated='" + updated + '\'' +
+                ", lastChapter='" + lastChapter + '\'' +
+                '}';
     }
 }

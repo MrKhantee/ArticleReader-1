@@ -1,5 +1,7 @@
 package com.article.di.module;
 
+import android.content.Context;
+
 import com.article.CoreApplication;
 
 import dagger.Module;
@@ -20,6 +22,11 @@ public class AppModule {
 
     @Provides
     CoreApplication providesApplication() {
+        return mCoreApplication;
+    }
+
+    @Provides
+    Context providesContext() {
         return mCoreApplication;
     }
 }

@@ -1,41 +1,40 @@
 package com.article.base;
 
+import android.support.annotation.NonNull;
+
 import io.reactivex.Flowable;
 import io.reactivex.processors.FlowableProcessor;
 import io.reactivex.processors.PublishProcessor;
 
-/**
- * Created by Amos on 2017/6/8.
- * Desc：
- */
-
 public class RxBus {
-    // 主题
-    private final FlowableProcessor<Object> bus;
+    private final FlowableProcessor<Object> mBus;
 
-    // PublishSubject只会把在订阅发生的时间点之后来自原始Flowable的数据发射给观察者
     private RxBus() {
-        bus = PublishProcessor.create().toSerialized();
+        mBus = PublishProcessor.create().toSerialized();
     }
 
-    public static RxBus getDefault() {
-        return RxBusHolder.sInstance;
+    private static class Holder {
+        private static RxBus instance = new RxBus();
     }
 
-    private static class RxBusHolder {
-        private static final RxBus sInstance = new RxBus();
+    public static RxBus getInstance() {
+        return Holder.instance;
     }
 
-
-    // 提供了一个新的事件
-    public void post(Object o) {
-        bus.onNext(o);
+    public void post(@NonNull Object obj) {
+        mBus.onNext(obj);
     }
 
-    // 根据传递的 eventType 类型返回特定类型(eventType)的 被观察者
-    public <T> Flowable<T> toFlowable(Class<T> eventType) {
-        return bus.ofType(eventType);
+    public <T> Flowable<T> register(Class<T> clz) {
+        return mBus.ofType(clz);
     }
 
+    public void unRegisterAll() {
+        //解除注册
+        mBus.onComplete();
+    }
 
+    public boolean hasSubscribers() {
+        return mBus.hasSubscribers();
+    }
 }

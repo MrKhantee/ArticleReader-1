@@ -11,6 +11,7 @@ import com.article.core.book.ui.activity.SubOtherRankActivity;
 import com.article.core.book.ui.activity.TopCategoryActivity;
 import com.article.core.book.ui.activity.TopRankActivity;
 import com.article.core.book.ui.fragment.BookListFragment;
+import com.article.core.book.ui.fragment.BookShelfFragment;
 import com.article.core.book.ui.fragment.SubCategoryFragment;
 import com.article.core.book.ui.fragment.SubRankFragment;
 
@@ -48,4 +49,6 @@ public interface BookComponent {
     BookListFragment inject(BookListFragment bookListFragment);
 
     SubCategoryFragment inject(SubCategoryFragment subCategoryFragment);
+
+    BookShelfFragment inject(BookShelfFragment shelfFragment);
 }
