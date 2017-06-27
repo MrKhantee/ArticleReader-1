@@ -24,6 +24,8 @@ import com.article.core.book.ui.activity.TopCategoryActivity;
 import com.article.core.book.ui.activity.TopRankActivity;
 import com.article.core.book.ui.fragment.BookShelfFragment;
 import com.article.core.book.ui.fragment.FindFragment;
+import com.article.core.code.CodeMainActivity;
+import com.article.core.fun.FunMainActivity;
 import com.article.di.component.AppComponent;
 
 import java.lang.reflect.Method;
@@ -208,6 +210,8 @@ public class BookActivity extends BaseActivity
                 finish();//返回主界面菜单
                 break;
             case R.id.nav_book_code:
+                CodeMainActivity.startActivity(BookActivity.this);
+                finish();
                 break;
             case R.id.nav_book_rss:
                 break;
@@ -218,6 +222,8 @@ public class BookActivity extends BaseActivity
             case R.id.nav_book_welfare:
                 break;
             case R.id.nav_book_funny:
+                FunMainActivity.startActivity(BookActivity.this);
+                finish();
                 break;
             case R.id.nav_book_rank:
                 TopRankActivity.startActivity(this);

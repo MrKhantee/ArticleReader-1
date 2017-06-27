@@ -14,6 +14,8 @@ import com.article.R;
 import com.article.base.BaseActivity;
 import com.article.common.utils.SnackBarUtils;
 import com.article.core.book.ui.BookActivity;
+import com.article.core.code.CodeMainActivity;
+import com.article.core.fun.FunMainActivity;
 import com.article.di.component.AppComponent;
 import com.article.widget.SupportDividerItemDecoration;
 
@@ -79,6 +81,7 @@ public class MainActivity extends BaseActivity {
                     BookActivity.startActivity(MainActivity.this);
                     break;
                 case 1:
+                    CodeMainActivity.startActivity(MainActivity.this);
                     break;
                 case 2:
                     break;
@@ -89,6 +92,7 @@ public class MainActivity extends BaseActivity {
                 case 5:
                     break;
                 case 6:
+                    FunMainActivity.startActivity(MainActivity.this);
                     break;
             }
         });

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_code_home"
+            android:icon="@drawable/ic_menu_home"
+            android:title="@string/ic_menu_home"/>
+        <item
+            android:checkable="false"
+            android:title="@string/ic_menu_code">
+            <menu>
+                <item
+                    android:id="@+id/nav_book_rank"
+                    android:checkable="false"
+                    android:title="搜索"/>
+                <item
+                    android:id="@+id/nav_book_cate"
+                    android:checkable="false"
+                    android:title="GitHub"/>
+                <item
+                    android:id="@+id/nav_book_list"
+                    android:checkable="false"
+                    android:title="下载Repo"/>
+            </menu>
+        </item>
+
+    </group>
+
+    <item android:title="功能模块">
+        <menu>
+            <item
+                android:id="@+id/nav_code_book"
+                android:icon="@drawable/ic_menu_book"
+                android:title="@string/ic_menu_book"/>
+            <item
+                android:id="@+id/nav_code_rss"
+                android:icon="@drawable/ic_menu_rss"
+                android:title="@string/ic_menu_rss"/>
+            <item
+                android:id="@+id/nav_code_music"
+                android:icon="@drawable/ic_menu_music"
+                android:title="@string/ic_menu_music"/>
+            <item
+                android:id="@+id/nav_code_weather"
+                android:icon="@drawable/ic_menu_weather"
+                android:title="@string/ic_menu_weather"/>
+            <item
+                android:id="@+id/nav_code_welfare"
+                android:icon="@drawable/ic_menu_welfare"
+                android:title="@string/ic_menu_welfare"/>
+            <item
+                android:id="@+id/nav_code_funny"
+                android:icon="@drawable/ic_menu_funny"
+                android:title="@string/ic_menu_funny"/>
+        </menu>
+    </item>
+
+</menu>
