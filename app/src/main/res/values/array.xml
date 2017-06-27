@@ -25,4 +25,15 @@
         <item>口碑</item>
         <item>完结</item>
     </string-array>
+
+    <!--搞笑段子-->
+    <string-array name="fun_main">
+        <item>热门</item>
+        <item>24小时</item>
+        <item>热图</item>
+        <item>文字</item>
+        <item>穿越</item>
+        <item>糗图</item>
+        <item>新鲜</item>
+    </string-array>
 </resources>

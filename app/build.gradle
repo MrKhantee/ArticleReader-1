@@ -82,4 +82,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compile rootProject.ext.dependencies["viewAnimator"]
+    compile rootProject.ext.dependencies["jsoup"]
 }

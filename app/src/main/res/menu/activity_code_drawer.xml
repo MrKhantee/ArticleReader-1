@@ -13,15 +13,15 @@
                 <item
                     android:id="@+id/nav_book_rank"
                     android:checkable="false"
-                    android:title="排行榜"/>
+                    android:title="搜索"/>
                 <item
                     android:id="@+id/nav_book_cate"
                     android:checkable="false"
-                    android:title="分类"/>
+                    android:title="GitHub"/>
                 <item
                     android:id="@+id/nav_book_list"
                     android:checkable="false"
-                    android:title="主题书单"/>
+                    android:title="下载Repo"/>
             </menu>
         </item>
 

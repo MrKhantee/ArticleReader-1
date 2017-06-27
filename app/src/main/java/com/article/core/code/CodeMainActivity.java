@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.article.R;
 import com.article.base.BaseActivity;
 import com.article.core.book.ui.BookActivity;
+import com.article.core.fun.FunMainActivity;
 import com.article.di.component.AppComponent;
 
 import java.lang.reflect.Method;
@@ -85,6 +86,7 @@ public class CodeMainActivity extends BaseActivity {
                 case R.id.nav_code_welfare:
                     break;
                 case R.id.nav_code_funny:
+                    FunMainActivity.startActivity(CodeMainActivity.this);
                     break;
             }
             mCodeDl.closeDrawer(GravityCompat.START);
@@ -99,7 +101,12 @@ public class CodeMainActivity extends BaseActivity {
 
     @Override
     public void initToolBar() {
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mCodeTb.setTitle("代码阅读");
     }
 
     @Override

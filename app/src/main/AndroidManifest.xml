@@ -40,6 +40,7 @@
         <activity android:name=".core.book.ui.activity.BooksByTagActivity"/>
         <activity android:name=".core.book.ui.activity.BooksByAuthorActivity"/>
         <activity android:name=".core.code.CodeMainActivity"/>
+        <activity android:name=".core.fun.FunMainActivity"/>
     </application>
 
 </manifest>

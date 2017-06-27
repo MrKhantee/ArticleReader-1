@@ -71,5 +71,6 @@ ext {
             "eventBus"                  : "org.greenrobot:eventbus:3.0.0",
             "ultimaterecyclerview"      : "com.marshalchen.ultimaterecyclerview:library:0.7.2",
             "viewAnimator"              : "com.github.florent37:viewanimator:1.0.5",
+            "jsoup"                     : "org.jsoup:jsoup:1.10.3",
     ]
 }
