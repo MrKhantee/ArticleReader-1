@@ -223,6 +223,7 @@ public class BookActivity extends BaseActivity
                 break;
             case R.id.nav_book_funny:
                 FunMainActivity.startActivity(BookActivity.this);
+                finish();
                 break;
             case R.id.nav_book_rank:
                 TopRankActivity.startActivity(this);

@@ -75,7 +75,6 @@ public class FunMainActivity extends BaseActivity {
             }
         };
         mFunVp.setAdapter(mPagerAdapter);
-        mFunTl.setTabMode(TabLayout.MODE_FIXED);
         mFunTl.setupWithViewPager(mFunVp);
     }
 

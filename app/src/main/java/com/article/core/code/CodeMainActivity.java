@@ -87,6 +87,7 @@ public class CodeMainActivity extends BaseActivity {
                     break;
                 case R.id.nav_code_funny:
                     FunMainActivity.startActivity(CodeMainActivity.this);
+                    finish();
                     break;
             }
             mCodeDl.closeDrawer(GravityCompat.START);
