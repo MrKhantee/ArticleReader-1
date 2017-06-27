@@ -80,4 +80,6 @@ dependencies {
     //ultimaterecyclerview
     compile rootProject.ext.dependencies["ultimaterecyclerview"]
     testCompile 'junit:junit:4.12'
+
+    compile rootProject.ext.dependencies["viewAnimator"]
 }

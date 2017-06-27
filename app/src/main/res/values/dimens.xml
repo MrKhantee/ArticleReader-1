@@ -7,4 +7,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="book_read_top_text">16sp</dimen>
     <dimen name="book_read_bottom_text">12dp</dimen>
+    <dimen name="medium_padding">12dp</dimen>
 </resources>

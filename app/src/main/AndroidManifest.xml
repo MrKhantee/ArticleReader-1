@@ -39,6 +39,7 @@
         <activity android:name=".core.book.ui.activity.BookReadActivity"/>
         <activity android:name=".core.book.ui.activity.BooksByTagActivity"/>
         <activity android:name=".core.book.ui.activity.BooksByAuthorActivity"/>
+        <activity android:name=".core.code.CodeMainActivity"/>
     </application>
 
 </manifest>

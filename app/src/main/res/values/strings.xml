@@ -128,4 +128,9 @@
     <string name="empty_shelf">您的书架还是空的，快去添加小说吧！</string>
     <string name="to_add_books">您的书架还没有小说，快去添加吧！</string>
     <string name="activity_add_package">添加</string>
+
+
+    <!--code reader-->
+    <!-- empty -->
+    <string name="empty_main_repo">Haven\'t opened file!You can open by bottom button</string>
 </resources>
