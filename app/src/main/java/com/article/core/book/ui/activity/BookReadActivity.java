@@ -12,7 +12,16 @@ import android.widget.TextView;
 
 import com.article.R;
 import com.article.base.BaseActivity;
+import com.article.core.book.bean.BookMixAToc;
+import com.article.core.book.bean.ChapterRead;
+import com.article.core.book.contract.BookReadContract;
+import com.article.core.book.presenter.BookReadPresenter;
 import com.article.di.component.AppComponent;
+import com.article.di.component.DaggerBookComponent;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -21,7 +30,7 @@ import butterknife.BindView;
  * Desc：
  */
 
-public class BookReadActivity extends BaseActivity {
+public class BookReadActivity extends BaseActivity implements BookReadContract.View{
 
     @BindView(R.id.flReadWidget)
     FrameLayout mFlReadWidget;
@@ -82,6 +91,9 @@ public class BookReadActivity extends BaseActivity {
     @BindView(R.id.rlBookReadRoot)
     RelativeLayout mRlBookReadRoot;
 
+    @Inject
+    BookReadPresenter mPresenter;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_read;
@@ -89,12 +101,16 @@ public class BookReadActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        mPresenter.attachView(this);
 
     }
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
-
+        DaggerBookComponent.builder()
+                .appComponent(appComponent)
+                .build()
+                .inject(this);
     }
 
     @Override
@@ -108,4 +124,28 @@ public class BookReadActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void complete() {
+
+    }
+
+    @Override
+    public void showBookToc(List<BookMixAToc.mixToc.Chapters> list) {
+
+    }
+
+    @Override
+    public void showChapterRead(ChapterRead.Chapter data, int chapter) {
+
+    }
+
+    @Override
+    public void netError(int chapter) {
+
+    }
 }

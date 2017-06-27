@@ -11,6 +11,7 @@ import com.article.core.book.bean.BooksByCats;
 import com.article.core.book.bean.BooksByTag;
 import com.article.core.book.bean.CategoryList;
 import com.article.core.book.bean.CategoryListLv2;
+import com.article.core.book.bean.ChangeResource;
 import com.article.core.book.bean.ChapterRead;
 import com.article.core.book.bean.RecommendBookList;
 import com.article.core.book.bean.SubRankList;
@@ -202,5 +203,16 @@ public class BookApi {
      */
     public Flowable<BooksByAuthor> getBooksByAuthor(String author) {
         return mApiService.getBooksByAuthor(author);
+    }
+
+    /**
+     * 实现小说换源
+     *
+     * @param sourceId
+     * @param view
+     * @return
+     */
+    public Flowable<ChangeResource> changeResource(String sourceId, String view) {
+        return mApiService.changeResource(sourceId, view);
     }
 }

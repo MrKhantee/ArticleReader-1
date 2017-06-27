@@ -10,6 +10,7 @@ import com.article.core.book.bean.BooksByCats;
 import com.article.core.book.bean.BooksByTag;
 import com.article.core.book.bean.CategoryList;
 import com.article.core.book.bean.CategoryListLv2;
+import com.article.core.book.bean.ChangeResource;
 import com.article.core.book.bean.ChapterRead;
 import com.article.core.book.bean.RecommendBookList;
 import com.article.core.book.bean.SubRankList;
@@ -185,5 +186,17 @@ public interface BookApiService {
      */
     @GET("/book/accurate-search")
     Flowable<BooksByAuthor> getBooksByAuthor(@Query("author") String author);
+
+    /**
+     * 实现小说换源
+     * http://api.zhuishushenqi.com/atoc/579b94e1561763dd2d2384e3?view=chapters
+     *
+     * @param sourceId 小说的源
+     * @param view chapters这个是固定的
+     * @return
+     */
+    @GET("/atoc/{sourceId}")
+    Flowable<ChangeResource> changeResource(@Path("sourceId") String sourceId, @Query("view") String view);
+
 
 }
