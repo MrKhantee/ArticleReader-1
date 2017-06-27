@@ -1,5 +1,6 @@
 package com.article.common.utils;
 
+import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -33,6 +34,16 @@ public class SnackBarUtils {
      */
     public static void showShortSnackbar(View parent, CharSequence text, int textColor, int bgColor) {
         showSnackbar(parent, text, Snackbar.LENGTH_SHORT, textColor, bgColor, null, -1, null);
+    }
+
+    /**
+     * 显示SnackBar
+     *
+     * @param parent 父视图
+     * @param msg    显示信息
+     */
+    public static void showSnackbar(View parent, CharSequence msg) {
+        showLongSnackbar(parent, msg, Color.WHITE, Color.rgb(48,63,159));
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.article.core.book.ui.fragment;
 
-import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -95,7 +94,8 @@ public class BookShelfFragment extends BaseFragment implements BookShelfContract
 
         mAdapter.setItemClickListener((view, position) -> {
             String title = mCollectionBooks.get(position).getTitle();
-            SnackBarUtils.showLongSnackbar(view, title, Color.WHITE, R.color.colorPrimary);
+//            SnackBarUtils.showLongSnackbar(view, title, Color.WHITE, R.color.colorPrimary);
+            SnackBarUtils.showSnackbar(view,title);
         });
         mFab.setOnClickListener(v -> ((BookActivity) mActivity).setCurrentItem(1));
     }

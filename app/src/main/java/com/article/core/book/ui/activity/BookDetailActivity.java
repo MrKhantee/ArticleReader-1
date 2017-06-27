@@ -2,7 +2,6 @@ package com.article.core.book.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -294,8 +293,8 @@ public class BookDetailActivity extends BaseMVPActivity<BookDetailActivityPresen
     @OnClick(R.id.book_detail_join_collection_btn)
     public void onJoinCollectionClick() {
         if (mRealmHelper.isBookExit(recommendBooks._id)) {
-            SnackBarUtils.showShortSnackbar(mBookDetailAuthorIv, String.format(getString(
-                    R.string.book_detail_has_remove_the_book_shelf), recommendBooks.title), Color.WHITE, R.color.colorPrimary);
+            SnackBarUtils.showSnackbar(mBookDetailAuthorIv, String.format(getString(
+                    R.string.book_detail_has_remove_the_book_shelf), recommendBooks.title));
             initCollectionIcon(true);
             mRealmHelper.deleteBook(recommendBooks._id);
         } else {
@@ -307,10 +306,9 @@ public class BookDetailActivity extends BaseMVPActivity<BookDetailActivityPresen
             collectionBook.setCover(recommendBooks.cover);
             collectionBook.setAuthor(recommendBooks.author);
             mRealmHelper.addBook(collectionBook);
-            SnackBarUtils.showShortSnackbar(mBookDetailAuthorIv,
+            SnackBarUtils.showSnackbar(mBookDetailAuthorIv,
                     String.format(getString(
-                            R.string.book_detail_has_joined_the_book_shelf), recommendBooks.title),
-                    Color.WHITE, R.color.colorPrimary);
+                            R.string.book_detail_has_joined_the_book_shelf), recommendBooks.title));
             initCollectionIcon(false);
         }
 //        if (isJoinedCollections) {
