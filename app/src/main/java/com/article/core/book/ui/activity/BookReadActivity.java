@@ -24,11 +24,13 @@ import com.article.common.utils.ScreenUtils;
 import com.article.common.utils.SharedPreferencesUtils;
 import com.article.common.utils.StatusBarCompat;
 import com.article.core.book.bean.BookMixAToc;
+import com.article.core.book.bean.BookResource;
 import com.article.core.book.bean.ChapterRead;
 import com.article.core.book.bean.Recommend;
 import com.article.core.book.contract.BookReadContract;
 import com.article.core.book.manager.CacheManager;
 import com.article.core.book.manager.CollectionsManager;
+import com.article.core.book.manager.SettingManager;
 import com.article.core.book.presenter.BookReadPresenter;
 import com.article.di.component.AppComponent;
 import com.article.di.component.DaggerBookComponent;
@@ -36,6 +38,7 @@ import com.article.widget.read.CustomReadView;
 import com.article.widget.read.OnReadStateChangeListener;
 import com.article.widget.read.OverlappedWidget;
 import com.article.widget.read.PageWidget;
+import com.article.widget.read.ThemeManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -234,13 +237,21 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
         } else if (statusBarColor != -1) {
             statusBarView = StatusBarCompat.compat(this, statusBarColor);
         }
-
+        initReadSet();
         initPagerWidget();
 
         hideStatusBar();
 
-        mPresenter.getBookMixAToc("chapters", bookId);
+        mPresenter.getBookMixAToc(bookId, "chapters");
+        mPresenter.getBookResource(bookId);
+    }
 
+    /**
+     * 初始化阅读设置
+     */
+    private void initReadSet() {
+        curTheme = SettingManager.getInstance().getReadTheme();
+        ThemeManager.setReaderTheme(curTheme, mRlBookReadRoot);
     }
 
     private void readCurrentChapter() {
@@ -299,6 +310,11 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
                 mPageWidget.jumpToChapter(currentChapter);
             }
         }
+    }
+
+    @Override
+    public void showBookResource(BookResource bookResource) {
+        System.out.println(bookResource.mResourceBeans);
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.article.core.book.bean.BookListDetail;
 import com.article.core.book.bean.BookListTags;
 import com.article.core.book.bean.BookLists;
 import com.article.core.book.bean.BookMixAToc;
+import com.article.core.book.bean.BookResource;
 import com.article.core.book.bean.BooksByAuthor;
 import com.article.core.book.bean.BooksByCats;
 import com.article.core.book.bean.BooksByTag;
@@ -143,16 +144,28 @@ public interface BookApiService {
                                          @Query("limit") int limit);
 
     /**
-     * 获取小说的源
-     * http://api.zhuishushenqi.com/toc?view=summary&book=51d11d802de6405c4500005c
+     * 获取章节信息
+     * http://api.zhuishushenqi.com/mix-atoc/51d11e782de6405c45000068?view=chapters
      *
      * @param view summary
      * @param book 小说的ID
      * @return
      */
+    @GET("/mix-atoc/{book}")
+    Flowable<BookMixAToc> getBookMixToc(@Path("book") String book,
+                                        @Query("view") String view);
+
+    /**
+     * 获取小说的源
+     * http://api.zhuishushenqi.com/toc?view=summary&book=51d11d802de6405c4500005c
+     *
+     * @param view
+     * @param book
+     * @return
+     */
     @GET("/toc")
-    Flowable<BookMixAToc> getBookToc(@Query("view") String view,
-                                     @Query("book") String book);
+    Flowable<BookResource> getBookResource(@Query("view") String view,
+                                           @Query("book") String book);
 
     /**
      * 小说阅读
@@ -192,7 +205,7 @@ public interface BookApiService {
      * http://api.zhuishushenqi.com/atoc/579b94e1561763dd2d2384e3?view=chapters
      *
      * @param sourceId 小说的源
-     * @param view chapters这个是固定的
+     * @param view     chapters这个是固定的
      * @return
      */
     @GET("/atoc/{sourceId}")

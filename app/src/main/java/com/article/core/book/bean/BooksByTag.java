@@ -9,9 +9,6 @@ import java.util.List;
 
 public class BooksByTag extends Base {
 
-
-
-
     public List<TagBook> books;
 
     public static class TagBook {

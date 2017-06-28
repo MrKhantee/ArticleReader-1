@@ -2,6 +2,7 @@ package com.article.core.book.contract;
 
 import com.article.base.BaseContract;
 import com.article.core.book.bean.BookMixAToc;
+import com.article.core.book.bean.BookResource;
 import com.article.core.book.bean.ChapterRead;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public interface BookReadContract {
 
         void showChapterRead(ChapterRead.Chapter data, int chapter);
 
+        void showBookResource(BookResource bookResource);
+
         void netError(int chapter);//添加网络处理异常接口
     }
 
@@ -29,5 +32,8 @@ public interface BookReadContract {
 
         //换源
         void changerResource(String sourceId);
+
+        //获取小说的源
+        void getBookResource(String book);
     }
 }

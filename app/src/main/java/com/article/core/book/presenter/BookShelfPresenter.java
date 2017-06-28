@@ -63,7 +63,7 @@ public class BookShelfPresenter extends RxPresenter<BookShelfContract.View>
 
     @Override
     public void getTopMac(String bookId) {
-        Disposable disposable = mBookApi.getBookToc("chapters", bookId).subscribeOn(Schedulers.io())
+        Disposable disposable = mBookApi.getBookMixToc("chapters", bookId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(bookMixAToc -> {
                     ACache.get(mContext).put(bookId + "bookToc", bookMixAToc);

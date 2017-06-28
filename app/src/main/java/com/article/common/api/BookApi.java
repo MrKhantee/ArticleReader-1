@@ -6,6 +6,7 @@ import com.article.core.book.bean.BookListDetail;
 import com.article.core.book.bean.BookListTags;
 import com.article.core.book.bean.BookLists;
 import com.article.core.book.bean.BookMixAToc;
+import com.article.core.book.bean.BookResource;
 import com.article.core.book.bean.BooksByAuthor;
 import com.article.core.book.bean.BooksByCats;
 import com.article.core.book.bean.BooksByTag;
@@ -169,8 +170,8 @@ public class BookApi {
      * @param book
      * @return
      */
-    public Flowable<BookMixAToc> getBookToc(String view, String book) {
-        return mApiService.getBookToc(view, book);
+    public Flowable<BookMixAToc> getBookMixToc(String book, String view) {
+        return mApiService.getBookMixToc(book, view);
     }
 
     /**
@@ -214,5 +215,16 @@ public class BookApi {
      */
     public Flowable<ChangeResource> changeResource(String sourceId, String view) {
         return mApiService.changeResource(sourceId, view);
+    }
+
+    /**
+     * 获取小说的源
+     *
+     * @param view summary
+     * @param book 小说的id
+     * @return
+     */
+    public Flowable<BookResource> getBookResource(String view, String book) {
+        return mApiService.getBookResource(view, book);
     }
 }
