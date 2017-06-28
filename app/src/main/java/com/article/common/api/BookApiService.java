@@ -160,7 +160,7 @@ public interface BookApiService {
      * @param strUrl
      * @return
      */
-    @GET("/http://chapter2.zhuishushenqi.com/chapter/{strUrl}")
+    @GET("http://chapter2.zhuishushenqi.com/chapter/{strUrl}")
     Flowable<ChapterRead> getChapterRead(@Path("strUrl") String strUrl);
 
     /**

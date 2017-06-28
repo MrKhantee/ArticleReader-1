@@ -20,6 +20,7 @@ import com.article.R;
 import com.article.base.BaseActivity;
 import com.article.common.Constant;
 import com.article.common.utils.LogUtils;
+import com.article.common.utils.ScreenUtils;
 import com.article.common.utils.SharedPreferencesUtils;
 import com.article.common.utils.StatusBarCompat;
 import com.article.core.book.bean.BookMixAToc;
@@ -27,6 +28,7 @@ import com.article.core.book.bean.ChapterRead;
 import com.article.core.book.bean.Recommend;
 import com.article.core.book.contract.BookReadContract;
 import com.article.core.book.manager.CacheManager;
+import com.article.core.book.manager.CollectionsManager;
 import com.article.core.book.presenter.BookReadPresenter;
 import com.article.di.component.AppComponent;
 import com.article.di.component.DaggerBookComponent;
@@ -41,6 +43,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.article.R.id.rlReadMark;
 
@@ -146,6 +149,7 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
     @BindView(R.id.rlBookReadRoot)
     RelativeLayout mRlBookReadRoot;
 
+
     @Inject
     BookReadPresenter mPresenter;
 
@@ -171,6 +175,7 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
 
     protected View statusBarView = null;
 
+
     public static void startActivity(Context context, Recommend.RecommendBooks recommendBooks) {
         startActivity(context, recommendBooks, false);
     }
@@ -184,13 +189,14 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
     protected int getLayoutId() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        statusBarColor = ContextCompat.getColor(this, R.color.reader_menu_bg_color);
+        statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary);
         return R.layout.activity_read;
     }
 
     @Override
     protected void initData() {
         mPresenter.attachView(this);
+
 
         mBooks = (Recommend.RecommendBooks) getIntent().getSerializableExtra(INTENT_BEAN);
         bookId = mBooks._id;
@@ -200,6 +206,8 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
 //        EventBus.getDefault().register(this);
 
         mTvBookReadTocTitle.setText(mBooks.title);
+
+        CollectionsManager.getInstance().setRecentReadingTime(bookId);
     }
 
     @Override
@@ -218,7 +226,9 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
     @Override
     public void configViews() {
         decodeView = getWindow().getDecorView();
-
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mLlBookReadTop.getLayoutParams();
+        params.topMargin = ScreenUtils.getStatusBarHeight(this) - 2;
+        mLlBookReadTop.setLayoutParams(params);
         if (statusBarColor == 0) {
             statusBarView = StatusBarCompat.compat(this, ContextCompat.getColor(this, R.color.colorPrimaryDark));
         } else if (statusBarColor != -1) {
@@ -227,7 +237,18 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
 
         initPagerWidget();
 
+        hideStatusBar();
 
+        mPresenter.getBookMixAToc("chapters", bookId);
+
+    }
+
+    private void readCurrentChapter() {
+        if (CacheManager.getInstance().getChapterFile(bookId, currentChapter) != null) {
+            showChapterRead(null, currentChapter);
+        } else {
+            mPresenter.getChapterRead(mChapterList.get(currentChapter - 1).link, currentChapter);
+        }
     }
 
     /**
@@ -239,22 +260,29 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
         } else {
             mPageWidget = new OverlappedWidget(this, bookId, mChapterList, new ReadListener());
         }
+
+        if (SharedPreferencesUtils.getInstance().getBoolean(Constant.IS_NIGHT, false)) {
+            mPageWidget.setTextColor(ContextCompat.getColor(this, R.color.chapter_content_night),
+                    ContextCompat.getColor(this, R.color.colorPrimary));
+        }
+        mFlReadWidget.removeAllViews();
+        mFlReadWidget.addView(mPageWidget);
     }
 
 
     @Override
     public void showError() {
-
     }
 
     @Override
     public void complete() {
-
     }
 
     @Override
     public void showBookToc(List<BookMixAToc.mixToc.Chapters> list) {
-
+        mChapterList.clear();
+        mChapterList.addAll(list);
+        readCurrentChapter();
     }
 
     @Override
@@ -349,6 +377,15 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
         }
     }
 
+
+    /***************按钮事件*****************/
+
+    @OnClick(R.id.ivBack)
+    public void onBackClick() {
+        finish();
+    }
+
+    /***************按钮事件*****************/
     private class ReadListener implements OnReadStateChangeListener {
         @Override
         public void onChapterChanged(int chapter) {

@@ -179,7 +179,7 @@ public class BookApi {
      * @param strUrl
      * @return
      */
-    public Flowable<ChapterRead> getChapterRead(String strUrl) {
+    public synchronized Flowable<ChapterRead> getChapterRead(String strUrl) {
         return mApiService.getChapterRead(strUrl);
     }
 

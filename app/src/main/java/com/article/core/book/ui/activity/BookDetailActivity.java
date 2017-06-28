@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -84,6 +85,9 @@ public class BookDetailActivity extends BaseMVPActivity<BookDetailActivityPresen
 
     @BindView(R.id.book_detail_join_collection_btn)
     DrawableCenterButton mBookDetailJoinCollectionBtn;
+
+    @BindView(R.id.book_detail_nsv)
+    NestedScrollView mBookDetailNsv;
 
     private String bookId;
 
