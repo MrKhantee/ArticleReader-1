@@ -5,6 +5,7 @@
               android:layout_above="@+id/llBookReadBottom"
               android:background="@color/reader_menu_bg_color"
               android:clickable="true"
+              android:id="@+id/rlReadAaSet"
               android:orientation="vertical"
               android:visibility="gone">
 
@@ -101,7 +102,7 @@
             android:id="@+id/cbVolume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:button="@drawable/volume_checkbox_selector"
             android:text="音量键翻页"
             android:textColor="@color/common_h3"
@@ -111,7 +112,7 @@
             android:id="@+id/cbAutoBrightness"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:button="@drawable/volume_checkbox_selector"
             android:text="自动调整亮度"
             android:textColor="@color/common_h3"

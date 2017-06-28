@@ -2,7 +2,7 @@ package com.article.core.book.contract;
 
 import com.article.base.BaseContract;
 import com.article.core.book.bean.BookMixAToc;
-import com.article.core.book.bean.data.CollectionBook;
+import com.article.core.book.bean.CollectionBook;
 
 import java.util.List;
 

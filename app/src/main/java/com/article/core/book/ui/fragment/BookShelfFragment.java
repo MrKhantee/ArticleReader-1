@@ -12,7 +12,7 @@ import com.article.base.RealmHelper;
 import com.article.common.utils.SnackBarUtils;
 import com.article.core.book.adapter.BookShelfAdapter;
 import com.article.core.book.bean.BookMixAToc;
-import com.article.core.book.bean.data.CollectionBook;
+import com.article.core.book.bean.CollectionBook;
 import com.article.core.book.contract.BookShelfContract;
 import com.article.core.book.presenter.BookShelfPresenter;
 import com.article.core.book.ui.BookActivity;

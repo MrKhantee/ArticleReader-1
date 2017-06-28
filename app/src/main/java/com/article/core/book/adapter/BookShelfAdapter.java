@@ -9,7 +9,7 @@ import com.article.base.BaseRVHolder;
 import com.article.common.Constant;
 import com.article.common.listener.OnRvItemClickListener;
 import com.article.common.utils.FormatUtils;
-import com.article.core.book.bean.data.CollectionBook;
+import com.article.core.book.bean.CollectionBook;
 
 import java.util.List;
 

@@ -37,7 +37,7 @@ public class Constant {
     public static String PATH_EPUB = PATH_DATA + "/epub";
 
     public static String PATH_CHM = PATH_DATA + "/chm";
-
+    public static final String IS_NIGHT = "isNight";
     public static String BASE_PATH = AppUtils.getAppContext().getCacheDir().getPath();
 
     public static final String SUFFIX_TXT = ".txt";
@@ -81,4 +81,5 @@ public class Constant {
         String OVER = "over";
     }
     public static final String ISBYUPDATESORT = "isByUpdateSort";
+    public static final String FLIP_STYLE = "flipStyle";
 }

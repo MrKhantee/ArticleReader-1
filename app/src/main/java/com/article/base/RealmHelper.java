@@ -2,7 +2,7 @@ package com.article.base;
 
 import android.content.Context;
 
-import com.article.core.book.bean.data.CollectionBook;
+import com.article.core.book.bean.CollectionBook;
 
 import java.util.List;
 

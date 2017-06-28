@@ -8,7 +8,7 @@ import com.article.base.RxPresenter;
 import com.article.common.api.BookApi;
 import com.article.common.utils.ACache;
 import com.article.core.book.bean.BookMixAToc;
-import com.article.core.book.bean.data.CollectionBook;
+import com.article.core.book.bean.CollectionBook;
 import com.article.core.book.contract.BookShelfContract;
 
 import java.util.List;

@@ -22,7 +22,7 @@ import com.article.core.book.adapter.RecommendBookListAdapter;
 import com.article.core.book.bean.BookDetail;
 import com.article.core.book.bean.Recommend;
 import com.article.core.book.bean.RecommendBookList;
-import com.article.core.book.bean.data.CollectionBook;
+import com.article.core.book.bean.CollectionBook;
 import com.article.core.book.bean.support.RefreshCollectionIconEvent;
 import com.article.core.book.contract.BookDetailActivityContract;
 import com.article.core.book.presenter.BookDetailActivityPresenter;
@@ -205,7 +205,9 @@ public class BookDetailActivity extends BaseMVPActivity<BookDetailActivityPresen
         recommendBooks.lastChapter = bookDetail.getLastChapter();
         recommendBooks.updated = bookDetail.getUpdated();
         recommendBooks.author = bookDetail.getAuthor();
-
+        recommendBooks.latelyFollower = bookDetail.getLatelyFollower();
+        recommendBooks.chaptersCount = bookDetail.getChaptersCount();
+        recommendBooks.retentionRatio = bookDetail.getRetentionRatio();
         refreshCollectionIcon();
     }
 
@@ -298,28 +300,25 @@ public class BookDetailActivity extends BaseMVPActivity<BookDetailActivityPresen
             initCollectionIcon(true);
             mRealmHelper.deleteBook(recommendBooks._id);
         } else {
+
             CollectionBook collectionBook = new CollectionBook();
-            collectionBook.set_id(recommendBooks._id);
-            collectionBook.setLastChapter(recommendBooks.lastChapter);
-            collectionBook.setUpdated(recommendBooks.updated);
-            collectionBook.setTitle(recommendBooks.title);
-            collectionBook.setCover(recommendBooks.cover);
-            collectionBook.setAuthor(recommendBooks.author);
+            collectionBook._id = recommendBooks._id;
+            collectionBook.lastChapter = recommendBooks.lastChapter;
+            collectionBook.updated = recommendBooks.updated;
+            collectionBook.title = recommendBooks.title;
+            collectionBook.cover = recommendBooks.cover;
+            collectionBook.author = recommendBooks.author;
+            collectionBook.latelyFollower = recommendBooks.latelyFollower;
+            collectionBook.retentionRatio = recommendBooks.retentionRatio;
+            collectionBook.chaptersCount = recommendBooks.chaptersCount;
+
             mRealmHelper.addBook(collectionBook);
+
             SnackBarUtils.showSnackbar(mBookDetailAuthorIv,
                     String.format(getString(
                             R.string.book_detail_has_joined_the_book_shelf), recommendBooks.title));
             initCollectionIcon(false);
         }
-//        if (isJoinedCollections) {
-//            if (recommendBooks != null) {
-//                CollectionsManager.getInstance().add(recommendBooks);
-//
-//            }
-//        } else {
-//            CollectionsManager.getInstance().remove(recommendBooks._id);
-//
-//        }
     }
 
     /**
@@ -327,7 +326,7 @@ public class BookDetailActivity extends BaseMVPActivity<BookDetailActivityPresen
      */
     @OnClick(R.id.book_detail_read_btn)
     public void onReadClick() {
-
+        BookReadActivity.startActivity(this, recommendBooks);
     }
 
     @OnClick(R.id.book_detail_long_intro_tv)

@@ -40,7 +40,7 @@ public class Recommend extends Base {
         public boolean isFromSD = false;
         public String path = "";
         public int latelyFollower;
-        public double retentionRatio;
+        public String retentionRatio;
         public String updated = "";
         public int chaptersCount;
         public String lastChapter;

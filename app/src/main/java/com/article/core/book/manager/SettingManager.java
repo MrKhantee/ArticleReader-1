@@ -4,6 +4,7 @@ import com.article.common.Constant;
 import com.article.common.utils.AppUtils;
 import com.article.common.utils.ScreenUtils;
 import com.article.common.utils.SharedPreferencesUtils;
+import com.article.widget.read.ThemeManager;
 
 /**
  * Created by Amos on 2017/6/13.
@@ -27,6 +28,29 @@ public class SettingManager {
     public void saveFontSize(String bookId, int fontSizePx) {
         // 书籍对应
         SharedPreferencesUtils.getInstance().putInt(getFontSizeKey(bookId), fontSizePx);
+    }
+
+    /**
+     * 保存阅读进度
+     *
+     * @param bookId
+     * @param currentChapter
+     * @param m_mbBufBeginPos
+     * @param m_mbBufEndPos
+     */
+    public synchronized void saveReadProgress(String bookId, int currentChapter, int m_mbBufBeginPos,
+                                              int m_mbBufEndPos) {
+        SharedPreferencesUtils.getInstance()
+                .putInt(getChapterKey(bookId), currentChapter)
+                .putInt(getStartPosKey(bookId), m_mbBufBeginPos)
+                .putInt(getEndPosKey(bookId), m_mbBufEndPos);
+    }
+
+    public int getReadTheme() {
+        if (SharedPreferencesUtils.getInstance().getBoolean(Constant.IS_NIGHT, false)) {
+            return ThemeManager.NIGHT;
+        }
+        return SharedPreferencesUtils.getInstance().getInt("readTheme", 3);
     }
 
     /**
@@ -77,6 +101,7 @@ public class SettingManager {
     private String getEndPosKey(String bookId) {
         return bookId + "-endPos";
     }
+
     public boolean isNoneCover() {
         return SharedPreferencesUtils.getInstance().getBoolean("isNoneCover", false);
     }
@@ -88,5 +113,22 @@ public class SettingManager {
      */
     public String getUserChooseSex() {
         return SharedPreferencesUtils.getInstance().getString("userChooseSex", Constant.Gender.MALE);
+    }
+
+    /**
+     * 获取上次阅读章节及位置
+     *
+     * @param bookId
+     * @return
+     */
+    public int[] getReadProgress(String bookId) {
+        int lastChapter = SharedPreferencesUtils.getInstance().getInt(getChapterKey(bookId), 1);
+        int startPos = SharedPreferencesUtils.getInstance().getInt(getStartPosKey(bookId), 0);
+        int endPos = SharedPreferencesUtils.getInstance().getInt(getEndPosKey(bookId), 0);
+
+        return new int[]{lastChapter, startPos, endPos};
+    }
+    public void saveReadTheme(int theme) {
+        SharedPreferencesUtils.getInstance().putInt("readTheme", theme);
     }
 }
