@@ -28,6 +28,6 @@ public interface BookReadContract {
         void getChapterRead(String url, int chapter);
 
         //换源
-        void changerResource(String sourceId, String view);
+        void changerResource(String sourceId);
     }
 }

@@ -35,6 +35,9 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * 缓存工具类
+ */
 public class ACache {
     public static final int TIME_HOUR = 60 * 60;
     public static final int TIME_DAY = TIME_HOUR * 24;
@@ -56,15 +59,23 @@ public class ACache {
         return get(cacheDir, MAX_SIZE, MAX_COUNT);
     }
 
-    public static ACache get(Context ctx, long max_zise, int max_count) {
+    public static ACache get(Context context, long max_size, int max_count) {
         File f = new File(Constant.PATH_DATA, "data");
-        return get(f, max_zise, max_count);
+        return get(f, max_size, max_count);
     }
 
-    public static ACache get(File cacheDir, long max_zise, int max_count) {
+    /**
+     * 获取Acache实例
+     *
+     * @param cacheDir
+     * @param max_size
+     * @param max_count
+     * @return
+     */
+    public static ACache get(File cacheDir, long max_size, int max_count) {
         ACache manager = mInstanceMap.get(cacheDir.getAbsoluteFile() + myPid());
         if (manager == null) {
-            manager = new ACache(cacheDir, max_zise, max_count);
+            manager = new ACache(cacheDir, max_size, max_count);
             mInstanceMap.put(cacheDir.getAbsolutePath() + myPid(), manager);
         }
         return manager;
@@ -84,10 +95,22 @@ public class ACache {
         return dir.delete();
     }
 
+    /**
+     * 获取到缓存的大小
+     *
+     * @param file
+     * @return
+     */
     public static String getCacheSize(File file) {
         return getFormatSize(getFolderSize(file));
     }
 
+    /**
+     * 获取文件夹得大小
+     *
+     * @param file
+     * @return
+     */
     public static long getFolderSize(File file) {
         long size = 0;
         try {
@@ -106,6 +129,12 @@ public class ACache {
         return size;
     }
 
+    /**
+     * 格式化大小
+     *
+     * @param size
+     * @return
+     */
     public static String getFormatSize(double size) {
         double kiloByte = size / 1024;
         if (kiloByte < 1) {
@@ -137,6 +166,11 @@ public class ACache {
                 + "TB";
     }
 
+    /**
+     * 获取到当前的进程
+     *
+     * @return
+     */
 
     private static String myPid() {
         return "_" + android.os.Process.myPid();
@@ -622,21 +656,18 @@ public class ACache {
          * 计算 cacheSize和cacheCount
          */
         private void calculateCacheSizeAndCacheCount() {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    int size = 0;
-                    int count = 0;
-                    File[] cachedFiles = cacheDir.listFiles();
-                    if (cachedFiles != null) {
-                        for (File cachedFile : cachedFiles) {
-                            size += calculateSize(cachedFile);
-                            count += 1;
-                            lastUsageDates.put(cachedFile, cachedFile.lastModified());
-                        }
-                        cacheSize.set(size);
-                        cacheCount.set(count);
+            new Thread(() -> {
+                int size = 0;
+                int count = 0;
+                File[] cachedFiles = cacheDir.listFiles();
+                if (cachedFiles != null) {
+                    for (File cachedFile : cachedFiles) {
+                        size += calculateSize(cachedFile);
+                        count += 1;
+                        lastUsageDates.put(cachedFile, cachedFile.lastModified());
                     }
+                    cacheSize.set(size);
+                    cacheCount.set(count);
                 }
             }).start();
         }
