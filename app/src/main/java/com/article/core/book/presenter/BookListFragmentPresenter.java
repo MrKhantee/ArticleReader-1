@@ -43,7 +43,6 @@ public class BookListFragmentPresenter extends RxPresenter<BookListFragmentContr
                     public void accept(@NonNull BookLists bookLists) throws Exception {
                         mView.showBookList(bookLists.bookLists, start == 0 ? true : false);
                         if (bookLists.bookLists == null || bookLists.bookLists.size() <= 0) {
-//                            ToastUtils.showSingleToast("暂无相关书单");
                         }
                     }
                 }, throwable -> mView.showError(), () -> mView.complete());

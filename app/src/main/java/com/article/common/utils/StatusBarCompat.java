@@ -6,7 +6,6 @@ import android.content.Context;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.article.R;
 
@@ -29,24 +28,6 @@ public class StatusBarCompat {
             return null;
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-                && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
-            if (statusColor != INVALID_VAL) {
-                color = statusColor;
-            }
-            View statusBarView = contentView.getChildAt(0);
-            if (statusBarView != null && statusBarView.getMeasuredHeight() == getStatusBarHeight(activity)) {
-                statusBarView.setBackgroundColor(color);
-                return statusBarView;
-            }
-            statusBarView = new View(activity);
-            ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    getStatusBarHeight(activity));
-            statusBarView.setBackgroundColor(color);
-            contentView.addView(statusBarView, lp);
-            return statusBarView;
-        }
         return null;
 
     }

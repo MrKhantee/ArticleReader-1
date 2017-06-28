@@ -4,6 +4,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.article.R;
@@ -74,9 +75,18 @@ public class BookShelfFragment extends BaseFragment implements BookShelfContract
     public void onResume() {
         super.onResume();
         List<CollectionBook> allCollectionBook = mRealmHelper.getAllCollectionBook();
-        mCollectionBooks.clear();
-        mCollectionBooks.addAll(allCollectionBook);
-        mAdapter.notifyDataSetChanged();
+
+        if (allCollectionBook.size() <= 0) {
+            mEmptyView.setVisibility(View.VISIBLE);
+            mBookShelfRv.setVisibility(View.INVISIBLE);
+        } else {
+            mCollectionBooks.clear();
+            mCollectionBooks.addAll(allCollectionBook);
+            mAdapter.notifyDataSetChanged();
+            mBookShelfRv.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(View.INVISIBLE);
+
+        }
     }
 
     @Override
@@ -94,8 +104,7 @@ public class BookShelfFragment extends BaseFragment implements BookShelfContract
 
         mAdapter.setItemClickListener((view, position) -> {
             String title = mCollectionBooks.get(position).getTitle();
-//            SnackBarUtils.showLongSnackbar(view, title, Color.WHITE, R.color.colorPrimary);
-            SnackBarUtils.showSnackbar(view,title);
+            SnackBarUtils.showSnackbar(view, title);
         });
         mFab.setOnClickListener(v -> ((BookActivity) mActivity).setCurrentItem(1));
     }
