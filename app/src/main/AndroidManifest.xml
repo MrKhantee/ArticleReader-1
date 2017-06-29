@@ -16,13 +16,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".core.MainActivity">
+        <activity
+            android:name=".core.SplashActivity"
+            android:theme="@style/splashActivityTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".core.MainActivity"/>
         <activity
             android:name=".core.book.ui.BookActivity"
             android:label="@string/title_activity_book"

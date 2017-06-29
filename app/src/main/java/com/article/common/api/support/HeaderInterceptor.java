@@ -29,6 +29,7 @@ public final class HeaderInterceptor implements Interceptor {
                     .addHeader("User-Agent", "ZhuiShuShenQi/3.40[preload=false;locale=zh_CN;clientidbase=android-nvidia]") // 不能转UTF-8
                     .addHeader("X-User-Agent", "ZhuiShuShenQi/3.40[preload=false;locale=zh_CN;clientidbase=android-nvidia]")
 //                    .addHeader("X-Device-Id", DeviceUtils.getIMEI(AppUtils.getAppContext()))
+                    .addHeader("X-Device-Id","867079021165390")
                     .addHeader("Host", "api.zhuishushenqi.com")
                     .addHeader("Connection", "Keep-Alive")
                     .addHeader("If-None-Match", "W/\"2a04-4nguJ+XAaA1yAeFHyxVImg\"")

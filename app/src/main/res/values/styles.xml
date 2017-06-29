@@ -13,6 +13,15 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <!--第一个activity的主题，解决启动白屏问题-->
+    <style name="splashActivityTheme" parent="AppTheme.NoActionBar.FullScreen">
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/main_bg</item>
+    </style>
+
     <!--全屏时候的主题-->
     <style name="AppTheme.NoActionBar.FullScreen" parent="AppTheme.NoActionBar">
         <item name="android:windowFullscreen">true</item>
@@ -98,5 +107,17 @@
         <item name="atg_verticalSpacing">10dp</item>
         <item name="atg_horizontalPadding">12dp</item>
         <item name="atg_verticalPadding">6dp</item>
+    </style>
+
+    <style name="FullscreenTheme" parent="AppTheme.NoActionBar">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
     </style>
 </resources>

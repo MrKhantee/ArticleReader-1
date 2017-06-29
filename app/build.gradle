@@ -75,12 +75,13 @@ dependencies {
     compile rootProject.ext.dependencies["fragmentation"]
     //eventbus
 //    compile rootProject.ext.dependencies["eventBus"]
-    compile 'org.greenrobot:eventbus:3.0.0'
 
     //ultimaterecyclerview
     compile rootProject.ext.dependencies["ultimaterecyclerview"]
-    testCompile 'junit:junit:4.12'
 
     compile rootProject.ext.dependencies["viewAnimator"]
     compile rootProject.ext.dependencies["jsoup"]
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.android.support:support-v4:25.3.1'
+    testCompile 'junit:junit:4.12'
 }

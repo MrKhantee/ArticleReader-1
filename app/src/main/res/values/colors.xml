@@ -60,4 +60,6 @@
     <color name="book_read_bottom_text">#e6e6e6</color>
 
     <color name="tip">#88303F9F</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

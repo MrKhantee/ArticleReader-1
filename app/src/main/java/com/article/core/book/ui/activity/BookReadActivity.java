@@ -34,6 +34,7 @@ import com.article.core.book.manager.SettingManager;
 import com.article.core.book.presenter.BookReadPresenter;
 import com.article.di.component.AppComponent;
 import com.article.di.component.DaggerBookComponent;
+import com.article.widget.read.BookResourceDialogFragment;
 import com.article.widget.read.CustomReadView;
 import com.article.widget.read.OnReadStateChangeListener;
 import com.article.widget.read.OverlappedWidget;
@@ -178,6 +179,7 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
 
     protected View statusBarView = null;
 
+    private BookResourceDialogFragment mDialogFragment;
 
     public static void startActivity(Context context, Recommend.RecommendBooks recommendBooks) {
         startActivity(context, recommendBooks, false);
@@ -283,10 +285,12 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
 
     @Override
     public void showError() {
+
     }
 
     @Override
     public void complete() {
+
     }
 
     @Override
@@ -398,6 +402,19 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
 
     @OnClick(R.id.ivBack)
     public void onBackClick() {
+        finish();
+    }
+
+    @OnClick(R.id.tvBookReadSource)
+    public void onBookResourceClick() {
+        if (mDialogFragment == null) {
+            mDialogFragment = BookResourceDialogFragment.newInstance();
+        }
+        mDialogFragment.show(getSupportFragmentManager(), "bookResource");
+    }
+
+    @OnClick(R.id.tvBookReadIntroduce)
+    public void onBookReadIntroduceClick() {
         finish();
     }
 

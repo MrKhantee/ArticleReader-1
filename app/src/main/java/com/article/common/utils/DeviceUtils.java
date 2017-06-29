@@ -45,6 +45,11 @@ public class DeviceUtils {
         return IMSI;
     }
 
+    /**
+     * 获取手机IMEI，6.0以上的手机需要权限
+     * @param context
+     * @return
+     */
     public static String getIMEI(Context context) {
         TelephonyManager telephonyManager = (TelephonyManager)
                 context.getSystemService(Context.TELEPHONY_SERVICE);

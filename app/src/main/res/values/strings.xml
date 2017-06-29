@@ -133,4 +133,8 @@
     <!--code reader-->
     <!-- empty -->
     <string name="empty_main_repo">Haven\'t opened file!You can open by bottom button</string>
+
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
