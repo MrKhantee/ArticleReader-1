@@ -180,6 +180,7 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
     protected View statusBarView = null;
 
     private BookResourceDialogFragment mDialogFragment;
+    private String mHostName;
 
     public static void startActivity(Context context, Recommend.RecommendBooks recommendBooks) {
         startActivity(context, recommendBooks, false);
@@ -298,6 +299,15 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
         mChapterList.clear();
         mChapterList.addAll(list);
         readCurrentChapter();
+
+        String link = list.get(0).link;
+        String[] split = link.split("/+");
+        String host = split[1];
+        if (host.contains("www")) {
+            mHostName = host.substring(4, split.length);
+        } else {
+            mHostName = host;
+        }
     }
 
     @Override
@@ -318,7 +328,6 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
 
     @Override
     public void showBookResource(BookResource bookResource) {
-        System.out.println(bookResource.mResourceBeans);
     }
 
     @Override
@@ -399,20 +408,29 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
 
 
     /***************按钮事件*****************/
-
+    /**
+     * 返回键事件
+     */
     @OnClick(R.id.ivBack)
     public void onBackClick() {
         finish();
     }
 
+    /**
+     * 实现换源
+     */
     @OnClick(R.id.tvBookReadSource)
     public void onBookResourceClick() {
-        if (mDialogFragment == null) {
-            mDialogFragment = BookResourceDialogFragment.newInstance();
-        }
-        mDialogFragment.show(getSupportFragmentManager(), "bookResource");
+//        if (mDialogFragment == null) {
+//            mDialogFragment = BookResourceDialogFragment.newInstance();
+//        }
+//        mDialogFragment.show(getSupportFragmentManager(), "bookResource");
+        BookResourceActivity.startActivity(this, mBooks._id, mHostName);
     }
 
+    /**
+     * 查看简介
+     */
     @OnClick(R.id.tvBookReadIntroduce)
     public void onBookReadIntroduceClick() {
         finish();
