@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.ListPopupWindow;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
@@ -12,6 +14,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -22,7 +25,9 @@ import com.article.common.Constant;
 import com.article.common.utils.LogUtils;
 import com.article.common.utils.ScreenUtils;
 import com.article.common.utils.SharedPreferencesUtils;
+import com.article.common.utils.SnackBarUtils;
 import com.article.common.utils.StatusBarCompat;
+import com.article.core.book.adapter.BookTocListAdapter;
 import com.article.core.book.bean.BookMixAToc;
 import com.article.core.book.bean.BookResource;
 import com.article.core.book.bean.ChapterRead;
@@ -182,6 +187,9 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
     private BookResourceDialogFragment mDialogFragment;
     private String mHostName;
 
+    //小说目录列表弹出窗
+    private ListPopupWindow mTocListPopupWindow;
+
     public static void startActivity(Context context, Recommend.RecommendBooks recommendBooks) {
         startActivity(context, recommendBooks, false);
     }
@@ -240,13 +248,39 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
         } else if (statusBarColor != -1) {
             statusBarView = StatusBarCompat.compat(this, statusBarColor);
         }
+        initTocPop();
         initReadSet();
         initPagerWidget();
-
         hideStatusBar();
 
         mPresenter.getBookMixAToc(bookId, "chapters");
         mPresenter.getBookResource(bookId);
+    }
+
+    private BookTocListAdapter mTocListAdapter;
+
+    /**
+     * 初始化小说目录弹出框
+     */
+    private void initTocPop() {
+        mTocListAdapter = new BookTocListAdapter(this, mChapterList, bookId, currentChapter);
+        mTocListPopupWindow = new ListPopupWindow(this);
+        mTocListPopupWindow.setAdapter(mTocListAdapter);
+        mTocListPopupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        mTocListPopupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        mTocListPopupWindow.setAnchorView(mLlBookReadTop);
+        mTocListPopupWindow.setOnItemClickListener((parent, view, position, id) -> {
+            mTocListPopupWindow.dismiss();
+            currentChapter = position + 1;
+            startRead = false;
+            mTocListAdapter.setCurrentChapter(currentChapter);
+            readCurrentChapter();
+            hideReadBar();
+        });
+        mTocListPopupWindow.setOnDismissListener(() -> {
+            gone(mTvBookReadTocTitle);
+            visible(mTvBookReadReading, mTvBookReadCommunity, mTvBookReadSource);
+        });
     }
 
     /**
@@ -417,6 +451,22 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
     }
 
     /**
+     * 朗读
+     */
+    @OnClick(R.id.tvBookReadReading)
+    public void onBookReadReadingClick() {
+        SnackBarUtils.showSnackbar(mFlReadWidget, "正在努力开发中！");
+    }
+
+    /**
+     * 社区
+     */
+    @OnClick(R.id.tvBookReadCommunity)
+    public void onBookReadCommunityClick() {
+        SnackBarUtils.showSnackbar(mFlReadWidget, "正在努力开发中！");
+    }
+
+    /**
      * 实现换源
      */
     @OnClick(R.id.tvBookReadSource)
@@ -425,7 +475,8 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
 //            mDialogFragment = BookResourceDialogFragment.newInstance();
 //        }
 //        mDialogFragment.show(getSupportFragmentManager(), "bookResource");
-        BookResourceActivity.startActivity(this, mBooks._id, mHostName);
+//        BookResourceActivity.startActivity(this, mBooks._id, mHostName);
+        SnackBarUtils.showSnackbar(mFlReadWidget, "正在努力开发中！");
     }
 
     /**
@@ -434,6 +485,45 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
     @OnClick(R.id.tvBookReadIntroduce)
     public void onBookReadIntroduceClick() {
         finish();
+    }
+
+    /**
+     * 设置按钮
+     */
+    @OnClick(R.id.tvBookReadSettings)
+    public void onBookReadSettingClick() {
+
+    }
+
+    /**
+     * 下载
+     */
+    @OnClick(R.id.tvBookReadDownload)
+    public void onBookReadDownloadClick() {
+    }
+
+    /**
+     * 书签
+     */
+    @OnClick(R.id.tvBookMark)
+    public void onBookMarkClick() {
+    }
+
+    /**
+     * 显示目录
+     */
+    @OnClick(R.id.tvBookReadToc)
+    public void onBookReadTocClick() {
+        gone(mLlBookReadBottom, mRlReadMark);
+        if (!mTocListPopupWindow.isShowing()) {
+            visible(mTvBookReadTocTitle);
+            gone(mTvBookReadReading, mTvBookReadCommunity, mTvBookReadSource);
+            mTocListPopupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
+            mTocListPopupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+            mTocListPopupWindow.show();
+            mTocListPopupWindow.setSelection(currentChapter - 1);
+            mTocListPopupWindow.getListView().setFastScrollEnabled(true);
+        }
     }
 
     /***************按钮事件*****************/
