@@ -1,4 +1,4 @@
-package com.article.widget.read;
+package com.article.core.book.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

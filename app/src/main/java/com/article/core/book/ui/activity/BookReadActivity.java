@@ -37,9 +37,10 @@ import com.article.core.book.manager.CacheManager;
 import com.article.core.book.manager.CollectionsManager;
 import com.article.core.book.manager.SettingManager;
 import com.article.core.book.presenter.BookReadPresenter;
+import com.article.core.book.ui.fragment.BookTocFragment;
 import com.article.di.component.AppComponent;
 import com.article.di.component.DaggerBookComponent;
-import com.article.widget.read.BookResourceDialogFragment;
+import com.article.core.book.ui.fragment.BookResourceDialogFragment;
 import com.article.widget.read.CustomReadView;
 import com.article.widget.read.OnReadStateChangeListener;
 import com.article.widget.read.OverlappedWidget;
@@ -492,7 +493,14 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
      */
     @OnClick(R.id.tvBookReadSettings)
     public void onBookReadSettingClick() {
-
+        if (isVisible(mTvBookReadSettings)) {
+            if (isVisible(rlReadAaSet)) {
+                gone(rlReadAaSet);
+            } else {
+                visible(rlReadAaSet);
+                gone(mRlReadMark);
+            }
+        }
     }
 
     /**
@@ -507,7 +515,21 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
      */
     @OnClick(R.id.tvBookMark)
     public void onBookMarkClick() {
+        if (isVisible(mLlBookReadBottom)) {
+            if (isVisible(mRlReadMark)) {
+                gone(mRlReadMark);
+            } else {
+                gone(rlReadAaSet);
+
+//                updateMark();
+
+                visible(mRlReadMark);
+            }
+        }
     }
+
+
+    private BookTocFragment mTocFragment;
 
     /**
      * 显示目录
@@ -524,6 +546,8 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
             mTocListPopupWindow.setSelection(currentChapter - 1);
             mTocListPopupWindow.getListView().setFastScrollEnabled(true);
         }
+//        BookTocFragment tocFragment = BookTocFragment.newInstance(this, bookId, currentChapter);
+//        tocFragment.show(getSupportFragmentManager(), "bookToc");
     }
 
     /***************按钮事件*****************/
@@ -532,7 +556,7 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
         public void onChapterChanged(int chapter) {
             LogUtils.i("onChapterChanged:" + chapter);
             currentChapter = chapter;
-//            mTocListAdapter.setCurrentChapter(currentChapter);
+            mTocListAdapter.setCurrentChapter(currentChapter);
             // 加载前一节 与 后三节
             for (int i = chapter - 1; i <= chapter + 3 && i <= mChapterList.size(); i++) {
                 if (i > 0 && i != chapter
