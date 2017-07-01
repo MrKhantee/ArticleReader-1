@@ -548,6 +548,8 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
         }
 //        BookTocFragment tocFragment = BookTocFragment.newInstance(this, bookId, currentChapter);
 //        tocFragment.show(getSupportFragmentManager(), "bookToc");
+
+
     }
 
     /***************按钮事件*****************/
