@@ -39,7 +39,10 @@
         <activity android:name=".core.book.ui.activity.BookListActivity"/>
         <activity android:name=".core.book.ui.activity.TopCategoryActivity"/>
         <activity android:name=".core.book.ui.activity.SubCategoryActivity"/>
-        <activity android:name=".core.book.ui.activity.BookReadActivity"/>
+        <activity
+            android:name=".core.book.ui.activity.BookReadActivity"
+            android:screenOrientation="portrait">
+        </activity>
         <activity android:name=".core.book.ui.activity.BooksByTagActivity"/>
         <activity android:name=".core.book.ui.activity.BooksByAuthorActivity"/>
         <activity android:name=".core.code.CodeMainActivity"/>

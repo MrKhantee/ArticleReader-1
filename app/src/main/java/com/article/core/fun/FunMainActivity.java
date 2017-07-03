@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.article.R;
 import com.article.base.BaseActivity;
+import com.article.core.fun.mvp.FunMainFragment;
 import com.article.di.component.AppComponent;
 
 import java.util.ArrayList;
@@ -54,7 +55,6 @@ public class FunMainActivity extends BaseActivity {
         mFragments.add(FunMainFragment.newInstance(FunMainFragment.FUN_TAG_24H));
         mFragments.add(FunMainFragment.newInstance(FunMainFragment.FUN_TAG_IMGRANK));
         mFragments.add(FunMainFragment.newInstance(FunMainFragment.FUN_TAG_TEXT));
-        mFragments.add(FunMainFragment.newInstance(FunMainFragment.FUN_TAG_HISTORY));
         mFragments.add(FunMainFragment.newInstance(FunMainFragment.FUN_TAG_PIC));
         mFragments.add(FunMainFragment.newInstance(FunMainFragment.FUN_TAG_NEW));
 

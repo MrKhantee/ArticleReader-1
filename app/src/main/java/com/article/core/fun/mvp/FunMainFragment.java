@@ -1,4 +1,4 @@
-package com.article.core.fun;
+package com.article.core.fun.mvp;
 
 import android.os.Bundle;
 
@@ -21,13 +21,13 @@ public class FunMainFragment extends BaseFragment {
     public static final String FUN_TAG_IMGRANK = "imgrank";
     //文字
     public static final String FUN_TAG_TEXT = "text";
-    //穿越
-    public static final String FUN_TAG_HISTORY = "history";
     //糗图
     public static final String FUN_TAG_PIC = "pic";
     //新鲜
     public static final String FUN_TAG_NEW = "new";
-
+    //加载的页面
+    private int page = 1;
+    private String mTag;
 
     public static FunMainFragment newInstance(String tag) {
         FunMainFragment mainFragment = new FunMainFragment();
@@ -44,6 +44,8 @@ public class FunMainFragment extends BaseFragment {
 
     @Override
     public void initData() {
+        Bundle arguments = getArguments();
+        mTag = arguments.getString(FUN_TAG);
 
     }
 

@@ -54,6 +54,7 @@ public class Constant {
             Color.parseColor("#67CCB7"),
             Color.parseColor("#F6BC7E")
     };
+
     @StringDef({
             Gender.MALE,
             Gender.FEMALE
@@ -64,6 +65,7 @@ public class Constant {
 
         String FEMALE = "female";
     }
+
     @StringDef({
             CateType.HOT,
             CateType.NEW,
@@ -80,6 +82,10 @@ public class Constant {
 
         String OVER = "over";
     }
+
     public static final String ISBYUPDATESORT = "isByUpdateSort";
     public static final String FLIP_STYLE = "flipStyle";
+
+    //糗事百科的基类url
+    public static final String FUN_BASE_URL = "https://www.qiushibaike.com/";
 }
