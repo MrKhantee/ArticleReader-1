@@ -4,14 +4,20 @@ import android.os.Bundle;
 
 import com.article.R;
 import com.article.base.BaseFragment;
+import com.article.core.fun.bean.FunBean;
 import com.article.di.component.AppComponent;
+import com.article.di.component.DaggerFunComponent;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Created by Amos on 2017/6/27.
  * Desc：
  */
 
-public class FunMainFragment extends BaseFragment {
+public class FunMainFragment extends BaseFragment implements FunFragmentContract.View {
     public static final String FUN_TAG = "tag";
     //热门
     public static final String FUN_TAG_HOT = "hot";
@@ -29,6 +35,9 @@ public class FunMainFragment extends BaseFragment {
     private int page = 1;
     private String mTag;
 
+    @Inject
+    FunFragmentPresenter mPresenter;
+
     public static FunMainFragment newInstance(String tag) {
         FunMainFragment mainFragment = new FunMainFragment();
         Bundle bundle = new Bundle();
@@ -39,7 +48,7 @@ public class FunMainFragment extends BaseFragment {
 
     @Override
     public void attachView() {
-
+        mPresenter.attachView(this);
     }
 
     @Override
@@ -51,7 +60,7 @@ public class FunMainFragment extends BaseFragment {
 
     @Override
     public void configViews() {
-
+        mPresenter.getQiushi("8hr", "2");
     }
 
     @Override
@@ -61,6 +70,24 @@ public class FunMainFragment extends BaseFragment {
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
+        DaggerFunComponent.builder()
+                .appComponent(appComponent)
+                .build()
+                .inject(this);
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void complete() {
+
+    }
+
+    @Override
+    public void showQiuShi(List<FunBean> mFunBeans) {
 
     }
 }

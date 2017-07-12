@@ -29,11 +29,14 @@ public interface FunApiService {
     /**
      * 拉取糗事百科的内容
      *
-     * @param tag 分类
-     * @param s   默认是4996894
+     * @param tag  分类
+     * @param page 页面
+     * @param s    默认是4996894
      * @return
      */
-    @GET("/{tag}/page/2/")
+    @GET("/{tag}/page/{page}/")
     Flowable<ResponseBody> getQiushi(@Path("tag") String tag,
+                                     @Path("page") String page,
                                      @Query("s") String s);
+
 }
