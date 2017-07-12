@@ -115,7 +115,10 @@ public class BookTocFragment extends DialogFragment {
     }
 
     public void setTitle(String title) {
-        mTitleTv.setText(title);
+        if(mTitleTv!=null){
+            mTitleTv.setText(title);
+        }
+
     }
 
     public void addAllChapters(List<BookMixAToc.mixToc.Chapters> chapters) {

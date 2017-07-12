@@ -37,10 +37,9 @@ import com.article.core.book.manager.CacheManager;
 import com.article.core.book.manager.CollectionsManager;
 import com.article.core.book.manager.SettingManager;
 import com.article.core.book.presenter.BookReadPresenter;
-import com.article.core.book.ui.fragment.BookTocFragment;
+import com.article.core.book.ui.fragment.BookResourceDialogFragment;
 import com.article.di.component.AppComponent;
 import com.article.di.component.DaggerBookComponent;
-import com.article.core.book.ui.fragment.BookResourceDialogFragment;
 import com.article.widget.read.CustomReadView;
 import com.article.widget.read.OnReadStateChangeListener;
 import com.article.widget.read.OverlappedWidget;
@@ -485,7 +484,8 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
      */
     @OnClick(R.id.tvBookReadIntroduce)
     public void onBookReadIntroduceClick() {
-        finish();
+        gone(rlReadAaSet, mRlReadMark);
+        BookDetailActivity.startActivity(this,bookId);
     }
 
     /**
@@ -508,6 +508,7 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
      */
     @OnClick(R.id.tvBookReadDownload)
     public void onBookReadDownloadClick() {
+
     }
 
     /**
@@ -520,16 +521,13 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
                 gone(mRlReadMark);
             } else {
                 gone(rlReadAaSet);
-
 //                updateMark();
-
                 visible(mRlReadMark);
             }
         }
     }
 
 
-    private BookTocFragment mTocFragment;
 
     /**
      * 显示目录
@@ -546,10 +544,6 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
             mTocListPopupWindow.setSelection(currentChapter - 1);
             mTocListPopupWindow.getListView().setFastScrollEnabled(true);
         }
-//        BookTocFragment tocFragment = BookTocFragment.newInstance(this, bookId, currentChapter);
-//        tocFragment.show(getSupportFragmentManager(), "bookToc");
-
-
     }
 
     /***************按钮事件*****************/

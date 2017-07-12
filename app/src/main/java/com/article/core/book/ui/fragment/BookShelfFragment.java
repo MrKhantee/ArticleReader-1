@@ -10,13 +10,14 @@ import android.widget.LinearLayout;
 import com.article.R;
 import com.article.base.BaseFragment;
 import com.article.base.RealmHelper;
-import com.article.common.utils.SnackBarUtils;
 import com.article.core.book.adapter.BookShelfAdapter;
 import com.article.core.book.bean.BookMixAToc;
 import com.article.core.book.bean.CollectionBook;
+import com.article.core.book.bean.Recommend;
 import com.article.core.book.contract.BookShelfContract;
 import com.article.core.book.presenter.BookShelfPresenter;
 import com.article.core.book.ui.BookActivity;
+import com.article.core.book.ui.activity.BookReadActivity;
 import com.article.di.component.AppComponent;
 import com.article.di.component.DaggerBookComponent;
 
@@ -91,10 +92,7 @@ public class BookShelfFragment extends BaseFragment implements BookShelfContract
 
     @Override
     public void configViews() {
-//        mBookShelfSrl.measure(0, 0);
-//        mBookShelfSrl.setRefreshing(true);
-//        mBookShelfSrl.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark,
-//                R.color.colorAccent, R.color.colorPrimary);
+
 
         mBookShelfRv.setHasFixedSize(true);
         mBookShelfRv.setLayoutManager(new LinearLayoutManager(mContext));
@@ -103,8 +101,27 @@ public class BookShelfFragment extends BaseFragment implements BookShelfContract
         mBookShelfSrl.setEnabled(false);
 
         mAdapter.setItemClickListener((view, position) -> {
-            String title = mCollectionBooks.get(position).getTitle();
-            SnackBarUtils.showSnackbar(view, title);
+//            String title = mCollectionBooks.get(position).getTitle();
+//            SnackBarUtils.showSnackbar(view, title);
+            CollectionBook collectionBook = mCollectionBooks.get(position);
+            Recommend.RecommendBooks books=new Recommend.RecommendBooks();
+            books.chaptersCount=collectionBook.getChaptersCount();
+            books.lastChapter=collectionBook.getLastChapter();
+            books.latelyFollower=collectionBook.getLatelyFollower();
+            books.author=collectionBook.getAuthor();
+            books.cover=collectionBook.getCover();
+            books._id=collectionBook.get_id();
+            books.title=collectionBook.getTitle();
+            books.isSeleted=collectionBook.isFromSD;
+            books.path=collectionBook.path;
+            books.recentReadingTime=collectionBook.recentReadingTime;
+            books.retentionRatio=collectionBook.getRetentionRatio();
+            books.shortIntro=collectionBook.getShortIntro();
+            books.updated=collectionBook.getUpdated();
+            books.isTop=collectionBook.isTop;
+            books.hasCp=collectionBook.hasCp;
+            books.showCheckBox=collectionBook.showCheckBox;
+            BookReadActivity.startActivity(mContext,books,true);
         });
         mFab.setOnClickListener(v -> ((BookActivity) mActivity).setCurrentItem(1));
     }
