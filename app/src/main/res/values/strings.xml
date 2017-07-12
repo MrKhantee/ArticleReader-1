@@ -130,6 +130,7 @@
     <string name="activity_add_package">添加</string>
 
 
+
     <!--code reader-->
     <!-- empty -->
     <string name="empty_main_repo">Haven\'t opened file!You can open by bottom button</string>

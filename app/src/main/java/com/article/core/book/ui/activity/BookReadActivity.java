@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.ListPopupWindow;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -21,7 +23,9 @@ import android.widget.TextView;
 
 import com.article.R;
 import com.article.base.BaseActivity;
+import com.article.base.RealmHelper;
 import com.article.common.Constant;
+import com.article.common.utils.FormatUtils;
 import com.article.common.utils.LogUtils;
 import com.article.common.utils.ScreenUtils;
 import com.article.common.utils.SharedPreferencesUtils;
@@ -31,6 +35,7 @@ import com.article.core.book.adapter.BookTocListAdapter;
 import com.article.core.book.bean.BookMixAToc;
 import com.article.core.book.bean.BookResource;
 import com.article.core.book.bean.ChapterRead;
+import com.article.core.book.bean.CollectionBook;
 import com.article.core.book.bean.Recommend;
 import com.article.core.book.contract.BookReadContract;
 import com.article.core.book.manager.CacheManager;
@@ -189,6 +194,7 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
 
     //小说目录列表弹出窗
     private ListPopupWindow mTocListPopupWindow;
+    private RealmHelper mRealmHelper;
 
     public static void startActivity(Context context, Recommend.RecommendBooks recommendBooks) {
         startActivity(context, recommendBooks, false);
@@ -211,7 +217,7 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
     protected void initData() {
         mPresenter.attachView(this);
 
-
+        mRealmHelper = new RealmHelper(this);
         mBooks = (Recommend.RecommendBooks) getIntent().getSerializableExtra(INTENT_BEAN);
         bookId = mBooks._id;
         isFromSd = getIntent().getBooleanExtra(INTENT_SD, false);
@@ -485,7 +491,7 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
     @OnClick(R.id.tvBookReadIntroduce)
     public void onBookReadIntroduceClick() {
         gone(rlReadAaSet, mRlReadMark);
-        BookDetailActivity.startActivity(this,bookId);
+        BookDetailActivity.startActivity(this, bookId);
     }
 
     /**
@@ -528,7 +534,6 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
     }
 
 
-
     /**
      * 显示目录
      */
@@ -546,7 +551,64 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
         }
     }
 
+
     /***************按钮事件*****************/
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                if (mTocListPopupWindow != null && mTocListPopupWindow.isShowing()) {
+                    mTocListPopupWindow.dismiss();
+                    gone(mTvBookReadTocTitle);
+                    visible(mTvBookReadReading, mTvBookReadCommunity, mTvBookReadSource);
+                    return true;
+                } else if (isVisible(rlReadAaSet)) {
+                    gone(rlReadAaSet);
+                    return true;
+                } else if (isVisible(mLlBookReadBottom)) {
+                    hideReadBar();
+                    return true;
+                } else if (!mRealmHelper.isBookExit(bookId)) {
+                    showJoinBookShelfDialog(mBooks);
+                    return true;
+                }
+                break;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    //显示询问是否将小说加入书架
+    private void showJoinBookShelfDialog(Recommend.RecommendBooks books) {
+        new AlertDialog.Builder(mContext)
+                .setTitle(getString(R.string.book_read_add_book))
+                .setMessage(getString(R.string.book_read_would_you_like_to_add_this_to_the_book_shelf))
+                .setPositiveButton(getString(R.string.book_read_join_the_book_shelf), (dialog, which) -> {
+                    dialog.dismiss();
+                    CollectionBook book=new CollectionBook();
+                    book._id=books._id;
+                    book.author=books.author;
+                    book.cover=books.cover;
+                    book.shortIntro=books.shortIntro;
+                    book.title=books.title;
+                    book.hasCp=books.hasCp;
+                    book.isTop=books.isTop;
+                    book.isFromSD=books.isFromSD;
+                    book.path=books.path;
+                    book.latelyFollower=books.latelyFollower;
+                    book.retentionRatio=books.retentionRatio;
+                    book.updated=books.updated;
+                    book.chaptersCount=books.chaptersCount;
+                    book.lastChapter=books.lastChapter;
+                    book.recentReadingTime= FormatUtils.getCurrentTimeString(FormatUtils.FORMAT_DATE_TIME);
+                    mRealmHelper.addBook(book);
+                    finish();
+                })
+                .setNegativeButton(getString(R.string.book_read_not), (dialog2, which) -> {
+                    dialog2.dismiss();
+                    finish();
+                }).create().show();
+    }
+
     private class ReadListener implements OnReadStateChangeListener {
         @Override
         public void onChapterChanged(int chapter) {
@@ -583,5 +645,7 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
         public void onFlip() {
             hideReadBar();
         }
+
+
     }
 }
