@@ -139,4 +139,10 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="book_resource_title">选择来源</string>
+    
+    <!--搞笑段子-->
+    <string name="fun_list_item_count">%1$d&#160;评论·%2$d&#160;分享</string>
+    <string name="fun_list_item_comment_user">%1$s&#160;：</string>
+    <!--搞笑段子-->
+    
 </resources>

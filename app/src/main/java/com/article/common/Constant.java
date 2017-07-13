@@ -87,5 +87,5 @@ public class Constant {
     public static final String FLIP_STYLE = "flipStyle";
 
     //糗事百科的基类url
-    public static final String FUN_BASE_URL = "https://www.qiushibaike.com/";
+    public static final String FUN_BASE_URL = "https://m2.qiushibaike.com";
 }

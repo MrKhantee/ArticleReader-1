@@ -62,4 +62,7 @@
     <color name="tip">#88303F9F</color>
 
     <color name="black_overlay">#66000000</color>
+
+    <!--第一条神品论用户名颜色-->
+    <color name="fun_cmt_user_name_text">#9B8878</color>
 </resources>

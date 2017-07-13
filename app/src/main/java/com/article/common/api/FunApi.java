@@ -1,11 +1,13 @@
 package com.article.common.api;
 
 import com.article.common.Constant;
-import com.squareup.okhttp.ResponseBody;
+import com.article.core.fun.FunBean;
 
 import io.reactivex.Flowable;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Amos on 2017/7/3.
@@ -20,8 +22,8 @@ public class FunApi {
     public FunApi(OkHttpClient client) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constant.FUN_BASE_URL)
-//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
         mFunApiService = retrofit.create(FunApiService.class);
@@ -40,14 +42,15 @@ public class FunApi {
         return instance;
     }
 
+
+
     /**
-     * 获取糗事百科
-     *
-     * @param tag
+     * 获取糗事百科数据
      * @param page
+     * @param count
      * @return
      */
-    public  Flowable<ResponseBody> getQiuShi(String tag, String page) {
-        return mFunApiService.getQiushi(tag, page, "4996894");
+    public Flowable<FunBean> getQiuShiBaiKe(String page, String count){
+        return mFunApiService.getQiuShiBaiKe(page, count);
     }
 }

@@ -1,6 +1,6 @@
 package com.article.di.component;
 
-import com.article.core.fun.mvp.FunMainFragment;
+import com.article.core.fun.FunMainActivity;
 
 import dagger.Component;
 
@@ -11,6 +11,6 @@ import dagger.Component;
 @Component(dependencies = AppComponent.class)
 public interface FunComponent {
 
-    FunMainFragment inject(FunMainFragment funMainFragment);
 
+    FunMainActivity inject(FunMainActivity funMainActivity);
 }

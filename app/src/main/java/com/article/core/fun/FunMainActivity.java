@@ -2,20 +2,15 @@ package com.article.core.fun;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.article.R;
-import com.article.base.BaseActivity;
-import com.article.core.fun.mvp.FunMainFragment;
+import com.article.base.BaseMVPActivity;
 import com.article.di.component.AppComponent;
+import com.article.di.component.DaggerFunComponent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -24,19 +19,16 @@ import butterknife.BindView;
  * Desc：
  */
 
-public class FunMainActivity extends BaseActivity {
+public class FunMainActivity extends BaseMVPActivity<FunPresenter> implements FunContract.View {
 
     @BindView(R.id.fun_tb)
     Toolbar mFunTb;
-    @BindView(R.id.fun_tl)
-    TabLayout mFunTl;
-    @BindView(R.id.fun_vp)
-    ViewPager mFunVp;
 
-    private List<Fragment> mFragments;
-    private FragmentPagerAdapter mPagerAdapter;
+    @BindView(R.id.fun_list_rv)
+    RecyclerView mFunListRv;
 
-    private List<String> names;
+    @Inject
+    FunPresenter mFunPresenter;
 
     @Override
     protected int getLayoutId() {
@@ -49,38 +41,15 @@ public class FunMainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        names = Arrays.asList(mContext.getResources().getStringArray(R.array.fun_main));
-        mFragments = new ArrayList<>();
-        mFragments.add(FunMainFragment.newInstance(FunMainFragment.FUN_TAG_HOT));
-        mFragments.add(FunMainFragment.newInstance(FunMainFragment.FUN_TAG_24H));
-        mFragments.add(FunMainFragment.newInstance(FunMainFragment.FUN_TAG_IMGRANK));
-        mFragments.add(FunMainFragment.newInstance(FunMainFragment.FUN_TAG_TEXT));
-        mFragments.add(FunMainFragment.newInstance(FunMainFragment.FUN_TAG_PIC));
-        mFragments.add(FunMainFragment.newInstance(FunMainFragment.FUN_TAG_NEW));
 
-        mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return mFragments.get(position);
-            }
-
-            @Override
-            public int getCount() {
-                return mFragments.size();
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return names.get(position);
-            }
-        };
-        mFunVp.setAdapter(mPagerAdapter);
-        mFunTl.setupWithViewPager(mFunVp);
     }
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
-
+        DaggerFunComponent.builder()
+                .appComponent(appComponent)
+                .build()
+                .inject(this);
     }
 
     @Override
@@ -91,8 +60,22 @@ public class FunMainActivity extends BaseActivity {
 
     @Override
     public void configViews() {
-
+        mFunPresenter.getQiuShiBaiKe("1", "30");
     }
 
 
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void complete() {
+
+    }
+
+    @Override
+    public void showQiuShi(FunBean funBean) {
+
+    }
 }

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="5dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginTop="8dp"
+    android:orientation="vertical"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="3dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/fun_item_user_avatar_iv"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:src="@drawable/anony"/>
+
+            <TextView
+                android:id="@+id/fun_item_user_name_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:gravity="center_vertical"
+                android:text="胸平浪静"
+                android:textColor="@color/fun_cmt_user_name_text"
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/fun_item_content_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="说个小时候小伙伴的事吧，那孩子特皮，都不知道被他爸揍了多少回了。一次不知道又做错了什么事，反正又把他爸气得够呛，把他捆在树上用皮带抽，真抽那种，他反而不认错，冲他姐姐喊:“去，拿把刀来，杀了我就是！” 还英勇就义般高呼:“杀了陈**（他名字）还有后来人！” 后来谁劝都没用，硬是被捆在树上抽到他爸不想抽了。"
+            android:textSize="18sp"/>
+
+        <ImageView
+            android:id="@+id/fun_item_image_iv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/fun_item_count_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="123评论·122分享"
+            android:textColor="@color/fun_cmt_user_name_text"
+            android:textSize="16sp"/>
+
+        <LinearLayout
+            android:id="@+id/fun_item_comment_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/cmt-god"/>
+
+            <TextView
+                android:id="@+id/fun_item_comment_user_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:text="纯一果果"
+                android:textColor="@color/fun_cmt_user_name_text"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/fun_item_comment_content_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:text="：我们真正穷的人连个风扇都装不起"
+                android:textSize="16sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
