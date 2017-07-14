@@ -43,12 +43,43 @@ public class FunListAdapter extends RecyclerView.Adapter<FunListAdapter.FunViewH
     @Override
     public void onBindViewHolder(FunViewHolder holder, int position) {
         FunBean.ItemsBean itemsBean = mItemsBeanList.get(position);
-        if (itemsBean.getUser()!=null){
+        if (itemsBean.getUser() != null) {
             Glide.with(mContext).load(itemsBean.getUser().getThumb())
                     .placeholder(R.drawable.anony)
                     .transform(new GlideCircleTransform(mContext))
                     .into(holder.mUserAvatarIv);
+            holder.mUserNameTv.setText(itemsBean.getUser().getLogin());
+        } else {
+            holder.mUserNameTv.setText("匿名用户");
         }
+        if (itemsBean.getFormat().equals("word")) {
+            holder.mImageIv.setVisibility(View.GONE);
+        } else if (itemsBean.getFormat().equals("image")) {
+            holder.mImageIv.setVisibility(View.VISIBLE);
+        }
+        holder.mContentTv.setText(itemsBean.getContent());
+        FunBean.ItemsBean.HotCommentBean hot_comment = itemsBean.getHot_comment();
+        if (hot_comment == null) {
+            holder.mCommentLl.setVisibility(View.GONE);
+        } else {
+            holder.mCommentLl.setVisibility(View.VISIBLE);
+            holder.mCommentUserNameTv.setText(String.format(mContext.getString(R.string.fun_list_item_comment_user),
+                    hot_comment.getUser().getLogin()));
+            holder.mCommentContentTv.setText(hot_comment.getContent());
+        }
+        holder.mCountTv.setText(String.format(mContext.getString(R.string.fun_list_item_count),
+                itemsBean.getComments_count(), itemsBean.getShare_count()));
+    }
+
+    public boolean addAll(List<FunBean.ItemsBean> itemsBeen) {
+        boolean result = mItemsBeanList.addAll(itemsBeen);
+        notifyDataSetChanged();
+        return result;
+    }
+
+    public void clear() {
+        mItemsBeanList.clear();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -60,7 +91,7 @@ public class FunListAdapter extends RecyclerView.Adapter<FunListAdapter.FunViewH
         @BindView(R.id.fun_item_user_avatar_iv)
         ImageView mUserAvatarIv;
         @BindView(R.id.fun_item_user_name_tv)
-        TextView mUSerNameTv;
+        TextView mUserNameTv;
         @BindView(R.id.fun_item_content_tv)
         TextView mContentTv;
         @BindView(R.id.fun_item_image_iv)
@@ -76,7 +107,7 @@ public class FunListAdapter extends RecyclerView.Adapter<FunListAdapter.FunViewH
 
         public FunViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

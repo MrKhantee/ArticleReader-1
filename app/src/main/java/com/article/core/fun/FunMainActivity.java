@@ -2,6 +2,8 @@ package com.article.core.fun;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
@@ -9,6 +11,9 @@ import com.article.R;
 import com.article.base.BaseMVPActivity;
 import com.article.di.component.AppComponent;
 import com.article.di.component.DaggerFunComponent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,12 +28,16 @@ public class FunMainActivity extends BaseMVPActivity<FunPresenter> implements Fu
 
     @BindView(R.id.fun_tb)
     Toolbar mFunTb;
-
+    @BindView(R.id.fun_list_srl)
+    SwipeRefreshLayout mFunListSrl;
     @BindView(R.id.fun_list_rv)
     RecyclerView mFunListRv;
 
     @Inject
     FunPresenter mFunPresenter;
+
+    FunListAdapter mAdapter;
+    private List<FunBean.ItemsBean> mItemsBeanList;
 
     @Override
     protected int getLayoutId() {
@@ -41,7 +50,8 @@ public class FunMainActivity extends BaseMVPActivity<FunPresenter> implements Fu
 
     @Override
     protected void initData() {
-
+        mItemsBeanList = new ArrayList<>();
+        mAdapter = new FunListAdapter(this, mItemsBeanList);
     }
 
     @Override
@@ -60,9 +70,29 @@ public class FunMainActivity extends BaseMVPActivity<FunPresenter> implements Fu
 
     @Override
     public void configViews() {
-        mFunPresenter.getQiuShiBaiKe("1", "30");
+
+        mFunListSrl.setColorSchemeResources(android.R.color.holo_blue_light,
+                android.R.color.holo_red_light, android.R.color.holo_orange_light,
+                android.R.color.holo_green_light);
+        mFunListSrl.measure(0, 0);
+        mFunListSrl.setRefreshing(true);
+        mFunListSrl.setOnRefreshListener(() -> refresh());
+
+        mFunListRv.setHasFixedSize(true);
+        mFunListRv.setLayoutManager(new LinearLayoutManager(this));
+        mFunListRv.setAdapter(mAdapter);
+
+//        mFunPresenter.getQiuShiBaiKe("1", "30");
+        refresh();
     }
 
+    private void refresh() {
+        mPresenter.getQiuShiBaiKe("1", "30");
+    }
+
+    private void onLoadMore() {
+
+    }
 
     @Override
     public void showError() {
@@ -71,11 +101,13 @@ public class FunMainActivity extends BaseMVPActivity<FunPresenter> implements Fu
 
     @Override
     public void complete() {
-
+        mFunListSrl.setRefreshing(false);
     }
 
     @Override
     public void showQiuShi(FunBean funBean) {
-
+        List<FunBean.ItemsBean> items = funBean.getItems();
+//        mAdapter.clear();
+        mAdapter.addAll(items);
     }
 }

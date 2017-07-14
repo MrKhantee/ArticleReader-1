@@ -16,6 +16,7 @@ import com.article.common.utils.SnackBarUtils;
 import com.article.core.book.ui.BookActivity;
 import com.article.core.code.CodeMainActivity;
 import com.article.core.fun.FunMainActivity;
+import com.article.core.welfare.WelFareActivity;
 import com.article.di.component.AppComponent;
 import com.article.widget.SupportDividerItemDecoration;
 
@@ -90,6 +91,7 @@ public class MainActivity extends BaseActivity {
                 case 4:
                     break;
                 case 5:
+                    WelFareActivity.startActivity(MainActivity.this);
                     break;
                 case 6:
                     FunMainActivity.startActivity(MainActivity.this);

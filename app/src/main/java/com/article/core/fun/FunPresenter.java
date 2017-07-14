@@ -44,9 +44,7 @@ public class FunPresenter extends RxPresenter<FunContract.View>
                         mView.showError();
                     }
                 }, () -> {
-                    if (mView != null) {
-                        mView.complete();
-                    }
+                    mView.complete();
                 });
         addSubscribe(disposable);
     }

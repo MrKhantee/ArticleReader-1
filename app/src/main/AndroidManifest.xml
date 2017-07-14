@@ -48,6 +48,7 @@
         <activity android:name=".core.code.CodeMainActivity"/>
         <activity android:name=".core.fun.FunMainActivity"/>
         <activity android:name=".core.book.ui.activity.BookResourceActivity"/>
+        <activity android:name=".core.welfare.WelFareActivity"/>
     </application>
 
 </manifest>

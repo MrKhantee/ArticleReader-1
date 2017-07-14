@@ -24,7 +24,6 @@
                     android:title="下载Repo"/>
             </menu>
         </item>
-
     </group>
 
     <item android:title="功能模块">

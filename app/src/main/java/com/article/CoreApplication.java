@@ -88,7 +88,7 @@ public class CoreApplication extends Application {
                 }
             }
         }
-        android.os.Process.killProcess(android.os.Process.myPid());
+//        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     /**
