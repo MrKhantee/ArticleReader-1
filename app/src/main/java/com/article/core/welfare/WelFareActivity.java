@@ -4,14 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
@@ -22,7 +20,8 @@ import com.article.core.code.CodeMainActivity;
 import com.article.core.fun.FunMainActivity;
 import com.article.di.component.AppComponent;
 
-import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -41,6 +40,8 @@ public class WelFareActivity extends BaseActivity implements NavigationView.OnNa
     @BindView(R.id.welfare_fl)
     FrameLayout mWelfareFl;
 
+    private List<Fragment> mFragments;
+
     public static void startActivity(Context context) {
         context.startActivity(new Intent(context, WelFareActivity.class));
     }
@@ -53,6 +54,9 @@ public class WelFareActivity extends BaseActivity implements NavigationView.OnNa
     @Override
     protected void initData() {
         setSupportActionBar(mWelfareTb);
+
+        mFragments = new ArrayList<>();
+
         //实现顶部状态栏透明
         WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
         localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
@@ -63,6 +67,15 @@ public class WelFareActivity extends BaseActivity implements NavigationView.OnNa
 
         mWelfareNav.setItemIconTintList(null);
         mWelfareNav.setNavigationItemSelectedListener(this);
+
+        initFragment();
+    }
+
+    /**
+     * 初始化Fragment
+     */
+    private void initFragment() {
+
     }
 
     @Override
@@ -70,28 +83,6 @@ public class WelFareActivity extends BaseActivity implements NavigationView.OnNa
 
     }
 
-    /**
-     * 显示item中的图片；
-     *
-     * @param view
-     * @param menu
-     * @return
-
-    @Override
-    protected boolean onPrepareOptionsPanel(View view, Menu menu) {
-        if (menu != null) {
-            if (menu.getClass() == MenuBuilder.class) {
-                try {
-                    Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
-                    m.setAccessible(true);
-                    m.invoke(menu, true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return super.onPrepareOptionsPanel(view, menu);
-    }*/
 
     @Override
     protected void onResume() {
@@ -100,6 +91,7 @@ public class WelFareActivity extends BaseActivity implements NavigationView.OnNa
 
     @Override
     public void initToolBar() {
+        mWelfareTb.setTitle("干货妹纸");
     }
 
     @Override
@@ -153,5 +145,9 @@ public class WelFareActivity extends BaseActivity implements NavigationView.OnNa
         }
         mWelfareDl.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void changeFragment(int position, String title) {
+
     }
 }

@@ -35,4 +35,14 @@
         <item>糗图</item>
         <item>新鲜</item>
     </string-array>
+
+    <!--福利-->
+    <string-array name="welfare_meizitu">
+        <item>妹子自拍</item>
+        <item>热门</item>
+        <item>清纯妹子</item>
+        <item>台湾妹子</item>
+        <item>日本妹子</item>
+        <item>性感妹子</item>
+    </string-array>
 </resources>

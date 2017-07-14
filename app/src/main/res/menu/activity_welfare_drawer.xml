@@ -11,27 +11,27 @@
             <menu>
                 <item
                     android:id="@+id/nav_welfare_gank_io"
-                    android:checkable="false"
+                    android:checkable="true"
                     android:title="@string/menu_welfare_gank_io"/>
                 <item
                     android:id="@+id/nav_welfare_meizi"
-                    android:checkable="false"
+                    android:checkable="true"
                     android:title="@string/menu_welfare_meizi"/>
                 <item
                     android:id="@+id/nav_welfare_tao"
-                    android:checkable="false"
+                    android:checkable="true"
                     android:title="@string/menu_welfare_tao"/>
                 <item
                     android:id="@+id/nav_welfare_douban"
-                    android:checkable="false"
+                    android:checkable="true"
                     android:title="@string/menu_welfare_douban"/>
                 <item
                     android:id="@+id/nav_welfare_huaban"
-                    android:checkable="false"
+                    android:checkable="true"
                     android:title="@string/menu_welfare_huaban"/>
                 <item
                     android:id="@+id/nav_welfare_jiandan"
-                    android:checkable="false"
+                    android:checkable="true"
                     android:title="@string/menu_welfare_jiandan"/>
             </menu>
         </item>
