@@ -18,6 +18,7 @@ import com.article.base.BaseActivity;
 import com.article.core.book.ui.BookActivity;
 import com.article.core.code.CodeMainActivity;
 import com.article.core.fun.FunMainActivity;
+import com.article.core.welfare.ui.GankMeiZiFragment;
 import com.article.di.component.AppComponent;
 
 import java.util.ArrayList;
@@ -75,7 +76,12 @@ public class WelFareActivity extends BaseActivity implements NavigationView.OnNa
      * 初始化Fragment
      */
     private void initFragment() {
+        GankMeiZiFragment gankMeiZiFragment=GankMeiZiFragment.newInstance();
 
+        mFragments.add(gankMeiZiFragment);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.welfare_fl,gankMeiZiFragment)
+                .commit();
     }
 
     @Override
@@ -147,7 +153,10 @@ public class WelFareActivity extends BaseActivity implements NavigationView.OnNa
         return true;
     }
 
-    private void changeFragment(int position, String title) {
+    private void changIndex(int position, String title) {
+
+    }
+    private void switchFragment(Fragment fragment){
 
     }
 }

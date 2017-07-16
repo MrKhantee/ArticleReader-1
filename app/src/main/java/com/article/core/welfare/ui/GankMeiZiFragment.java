@@ -1,5 +1,6 @@
 package com.article.core.welfare.ui;
 
+import com.article.R;
 import com.article.base.BaseFragment;
 import com.article.di.component.AppComponent;
 
@@ -9,6 +10,13 @@ import com.article.di.component.AppComponent;
  */
 
 public class GankMeiZiFragment extends BaseFragment {
+
+
+    public static GankMeiZiFragment newInstance(){
+        GankMeiZiFragment fragment=new GankMeiZiFragment();
+        return fragment;
+    }
+
     @Override
     public void attachView() {
 
@@ -26,7 +34,7 @@ public class GankMeiZiFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.fragment_gank_meizi;
     }
 
     @Override
