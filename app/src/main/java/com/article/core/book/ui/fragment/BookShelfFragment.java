@@ -1,7 +1,7 @@
 package com.article.core.book.ui.fragment;
 
 import android.content.DialogInterface;
-import android.support.design.widget.FloatingActionButton;
+import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.article.R;
 import com.article.base.BaseFragment;
+import com.article.common.utils.SnackBarUtils;
 import com.article.core.book.adapter.BookShelfAdapter;
 import com.article.core.book.bean.BookMixAToc;
 import com.article.core.book.bean.Recommend;
@@ -18,7 +19,6 @@ import com.article.core.book.bean.support.RefreshCollectionListEvent;
 import com.article.core.book.contract.BookShelfContract;
 import com.article.core.book.manager.CollectionsManager;
 import com.article.core.book.presenter.BookShelfPresenter;
-import com.article.core.book.ui.BookActivity;
 import com.article.core.book.ui.activity.BookDetailActivity;
 import com.article.core.book.ui.activity.BookReadActivity;
 import com.article.di.component.AppComponent;
@@ -48,8 +48,8 @@ public class BookShelfFragment extends BaseFragment implements
     LinearLayout mEmptyView;
     @BindView(R.id.book_shelf_srl)
     SwipeRefreshLayout mBookShelfSrl;
-    @BindView(R.id.fab)
-    FloatingActionButton mFab;
+//    @BindView(R.id.fab)
+//    FloatingActionButton mFab;
 
     private List<Recommend.RecommendBooks> mCollectionBooks;
     private BookShelfAdapter mAdapter;
@@ -98,13 +98,15 @@ public class BookShelfFragment extends BaseFragment implements
         mBookShelfSrl.setColorSchemeResources(android.R.color.holo_blue_light,
                 android.R.color.holo_red_light, android.R.color.holo_orange_light,
                 android.R.color.holo_green_light);
+        mBookShelfSrl.measure(0,0);
+        mBookShelfSrl.setRefreshing(true);
         //条目点击监听
         mAdapter.setItemClickListener((view, position) -> {
             Recommend.RecommendBooks books = mCollectionBooks.get(position);
             BookReadActivity.startActivity(mContext, books, true);
         });
         //悬浮按钮监听
-        mFab.setOnClickListener(v -> ((BookActivity) mActivity).setCurrentItem(1));
+//        mFab.setOnClickListener(v -> ((BookActivity) mActivity).setCurrentItem(1));
         //长按监听
         mAdapter.setItemLongClickListener(this);
     }
@@ -140,7 +142,7 @@ public class BookShelfFragment extends BaseFragment implements
             items = getResources().getStringArray(R.array.book_shelf_item_long_click_choice_local);
             listener = (dialog, which) -> {
                 switch (which) {
-                    case 0://置顶
+                    case 0://置顶、取消置顶
                         break;
                     case 1://删除
                         break;
@@ -154,7 +156,8 @@ public class BookShelfFragment extends BaseFragment implements
             items = getResources().getStringArray(R.array.book_shelf_item_long_click_choice);
             listener = (dialog, which) -> {
                 switch (which) {
-                    case 0://置顶
+                    case 0://置顶、取消置顶
+                        CollectionsManager.getInstance().top(mCollectionBooks.get(position)._id, !isTop);
                         break;
                     case 1://书籍详情
                         BookDetailActivity.startActivity(mContext, mCollectionBooks.get(position)._id);
@@ -164,6 +167,10 @@ public class BookShelfFragment extends BaseFragment implements
                     case 3://缓存全本
                         break;
                     case 4://删除
+                        List<Recommend.RecommendBooks> removeList = new ArrayList<>();
+                        Recommend.RecommendBooks item = mAdapter.getItem(position);
+                        removeList.add(item);
+                        showDeleteCacheDialog(removeList);
                         break;
                     case 5://批量管理
                         break;
@@ -178,6 +185,40 @@ public class BookShelfFragment extends BaseFragment implements
                 .setTitle(mCollectionBooks.get(position).title)
                 .setItems(items, listener)
                 .setNegativeButton(null, null)
+                .create().show();
+    }
+
+    /**
+     * 清除本地缓存的对话框
+     *
+     * @param removeList
+     */
+    private void showDeleteCacheDialog(List<Recommend.RecommendBooks> removeList) {
+        boolean selected[] = {true};
+        new AlertDialog.Builder(mContext)
+                .setTitle(mContext.getString(R.string.remove_selected_book))
+                .setMultiChoiceItems(new String[]{mContext.getString(R.string.delete_local_cache)}, selected,
+                        (dialog, which, isChecked) -> selected[0] = isChecked)
+                .setNegativeButton(mContext.getString(R.string.cancel), null)
+                .setPositiveButton(mContext.getString(R.string.confirm), (dialog, which) -> {
+                    dialog.dismiss();
+                    new AsyncTask<String, String, String>() {
+                        @Override
+                        protected String doInBackground(String... params) {
+                            CollectionsManager.getInstance().removeSome(removeList, selected[0]);
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPostExecute(String s) {
+                            super.onPostExecute(s);
+                            SnackBarUtils.showSnackbar(mBookShelfRv,"成功移除书籍");
+                            for (Recommend.RecommendBooks bean : removeList) {
+                                mAdapter.remove(bean);
+                            }
+                        }
+                    }.execute();
+                })
                 .create().show();
     }
 

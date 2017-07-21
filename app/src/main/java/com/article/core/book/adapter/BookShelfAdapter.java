@@ -24,7 +24,6 @@ public class BookShelfAdapter extends BaseRVAdapter<Recommend.RecommendBooks> {
         super(context, list, R.layout.item_book_shelf);
     }
 
-
     private OnRvItemClickListener mItemClickListener;
 
     public void setItemClickListener(OnRvItemClickListener itemClickListener) {
@@ -62,6 +61,11 @@ public class BookShelfAdapter extends BaseRVAdapter<Recommend.RecommendBooks> {
             viewHolder.itemView.setOnLongClickListener(v -> mItemLongClickListener.onItemLongClick(position));
         }
 
+    }
+
+    public Recommend.RecommendBooks getItem(int position) {
+        Recommend.RecommendBooks books = mList.get(position);
+        return books;
     }
 
     public interface OnItemLongClickListener {
