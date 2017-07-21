@@ -2,6 +2,7 @@ package com.article.core.book.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -31,7 +32,8 @@ public class TopRankActivity extends BaseMVPActivity<TopRankActivityPresenter>
     ExpandableListView mElvMale;
     @BindView(R.id.elv_female)
     ExpandableListView mElvFemale;
-
+    @BindView(R.id.ranking_srl)
+    SwipeRefreshLayout mRankSrl;
     @Inject
     TopRankActivityPresenter mPresenter;
 
@@ -82,20 +84,19 @@ public class TopRankActivity extends BaseMVPActivity<TopRankActivityPresenter>
         mElvMale.setAdapter(mMaleAdapter);
         mElvFemale.setAdapter(mFemaleAdapter);
 
-        mPresenter.attachView(this);
-        mPresenter.getRankList();
 
         mTbTopRank.setNavigationOnClickListener(v -> finish());
     }
 
     @Override
     public void showError() {
-
+        mRankSrl.setRefreshing(false);
     }
 
     @Override
     public void complete() {
-        dismissDialog();
+//        dismissDialog();
+        mRankSrl.setRefreshing(false);
     }
 
 
@@ -112,7 +113,18 @@ public class TopRankActivity extends BaseMVPActivity<TopRankActivityPresenter>
 
     @Override
     public void configViews() {
+        mPresenter.attachView(this);
+        mPresenter.getRankList();
 
+        mRankSrl.measure(0, 0);
+        mRankSrl.setRefreshing(true);
+        mRankSrl.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark,
+                R.color.colorAccent, R.color.colorPrimary);
+        mRankSrl.setOnRefreshListener(this::onRefresh);
+    }
+
+    private void onRefresh() {
+        mPresenter.getRankList();
     }
 
     @Override

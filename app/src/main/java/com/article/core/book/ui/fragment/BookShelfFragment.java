@@ -98,7 +98,7 @@ public class BookShelfFragment extends BaseFragment implements
         mBookShelfSrl.setColorSchemeResources(android.R.color.holo_blue_light,
                 android.R.color.holo_red_light, android.R.color.holo_orange_light,
                 android.R.color.holo_green_light);
-        mBookShelfSrl.measure(0,0);
+        mBookShelfSrl.measure(0, 0);
         mBookShelfSrl.setRefreshing(true);
         //条目点击监听
         mAdapter.setItemClickListener((view, position) -> {
@@ -109,6 +109,7 @@ public class BookShelfFragment extends BaseFragment implements
 //        mFab.setOnClickListener(v -> ((BookActivity) mActivity).setCurrentItem(1));
         //长按监听
         mAdapter.setItemLongClickListener(this);
+        mBookShelfSrl.setOnRefreshListener(this::onRefreshing);
     }
 
     @Override
@@ -212,7 +213,7 @@ public class BookShelfFragment extends BaseFragment implements
                         @Override
                         protected void onPostExecute(String s) {
                             super.onPostExecute(s);
-                            SnackBarUtils.showSnackbar(mBookShelfRv,"成功移除书籍");
+                            SnackBarUtils.showSnackbar(mBookShelfRv, "成功移除书籍");
                             for (Recommend.RecommendBooks bean : removeList) {
                                 mAdapter.remove(bean);
                             }
@@ -226,15 +227,14 @@ public class BookShelfFragment extends BaseFragment implements
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void RefreshCollectionList(RefreshCollectionListEvent event) {
         mBookShelfSrl.setRefreshing(true);
-        onRefresh();
+        onRefreshing();
     }
 
-    private static final String TAG = "BookShelfFragment";
 
     /**
      * 刷新数据
      */
-    private void onRefresh() {
+    private void onRefreshing() {
         List<Recommend.RecommendBooks> list = CollectionsManager.getInstance().getCollectionListBySort();
         mAdapter.clear();
         mAdapter.addAll(list);

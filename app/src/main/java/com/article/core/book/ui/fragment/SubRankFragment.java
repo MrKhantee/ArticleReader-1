@@ -1,6 +1,7 @@
 package com.article.core.book.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -37,6 +38,8 @@ public class SubRankFragment extends BaseMVPFragment<SubRankFragmentPresenter>
 
     @BindView(R.id.fragment_sub_rank_rl)
     RecyclerView mFragmentSubRankRl;
+    @BindView(R.id.sub_rank_srl)
+    SwipeRefreshLayout mSubRankSrl;
 
     private SubRankFragmentAdapter mAdapter;
     private List<BooksByCats.BooksBean> mBeanList = new ArrayList<>();
@@ -54,11 +57,17 @@ public class SubRankFragment extends BaseMVPFragment<SubRankFragmentPresenter>
     public void initData() {
         id = this.getArguments().getString(BUNDLE_ID);
         mAdapter = new SubRankFragmentAdapter(mContext, mBeanList);
+
+        mSubRankSrl.setColorSchemeResources(android.R.color.holo_blue_light,
+                android.R.color.holo_red_light, android.R.color.holo_orange_light,
+                android.R.color.holo_green_light);
+        mSubRankSrl.measure(0, 0);
+        mSubRankSrl.setRefreshing(true);
     }
 
     @Override
     public void configViews() {
-        showDialog();
+//        showDialog();
         mPresenter.attachView(this);
         mPresenter.getRankList(id);
 
@@ -67,6 +76,7 @@ public class SubRankFragment extends BaseMVPFragment<SubRankFragmentPresenter>
         mFragmentSubRankRl.setAdapter(mAdapter);
 
         mAdapter.setClickListener((view, position) -> BookDetailActivity.startActivity(mContext, mAdapter.getData(position)._id));
+        mSubRankSrl.setOnRefreshListener(() -> mPresenter.getRankList(id));
     }
 
     @Override
@@ -82,13 +92,15 @@ public class SubRankFragment extends BaseMVPFragment<SubRankFragmentPresenter>
 
     @Override
     public void showError() {
-        dismissDialog();
+//        dismissDialog();
+        mSubRankSrl.setRefreshing(false);
     }
 
     @Override
     public void complete() {
-        dismissDialog();
+//        dismissDialog();
         mAdapter.notifyDataSetChanged();
+        mSubRankSrl.setRefreshing(false);
     }
 
     @Override
