@@ -91,7 +91,7 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
     @BindView(R.id.tvBookReadSource)
     TextView mTvBookReadSource;
 
-    //
+    //顶部栏
     @BindView(R.id.llBookReadTop)
     LinearLayout mLlBookReadTop;
 
@@ -236,7 +236,7 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
 
     @Override
     public void initToolBar() {
-
+        mPresenter.attachView(this);
     }
 
     @Override
@@ -510,7 +510,19 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
      */
     @OnClick(R.id.tvBookReadDownload)
     public void onBookReadDownloadClick() {
-
+        gone(rlReadAaSet);
+        new AlertDialog.Builder(this)
+                .setTitle("想要缓存多少章？")
+                .setItems(new String[]{"后面五十章", "后面全部", "全部"}, (dialog, which) -> {
+                    switch (which) {
+                        case 0://缓存五十章
+                            break;
+                        case 1://缓存后面全部
+                            break;
+                        case 2://缓存全部
+                            break;
+                    }
+                }).create().show();
     }
 
     /**
@@ -538,12 +550,13 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
         gone(mLlBookReadBottom, mRlReadMark);
         if (!mTocListPopupWindow.isShowing()) {
             visible(mTvBookReadTocTitle);
-            gone(mTvBookReadReading, mTvBookReadCommunity, mTvBookReadSource);
+            gone(mTvBookReadReading, mTvBookReadCommunity, mTvBookReadSource, mTvBookReadIntroduce);
             mTocListPopupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
             mTocListPopupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             mTocListPopupWindow.show();
             mTocListPopupWindow.setSelection(currentChapter - 1);
-            mTocListPopupWindow.getListView().setFastScrollEnabled(true);
+            mTocListPopupWindow.getListView()
+                    .setFastScrollEnabled(true);
         }
     }
 
@@ -555,7 +568,8 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
             case KeyEvent.KEYCODE_BACK:
                 if (mTocListPopupWindow != null && mTocListPopupWindow.isShowing()) {
                     mTocListPopupWindow.dismiss();
-                    gone(mTvBookReadTocTitle);
+//                    gone(mTvBookReadTocTitle);
+                    gone(mLlBookReadTop);
                     visible(mTvBookReadReading, mTvBookReadCommunity, mTvBookReadSource);
                     return true;
                 } else if (isVisible(rlReadAaSet)) {
