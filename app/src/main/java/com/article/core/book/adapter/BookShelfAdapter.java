@@ -24,10 +24,17 @@ public class BookShelfAdapter extends BaseRVAdapter<CollectionBook> {
         super(context, list, R.layout.item_book_shelf);
     }
 
+
     private OnRvItemClickListener mItemClickListener;
 
     public void setItemClickListener(OnRvItemClickListener itemClickListener) {
         mItemClickListener = itemClickListener;
+    }
+
+    private OnItemLongClickListener mItemLongClickListener;
+
+    public void setItemLongClickListener(OnItemLongClickListener itemLongClickListener) {
+        mItemLongClickListener = itemLongClickListener;
     }
 
     @Override
@@ -50,5 +57,14 @@ public class BookShelfAdapter extends BaseRVAdapter<CollectionBook> {
                 mItemClickListener.onItemClick(v, position);
             }
         });
+        //长按监听
+        if (mItemLongClickListener != null) {
+            viewHolder.itemView.setOnLongClickListener(v -> mItemLongClickListener.onItemLongClick(position));
+        }
+
+    }
+
+    public interface OnItemLongClickListener {
+        boolean onItemLongClick(int position);
     }
 }

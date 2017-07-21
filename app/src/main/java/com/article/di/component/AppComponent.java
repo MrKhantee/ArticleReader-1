@@ -5,6 +5,7 @@ import android.content.Context;
 import com.article.CoreApplication;
 import com.article.base.RealmHelper;
 import com.article.common.api.BookApi;
+import com.article.common.api.FunApi;
 import com.article.di.module.AppModule;
 import com.article.di.module.BookApiModule;
 import com.article.di.module.FunApiModule;
@@ -24,7 +25,8 @@ public interface AppComponent {
 
     RealmHelper getRealmHelper();
 
+    FunApi getFunApi();
+
     Context getContext();
 
-//    FunApi getFunApi();
 }

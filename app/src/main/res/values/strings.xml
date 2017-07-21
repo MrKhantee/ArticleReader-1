@@ -152,6 +152,7 @@
     <string name="menu_welfare_douban">豆瓣妹纸</string>
     <string name="menu_welfare_huaban">花瓣妹纸</string>
     <string name="menu_welfare_jiandan">煎蛋妹纸</string>
+    <string name="cancel_top">取消置顶</string>
     <!--福利-->
     
 </resources>

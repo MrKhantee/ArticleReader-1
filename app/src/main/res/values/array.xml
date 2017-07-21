@@ -26,6 +26,21 @@
         <item>完结</item>
     </string-array>
 
+    <string-array name="book_shelf_item_long_click_choice">
+        <item>置顶</item>
+        <item>书籍详情</item>
+        <item>移入养肥区</item>
+        <item>缓存全本</item>
+        <item>删除</item>
+        <item>批量管理</item>
+    </string-array>
+
+    <string-array name="book_shelf_item_long_click_choice_local">
+        <item>置顶</item>
+        <item>删除</item>
+        <item>批量管理</item>
+    </string-array>
+
     <!--搞笑段子-->
     <string-array name="fun_main">
         <item>热门</item>

@@ -18,7 +18,7 @@ import com.article.base.BaseActivity;
 import com.article.core.book.ui.BookActivity;
 import com.article.core.code.CodeMainActivity;
 import com.article.core.fun.FunMainActivity;
-import com.article.core.welfare.ui.GankMeiZiFragment;
+import com.article.core.welfare.ui.fragment.GankMeiZiFragment;
 import com.article.di.component.AppComponent;
 
 import java.util.ArrayList;
