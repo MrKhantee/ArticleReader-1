@@ -62,7 +62,7 @@ public class SubOtherRankActivity extends BaseMVPActivity<SubOtherRankActivityPr
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         title = getIntent().getStringExtra(INTENT_TITLE);
         id = getIntent().getStringExtra(BUNDLE_ID);
 

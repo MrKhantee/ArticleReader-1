@@ -19,6 +19,9 @@ import android.view.WindowManager;
 
 import com.article.R;
 import com.article.base.BaseActivity;
+import com.article.core.book.contract.BookActivityContract;
+import com.article.core.book.manager.EventManager;
+import com.article.core.book.presenter.BookActivityPresenter;
 import com.article.core.book.ui.activity.BookListActivity;
 import com.article.core.book.ui.activity.TopCategoryActivity;
 import com.article.core.book.ui.activity.TopRankActivity;
@@ -28,16 +31,19 @@ import com.article.core.code.CodeMainActivity;
 import com.article.core.fun.FunMainActivity;
 import com.article.core.welfare.WelFareActivity;
 import com.article.di.component.AppComponent;
+import com.article.di.component.DaggerBookComponent;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 
 public class BookActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, BookActivityContract.View {
 
     @BindView(R.id.tb_book)
     Toolbar mTbBook;
@@ -56,10 +62,12 @@ public class BookActivity extends BaseActivity
     private FragmentPagerAdapter mAdapter;
     private List<String> mList;
 
+    @Inject
+    BookActivityPresenter mPresenter;
+
     public static void startActivity(Context context) {
         context.startActivity(new Intent(context, BookActivity.class));
     }
-
 
     @Override
     protected int getLayoutId() {
@@ -67,9 +75,9 @@ public class BookActivity extends BaseActivity
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         setSupportActionBar(mTbBook);
-
+//        EventBus.getDefault().register(this);
         //实现顶部状态栏透明
         WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
         localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
@@ -118,7 +126,10 @@ public class BookActivity extends BaseActivity
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
-
+        DaggerBookComponent.builder()
+                .appComponent(appComponent)
+                .build()
+                .inject(this);
     }
 
     @Override
@@ -134,9 +145,15 @@ public class BookActivity extends BaseActivity
 
     @Override
     public void configViews() {
-
+        mPresenter.attachView(this);
+        mPresenter.syncBookShelf();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        EventBus.getDefault().unregister(this);
+    }
 
     @Override
     public void onBackPressedSupport() {
@@ -240,5 +257,21 @@ public class BookActivity extends BaseActivity
         }
         mDlBook.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void complete() {
+
+    }
+
+    @Override
+    public void syncBookShelfCompleted() {
+        dismissDialog();
+        EventManager.refreshCollectionList();
     }
 }

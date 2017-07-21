@@ -2,19 +2,22 @@ package com.article.core.book.presenter;
 
 import android.content.Context;
 
-import com.article.base.RealmHelper;
-import com.article.base.RxBus;
 import com.article.base.RxPresenter;
 import com.article.common.api.BookApi;
 import com.article.common.utils.ACache;
+import com.article.common.utils.LogUtils;
+import com.article.common.utils.RxUtils;
+import com.article.common.utils.StringUtils;
 import com.article.core.book.bean.BookMixAToc;
-import com.article.core.book.bean.CollectionBook;
+import com.article.core.book.bean.Recommend;
 import com.article.core.book.contract.BookShelfContract;
+import com.article.core.book.manager.SettingManager;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -29,49 +32,52 @@ public class BookShelfPresenter extends RxPresenter<BookShelfContract.View>
 
 
     BookApi mBookApi;
-    RealmHelper mRealmHelper;
     Context mContext;
 
     @Inject
-    public BookShelfPresenter(BookApi bookApi, RealmHelper realmHelper, Context context) {
+    public BookShelfPresenter(BookApi bookApi, Context context) {
         mBookApi = bookApi;
-        mRealmHelper = realmHelper;
         mContext = context;
     }
 
     @Override
     public void getCollectionBook() {
-//        Flowable.create((FlowableOnSubscribe<CollectionBook>) e -> {
-//            List<CollectionBook> allCollectionBook = mRealmHelper.getAllCollectionBook();
-//            for (CollectionBook book : allCollectionBook) {
-//                e.onNext(book);
-//            }
-//            e.onComplete();
-//        }, BackpressureStrategy.BUFFER)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(collectionBook -> {
-//                    List<CollectionBook> books = new ArrayList<>();
-//                    books.add(collectionBook);
-//                    mView.showCollectionBook(books);
-//                }, throwable -> mView.showError(), () -> mView.complete());
-        List<CollectionBook> collectionBooks = mRealmHelper.getAllCollectionBook();
-        for (CollectionBook book : collectionBooks) {
-            RxBus.getInstance().post(book);
-        }
+        String key = StringUtils.creatAcacheKey("recommend-list", SettingManager.getInstance().getUserChooseSex());
+        Flowable<Recommend> fromNetWork = mBookApi.getRecommend(SettingManager.getInstance().getUserChooseSex())
+                .compose(RxUtils.rxCacheBeanHelper(key));
+        Disposable disposable = Flowable.concat(RxUtils.rxCreateDiskFlowable(key, Recommend.class), fromNetWork)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(recommend -> {
+                    if (recommend != null) {
+                        List<Recommend.RecommendBooks> list = ((Recommend) recommend).books;
+                        if (list != null && !list.isEmpty() && mView != null) {
+                            mView.showCollectionBook(list);
+                        }
+                    }
+                }, throwable -> {
+                    LogUtils.e("getRecommendList", throwable.toString());
+                    mView.showError();
+                }, () -> mView.complete());
+        addSubscribe(disposable);
     }
 
     @Override
     public void getTopMac(String bookId) {
-        Disposable disposable = mBookApi.getBookMixToc("chapters", bookId).subscribeOn(Schedulers.io())
+        mBookApi.getBookMixToc(bookId, "chapters").subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(bookMixAToc -> {
                     ACache.get(mContext).put(bookId + "bookToc", bookMixAToc);
-                    if (mView != null && bookMixAToc != null) {
-                        List<BookMixAToc.mixToc.Chapters> chapters = bookMixAToc.mixToc.chapters;
-                        mView.showChapter(bookId, chapters);
+                    List<BookMixAToc.mixToc.Chapters> list = bookMixAToc.mixToc.chapters;
+                    if (list != null && !list.isEmpty() && mView != null) {
+                        mView.showChapter(bookId, list);
                     }
-                }, throwable -> mView.showError(), () -> mView.complete());
-        addSubscribe(disposable);
+                }, throwable -> {
+                    LogUtils.e("onError: " + throwable);
+                    mView.showError();
+                }, () -> {
+
+                });
+
     }
 }

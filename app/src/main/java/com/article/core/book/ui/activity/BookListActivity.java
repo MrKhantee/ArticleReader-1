@@ -80,7 +80,7 @@ public class BookListActivity extends BaseActivity implements BookListActivityCo
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         names = Arrays.asList(getResources().getStringArray(R.array.subject_tabs));
         mTabContents = new ArrayList<>();
         mTabContents.add(BookListFragment.newInstance("", 0));

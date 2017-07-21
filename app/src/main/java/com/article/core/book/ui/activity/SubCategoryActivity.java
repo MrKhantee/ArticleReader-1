@@ -83,7 +83,7 @@ public class SubCategoryActivity extends BaseActivity implements SubCategoryActi
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         cate = getIntent().getStringExtra(INTENT_CATE_NAME);
         gender = getIntent().getStringExtra(INTENT_GENDER);
 

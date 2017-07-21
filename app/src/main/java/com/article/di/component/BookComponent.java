@@ -1,5 +1,6 @@
 package com.article.di.component;
 
+import com.article.core.book.ui.BookActivity;
 import com.article.core.book.ui.activity.BookDetailActivity;
 import com.article.core.book.ui.activity.BookListActivity;
 import com.article.core.book.ui.activity.BookListDetailActivity;
@@ -25,6 +26,7 @@ import dagger.Component;
  */
 @Component(dependencies = AppComponent.class)
 public interface BookComponent {
+    BookActivity inject(BookActivity bookActivity);
 
     TopRankActivity inject(TopRankActivity topRankActivity);
 

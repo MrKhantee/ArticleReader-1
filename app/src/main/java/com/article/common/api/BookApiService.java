@@ -13,6 +13,7 @@ import com.article.core.book.bean.CategoryList;
 import com.article.core.book.bean.CategoryListLv2;
 import com.article.core.book.bean.ChangeResource;
 import com.article.core.book.bean.ChapterRead;
+import com.article.core.book.bean.Recommend;
 import com.article.core.book.bean.RecommendBookList;
 import com.article.core.book.bean.SubRankList;
 import com.article.core.book.bean.TopRankList;
@@ -28,6 +29,13 @@ import retrofit2.http.Query;
  */
 
 public interface BookApiService {
+    /**
+     * 推荐书籍
+     * @param gender
+     * @return
+     */
+    @GET("/book/recommend")
+    Flowable<Recommend> getRecomend(@Query("gender") String gender);
     /**
      * 获取所有的排行榜
      * http://api.zhuishushenqi.com/ranking/gender

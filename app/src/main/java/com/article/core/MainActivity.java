@@ -44,7 +44,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         mMainBeanList = new ArrayList<>();
         mMainBeanList.add(new MainBean("小说阅读器", R.drawable.home_book_reader));
         mMainBeanList.add(new MainBean("代码阅读器", R.drawable.home_code_reader));

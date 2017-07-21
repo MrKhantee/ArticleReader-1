@@ -71,7 +71,7 @@ public class SubRankActivity extends BaseActivity {
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         week = getIntent().getStringExtra(INTENT_WEEK);
         month = getIntent().getStringExtra(INTENT_MONTH);
         all = getIntent().getStringExtra(INTENT_ALL);

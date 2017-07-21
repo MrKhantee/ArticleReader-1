@@ -3,7 +3,6 @@ package com.article.di.component;
 import android.content.Context;
 
 import com.article.CoreApplication;
-import com.article.base.RealmHelper;
 import com.article.common.api.BookApi;
 import com.article.common.api.FunApi;
 import com.article.di.module.AppModule;
@@ -22,8 +21,6 @@ public interface AppComponent {
     CoreApplication getApplication();
 
     BookApi getBookApi();
-
-    RealmHelper getRealmHelper();
 
     FunApi getFunApi();
 

@@ -23,7 +23,6 @@ import android.widget.TextView;
 
 import com.article.R;
 import com.article.base.BaseActivity;
-import com.article.base.RealmHelper;
 import com.article.common.Constant;
 import com.article.common.utils.FormatUtils;
 import com.article.common.utils.LogUtils;
@@ -35,11 +34,11 @@ import com.article.core.book.adapter.BookTocListAdapter;
 import com.article.core.book.bean.BookMixAToc;
 import com.article.core.book.bean.BookResource;
 import com.article.core.book.bean.ChapterRead;
-import com.article.core.book.bean.CollectionBook;
 import com.article.core.book.bean.Recommend;
 import com.article.core.book.contract.BookReadContract;
 import com.article.core.book.manager.CacheManager;
 import com.article.core.book.manager.CollectionsManager;
+import com.article.core.book.manager.EventManager;
 import com.article.core.book.manager.SettingManager;
 import com.article.core.book.presenter.BookReadPresenter;
 import com.article.core.book.ui.fragment.BookResourceDialogFragment;
@@ -53,11 +52,13 @@ import com.article.widget.read.ThemeManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Flowable;
 
 import static com.article.R.id.rlReadMark;
 
@@ -194,7 +195,6 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
 
     //小说目录列表弹出窗
     private ListPopupWindow mTocListPopupWindow;
-    private RealmHelper mRealmHelper;
 
     public static void startActivity(Context context, Recommend.RecommendBooks recommendBooks) {
         startActivity(context, recommendBooks, false);
@@ -214,21 +214,17 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         mPresenter.attachView(this);
-
-        mRealmHelper = new RealmHelper(this);
         mBooks = (Recommend.RecommendBooks) getIntent().getSerializableExtra(INTENT_BEAN);
         bookId = mBooks._id;
         isFromSd = getIntent().getBooleanExtra(INTENT_SD, false);
-
-
-//        EventBus.getDefault().register(this);
-
         mTvBookReadTocTitle.setText(mBooks.title);
-
         CollectionsManager.getInstance().setRecentReadingTime(bookId);
+        Flowable.timer(1000, TimeUnit.MILLISECONDS)
+                .subscribe(aLong -> EventManager.refreshCollectionList());
     }
+
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -568,7 +564,7 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
                 } else if (isVisible(mLlBookReadBottom)) {
                     hideReadBar();
                     return true;
-                } else if (!mRealmHelper.isBookExit(bookId)) {
+                } else if (!CollectionsManager.getInstance().isCollected(bookId)) {
                     showJoinBookShelfDialog(mBooks);
                     return true;
                 }
@@ -584,23 +580,8 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
                 .setMessage(getString(R.string.book_read_would_you_like_to_add_this_to_the_book_shelf))
                 .setPositiveButton(getString(R.string.book_read_join_the_book_shelf), (dialog, which) -> {
                     dialog.dismiss();
-                    CollectionBook book=new CollectionBook();
-                    book._id=books._id;
-                    book.author=books.author;
-                    book.cover=books.cover;
-                    book.shortIntro=books.shortIntro;
-                    book.title=books.title;
-                    book.hasCp=books.hasCp;
-                    book.isTop=books.isTop;
-                    book.isFromSD=books.isFromSD;
-                    book.path=books.path;
-                    book.latelyFollower=books.latelyFollower;
-                    book.retentionRatio=books.retentionRatio;
-                    book.updated=books.updated;
-                    book.chaptersCount=books.chaptersCount;
-                    book.lastChapter=books.lastChapter;
-                    book.recentReadingTime= FormatUtils.getCurrentTimeString(FormatUtils.FORMAT_DATE_TIME);
-                    mRealmHelper.addBook(book);
+                    books.recentReadingTime = FormatUtils.getCurrentTimeString(FormatUtils.FORMAT_DATE_TIME);
+                    CollectionsManager.getInstance().add(books);
                     finish();
                 })
                 .setNegativeButton(getString(R.string.book_read_not), (dialog2, which) -> {

@@ -54,7 +54,7 @@ public class CodeMainActivity extends BaseActivity {
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         setSupportActionBar(mCodeTb);
 
         //实现顶部状态栏透明

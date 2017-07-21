@@ -5,7 +5,6 @@ import android.app.Application;
 import android.content.Context;
 import android.support.v7.app.AppCompatDelegate;
 
-import com.article.base.RealmHelper;
 import com.article.common.utils.AppUtils;
 import com.article.common.utils.SharedPreferencesUtils;
 import com.article.di.component.AppComponent;
@@ -16,9 +15,6 @@ import com.article.di.module.FunApiModule;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
 /**
  * Created by Amos on 2017/6/8.
@@ -46,12 +42,7 @@ public class CoreApplication extends Application {
         instance = this;
         AppUtils.init(this);
         initPrefs();
-        Realm.init(this);
-        RealmConfiguration configuration = new RealmConfiguration.Builder()
-                .name(RealmHelper.DATABASES_NAME)
-                .deleteRealmIfMigrationNeeded()
-                .build();
-        Realm.setDefaultConfiguration(configuration);
+
     }
 
 

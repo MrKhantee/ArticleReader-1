@@ -49,7 +49,7 @@ public abstract class BaseActivity extends SupportActivity {
     /**
      * 初始化事件和数据
      */
-    protected abstract void initData();
+    public abstract void initData();
 
     protected abstract void setupActivityComponent(AppComponent appComponent);
 

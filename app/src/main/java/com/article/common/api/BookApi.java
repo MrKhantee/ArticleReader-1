@@ -14,6 +14,7 @@ import com.article.core.book.bean.CategoryList;
 import com.article.core.book.bean.CategoryListLv2;
 import com.article.core.book.bean.ChangeResource;
 import com.article.core.book.bean.ChapterRead;
+import com.article.core.book.bean.Recommend;
 import com.article.core.book.bean.RecommendBookList;
 import com.article.core.book.bean.SubRankList;
 import com.article.core.book.bean.TopRankList;
@@ -54,6 +55,16 @@ public class BookApi {
             instance = new BookApi(client);
         }
         return instance;
+    }
+
+    /**
+     * 推荐书籍
+     *
+     * @param gender
+     * @return
+     */
+    public Flowable<Recommend> getRecommend(String gender) {
+        return mApiService.getRecomend(gender);
     }
 
     /**

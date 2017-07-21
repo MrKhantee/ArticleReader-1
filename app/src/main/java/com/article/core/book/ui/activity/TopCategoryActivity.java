@@ -63,7 +63,7 @@ public class TopCategoryActivity extends BaseActivity implements TopCategoryActi
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         mMaleList = new ArrayList<>();
         mFemaleList = new ArrayList<>();
 

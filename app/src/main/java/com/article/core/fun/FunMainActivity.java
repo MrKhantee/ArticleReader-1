@@ -49,7 +49,7 @@ public class FunMainActivity extends BaseMVPActivity<FunPresenter> implements Fu
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         mItemsBeanList = new ArrayList<>();
         mAdapter = new FunListAdapter(this, mItemsBeanList);
     }

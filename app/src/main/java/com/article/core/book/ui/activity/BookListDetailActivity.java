@@ -100,7 +100,7 @@ public class BookListDetailActivity extends BaseMVPActivity<BookListDetailActivi
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         bookListId = getIntent().getStringExtra(INTENT_BOOK_LIST_ID);
         mDetailAdapter = new BookListDetailAdapter(this, mBookBeen, mDetailMsg);
     }

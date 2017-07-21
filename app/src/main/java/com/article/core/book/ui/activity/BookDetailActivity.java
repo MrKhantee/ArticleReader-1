@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.article.R;
 import com.article.base.BaseMVPActivity;
-import com.article.base.RealmHelper;
 import com.article.common.Constant;
 import com.article.common.listener.OnRvItemClickListener;
 import com.article.common.utils.FormatUtils;
@@ -23,9 +22,9 @@ import com.article.core.book.adapter.RecommendBookListAdapter;
 import com.article.core.book.bean.BookDetail;
 import com.article.core.book.bean.Recommend;
 import com.article.core.book.bean.RecommendBookList;
-import com.article.core.book.bean.CollectionBook;
 import com.article.core.book.bean.support.RefreshCollectionIconEvent;
 import com.article.core.book.contract.BookDetailActivityContract;
+import com.article.core.book.manager.CollectionsManager;
 import com.article.core.book.presenter.BookDetailActivityPresenter;
 import com.article.di.component.AppComponent;
 import com.article.di.component.DaggerBookComponent;
@@ -106,7 +105,6 @@ public class BookDetailActivity extends BaseMVPActivity<BookDetailActivityPresen
     private RecommendBookListAdapter mRecommendBookListAdapter;
     private List<RecommendBookList.RecommendBook> mBookList = new ArrayList<>();
 
-    private RealmHelper mRealmHelper;
 
     public static void startActivity(Context context, String bookId) {
         context.startActivity(new Intent(context, BookDetailActivity.class).putExtra(INTENT_BOOK_ID, bookId));
@@ -118,9 +116,8 @@ public class BookDetailActivity extends BaseMVPActivity<BookDetailActivityPresen
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         bookId = getIntent().getStringExtra(INTENT_BOOK_ID);
-        mRealmHelper = new RealmHelper(this);
     }
 
     @Override
@@ -224,7 +221,7 @@ public class BookDetailActivity extends BaseMVPActivity<BookDetailActivityPresen
      * 刷新收藏图标
      */
     private void refreshCollectionIcon() {
-        if (!mRealmHelper.isBookExit(recommendBooks._id)) {
+        if (!CollectionsManager.getInstance().isCollected(recommendBooks._id)) {
             initCollectionIcon(true);
         } else {
             initCollectionIcon(false);
@@ -298,26 +295,13 @@ public class BookDetailActivity extends BaseMVPActivity<BookDetailActivityPresen
      */
     @OnClick(R.id.book_detail_join_collection_btn)
     public void onJoinCollectionClick() {
-        if (mRealmHelper.isBookExit(recommendBooks._id)) {
+        if (CollectionsManager.getInstance().isCollected(recommendBooks._id)) {
             SnackBarUtils.showSnackbar(mBookDetailAuthorIv, String.format(getString(
                     R.string.book_detail_has_remove_the_book_shelf), recommendBooks.title));
             initCollectionIcon(true);
-            mRealmHelper.deleteBook(recommendBooks._id);
+            CollectionsManager.getInstance().remove(recommendBooks._id);
         } else {
-
-            CollectionBook collectionBook = new CollectionBook();
-            collectionBook._id = recommendBooks._id;
-            collectionBook.lastChapter = recommendBooks.lastChapter;
-            collectionBook.updated = recommendBooks.updated;
-            collectionBook.title = recommendBooks.title;
-            collectionBook.cover = recommendBooks.cover;
-            collectionBook.author = recommendBooks.author;
-            collectionBook.latelyFollower = recommendBooks.latelyFollower;
-            collectionBook.retentionRatio = recommendBooks.retentionRatio;
-            collectionBook.chaptersCount = recommendBooks.chaptersCount;
-
-            mRealmHelper.addBook(collectionBook);
-
+            CollectionsManager.getInstance().add(recommendBooks);
             SnackBarUtils.showSnackbar(mBookDetailAuthorIv,
                     String.format(getString(
                             R.string.book_detail_has_joined_the_book_shelf), recommendBooks.title));

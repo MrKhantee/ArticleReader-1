@@ -58,7 +58,7 @@ public class BooksByTagActivity extends BaseActivity implements BooksByTagContra
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         tag = getIntent().getStringExtra(INTENT_TAG);
 
         mTagBooks = new ArrayList<>();

@@ -58,7 +58,7 @@ public class BooksByAuthorActivity extends BaseActivity implements BooksByAuthor
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         author = getIntent().getStringExtra(INTENT_AUTHOR);
 
         mPresenter.attachView(this);

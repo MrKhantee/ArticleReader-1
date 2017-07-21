@@ -6,16 +6,15 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.view.KeyEvent;
 import android.widget.LinearLayout;
 
 import com.article.R;
 import com.article.base.BaseFragment;
-import com.article.base.RealmHelper;
 import com.article.core.book.adapter.BookShelfAdapter;
 import com.article.core.book.bean.BookMixAToc;
-import com.article.core.book.bean.CollectionBook;
 import com.article.core.book.bean.Recommend;
+import com.article.core.book.bean.support.RefreshCollectionListEvent;
 import com.article.core.book.contract.BookShelfContract;
 import com.article.core.book.manager.CollectionsManager;
 import com.article.core.book.presenter.BookShelfPresenter;
@@ -24,6 +23,10 @@ import com.article.core.book.ui.activity.BookDetailActivity;
 import com.article.core.book.ui.activity.BookReadActivity;
 import com.article.di.component.AppComponent;
 import com.article.di.component.DaggerBookComponent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,10 +51,9 @@ public class BookShelfFragment extends BaseFragment implements
     @BindView(R.id.fab)
     FloatingActionButton mFab;
 
-    private List<CollectionBook> mCollectionBooks;
+    private List<Recommend.RecommendBooks> mCollectionBooks;
     private BookShelfAdapter mAdapter;
 
-    private RealmHelper mRealmHelper;
 
     @Inject
     BookShelfPresenter mPresenter;
@@ -70,64 +72,40 @@ public class BookShelfFragment extends BaseFragment implements
 
     @Override
     public void initData() {
-        mRealmHelper = new RealmHelper(mContext);
         mCollectionBooks = new ArrayList<>();
         mAdapter = new BookShelfAdapter(mContext, mCollectionBooks);
-
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        List<CollectionBook> allCollectionBook = mRealmHelper.getAllCollectionBook();
-
-        if (allCollectionBook.size() <= 0) {
-            mEmptyView.setVisibility(View.VISIBLE);
-            mBookShelfRv.setVisibility(View.INVISIBLE);
-        } else {
-            mCollectionBooks.clear();
-            mCollectionBooks.addAll(allCollectionBook);
-            mAdapter.notifyDataSetChanged();
-            mBookShelfRv.setVisibility(View.VISIBLE);
-            mEmptyView.setVisibility(View.INVISIBLE);
-
-        }
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+                mAdapter.notifyDataSetChanged();
+            }
+            return false;
+        });
     }
 
     @Override
     public void configViews() {
-
-
         mBookShelfRv.setHasFixedSize(true);
         mBookShelfRv.setLayoutManager(new LinearLayoutManager(mContext));
         mBookShelfRv.setAdapter(mAdapter);
-
-        mBookShelfSrl.setEnabled(false);
-
+        mBookShelfSrl.setColorSchemeResources(android.R.color.holo_blue_light,
+                android.R.color.holo_red_light, android.R.color.holo_orange_light,
+                android.R.color.holo_green_light);
+        //条目点击监听
         mAdapter.setItemClickListener((view, position) -> {
-//            String title = mCollectionBooks.get(position).getTitle();
-//            SnackBarUtils.showSnackbar(view, title);
-            CollectionBook collectionBook = mCollectionBooks.get(position);
-            Recommend.RecommendBooks books = new Recommend.RecommendBooks();
-            books.chaptersCount = collectionBook.getChaptersCount();
-            books.lastChapter = collectionBook.getLastChapter();
-            books.latelyFollower = collectionBook.getLatelyFollower();
-            books.author = collectionBook.getAuthor();
-            books.cover = collectionBook.getCover();
-            books._id = collectionBook.get_id();
-            books.title = collectionBook.getTitle();
-            books.isSeleted = collectionBook.isFromSD;
-            books.path = collectionBook.path;
-            books.recentReadingTime = collectionBook.recentReadingTime;
-            books.retentionRatio = collectionBook.getRetentionRatio();
-            books.shortIntro = collectionBook.getShortIntro();
-            books.updated = collectionBook.getUpdated();
-            books.isTop = collectionBook.isTop;
-            books.hasCp = collectionBook.hasCp;
-            books.showCheckBox = collectionBook.showCheckBox;
+            Recommend.RecommendBooks books = mCollectionBooks.get(position);
             BookReadActivity.startActivity(mContext, books, true);
         });
+        //悬浮按钮监听
         mFab.setOnClickListener(v -> ((BookActivity) mActivity).setCurrentItem(1));
+        //长按监听
         mAdapter.setItemLongClickListener(this);
     }
 
@@ -156,7 +134,6 @@ public class BookShelfFragment extends BaseFragment implements
     private void showLongClickDialog(int position) {
         boolean isTop = CollectionsManager.getInstance().isTop(mCollectionBooks.get(position)._id);
         String[] items;
-
         DialogInterface.OnClickListener listener;
         if (mCollectionBooks.get(position).isFromSD) {
             //当小说的本地的时候
@@ -204,11 +181,31 @@ public class BookShelfFragment extends BaseFragment implements
                 .create().show();
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void RefreshCollectionList(RefreshCollectionListEvent event) {
+        mBookShelfSrl.setRefreshing(true);
+        onRefresh();
     }
 
+    private static final String TAG = "BookShelfFragment";
+
+    /**
+     * 刷新数据
+     */
+    private void onRefresh() {
+        List<Recommend.RecommendBooks> list = CollectionsManager.getInstance().getCollectionListBySort();
+        mAdapter.clear();
+        mAdapter.addAll(list);
+        mAdapter.notifyDataSetChanged();
+        mBookShelfSrl.setRefreshing(false);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
 
     @Override
     public void showError() {
@@ -221,9 +218,10 @@ public class BookShelfFragment extends BaseFragment implements
     }
 
     @Override
-    public void showCollectionBook(List<CollectionBook> collectionBooks) {
+    public void showCollectionBook(List<Recommend.RecommendBooks> collectionBooks) {
         mCollectionBooks.clear();
         mCollectionBooks.addAll(collectionBooks);
+        mAdapter.addAll(collectionBooks);
         mAdapter.notifyDataSetChanged();
     }
 

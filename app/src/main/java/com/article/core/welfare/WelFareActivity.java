@@ -53,7 +53,7 @@ public class WelFareActivity extends BaseActivity implements NavigationView.OnNa
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         setSupportActionBar(mWelfareTb);
 
         mFragments = new ArrayList<>();

@@ -2,7 +2,7 @@ package com.article.core.book.contract;
 
 import com.article.base.BaseContract;
 import com.article.core.book.bean.BookMixAToc;
-import com.article.core.book.bean.CollectionBook;
+import com.article.core.book.bean.Recommend;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface BookShelfContract {
     interface View extends BaseContract.BaseView {
-        void showCollectionBook(List<CollectionBook> collectionBooks);
+        void showCollectionBook(List<Recommend.RecommendBooks> collectionBooks);
 
         void showChapter(String bookId,List<BookMixAToc.mixToc.Chapters> mChapters);
     }

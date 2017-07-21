@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'realm-android'
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
@@ -82,6 +81,5 @@ dependencies {
     compile rootProject.ext.dependencies["viewAnimator"]
     compile rootProject.ext.dependencies["jsoup"]
     compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.android.support:support-v4:25.3.1'
     testCompile 'junit:junit:4.12'
 }

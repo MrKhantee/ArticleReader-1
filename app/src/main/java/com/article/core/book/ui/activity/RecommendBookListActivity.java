@@ -52,7 +52,7 @@ public class RecommendBookListActivity extends BaseMVPActivity<RecommendBookList
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         bookId = getIntent().getStringExtra(INTENT_BOOK_ID);
         mAdapter = new RecommendBookListActivityAdapter(this, mBookList, this);
     }

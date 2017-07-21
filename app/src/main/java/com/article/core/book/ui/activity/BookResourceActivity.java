@@ -61,7 +61,7 @@ public class BookResourceActivity extends BaseActivity implements BookResourceCo
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         mPresenter.attachView(this);
         bookId = getIntent().getStringExtra(INTENT_BOOK_ID);
         host = getIntent().getStringExtra(INTENT_SELECT_HOST);

@@ -18,16 +18,12 @@ public class RxPresenter<T extends BaseContract.BaseView> implements BaseContrac
             mCompositeDisposable.clear();
         }
     }
-
     protected void addSubscribe(Disposable subscription) {
         if (mCompositeDisposable == null) {
             mCompositeDisposable = new CompositeDisposable();
         }
         mCompositeDisposable.add(subscription);
     }
-
-
-
     @Override
     public void attachView(T view) {
         this.mView = view;

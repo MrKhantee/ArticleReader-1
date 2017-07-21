@@ -9,7 +9,7 @@ import com.article.base.BaseRVHolder;
 import com.article.common.Constant;
 import com.article.common.listener.OnRvItemClickListener;
 import com.article.common.utils.FormatUtils;
-import com.article.core.book.bean.CollectionBook;
+import com.article.core.book.bean.Recommend;
 
 import java.util.List;
 
@@ -18,9 +18,9 @@ import java.util.List;
  * Desc：
  */
 
-public class BookShelfAdapter extends BaseRVAdapter<CollectionBook> {
+public class BookShelfAdapter extends BaseRVAdapter<Recommend.RecommendBooks> {
 
-    public BookShelfAdapter(Context context, List<CollectionBook> list) {
+    public BookShelfAdapter(Context context, List<Recommend.RecommendBooks> list) {
         super(context, list, R.layout.item_book_shelf);
     }
 
@@ -38,20 +38,20 @@ public class BookShelfAdapter extends BaseRVAdapter<CollectionBook> {
     }
 
     @Override
-    protected void onBindData(BaseRVHolder viewHolder, int position, CollectionBook item) {
-        if (item.getCover() != null) {
-            viewHolder.setImageUrl(R.id.book_shelf_cover_iv, Constant.BOOK_IMAGE_BASE_URL + item.getCover());
+    protected void onBindData(BaseRVHolder viewHolder, int position, Recommend.RecommendBooks item) {
+        if (item.cover != null) {
+            viewHolder.setImageUrl(R.id.book_shelf_cover_iv, Constant.BOOK_IMAGE_BASE_URL + item.cover);
         } else {
             viewHolder.setImageUrl(R.id.book_shelf_cover_iv,
-                    Constant.BOOK_IMAGE_BASE_URL + item.getCover(), R.drawable.cover_default);
+                    Constant.BOOK_IMAGE_BASE_URL + item.cover, R.drawable.cover_default);
         }
         String latelyUpdate = "";
-        if (!TextUtils.isEmpty(FormatUtils.getDescriptionTimeFromDateString(item.getUpdated()))) {
-            latelyUpdate = FormatUtils.getDescriptionTimeFromDateString(item.getUpdated()) + ":";
+        if (!TextUtils.isEmpty(FormatUtils.getDescriptionTimeFromDateString(item.updated))) {
+            latelyUpdate = FormatUtils.getDescriptionTimeFromDateString(item.updated) + ":";
         }
         viewHolder.setText(R.id.book_shelf_lately_update_tv, latelyUpdate)
-                .setText(R.id.book_shelf_title_tv, item.getTitle())
-                .setText(R.id.book_shelf_short_tv, item.getLastChapter());
+                .setText(R.id.book_shelf_title_tv, item.title)
+                .setText(R.id.book_shelf_short_tv, item.lastChapter);
         viewHolder.setOnItemClickListener(v -> {
             if (mItemClickListener != null) {
                 mItemClickListener.onItemClick(v, position);

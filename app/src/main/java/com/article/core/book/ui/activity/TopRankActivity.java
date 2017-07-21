@@ -63,7 +63,7 @@ public class TopRankActivity extends BaseMVPActivity<TopRankActivityPresenter>
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
 
         mItemClickListener = new OnItemClickListener();
         mMaleGroupList = new ArrayList<>();
