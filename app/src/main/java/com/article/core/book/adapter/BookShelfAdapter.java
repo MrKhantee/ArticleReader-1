@@ -2,6 +2,7 @@ package com.article.core.book.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 
 import com.article.R;
@@ -77,7 +78,13 @@ public class BookShelfAdapter extends BaseRVAdapter<Recommend.RecommendBooks> {
         if (mItemLongClickListener != null) {
             viewHolder.itemView.setOnLongClickListener(v -> mItemLongClickListener.onItemLongClick(position));
         }
+        CheckBox checkBox = viewHolder.getView(R.id.book_shelf_select_cb);
+        checkBox.setChecked(item.isSeleted);
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> item.isSeleted = isChecked);
+    }
 
+    public List<Recommend.RecommendBooks> getAll() {
+        return mList;
     }
 
     public Recommend.RecommendBooks getItem(int position) {
@@ -92,4 +99,5 @@ public class BookShelfAdapter extends BaseRVAdapter<Recommend.RecommendBooks> {
     public interface OnMoreIVClickListener {
         void onClick(int position);
     }
+
 }

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.article.R;
 import com.article.base.BaseFragment;
@@ -35,6 +36,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.article.R.id.emptyView;
 
@@ -51,6 +53,17 @@ public class BookShelfFragment extends BaseFragment implements
     LinearLayout mEmptyView;
     @BindView(R.id.book_shelf_srl)
     SwipeRefreshLayout mBookShelfSrl;
+    //全选布局
+    @BindView(R.id.llBatchManagement)
+    LinearLayout mBatchManager;
+    //全选
+    @BindView(R.id.tvSelectAll)
+    TextView mSelectALl;
+    //删除
+    @BindView(R.id.tvDelete)
+    TextView mDelete;
+
+    private boolean isSelectAll = false;
 
     private List<Recommend.RecommendBooks> mCollectionBooks;
     private BookShelfAdapter mAdapter;
@@ -85,10 +98,28 @@ public class BookShelfFragment extends BaseFragment implements
         getView().requestFocus();
         getView().setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
-                mAdapter.notifyDataSetChanged();
+//                mAdapter.notifyDataSetChanged();
+                if (isVisible(mBatchManager)) {
+                    goneBatchManagerLayoutAndRefreshUI();
+                    return true;
+                }
             }
             return false;
         });
+    }
+
+    /**
+     * 隐藏批量管理布局，刷新UI
+     */
+    private void goneBatchManagerLayoutAndRefreshUI() {
+        if (mAdapter == null) {
+            return;
+        }
+        gone(mBatchManager);
+        for (Recommend.RecommendBooks bean : mAdapter.getAll()) {
+            bean.showCheckBox = false;
+        }
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -103,6 +134,9 @@ public class BookShelfFragment extends BaseFragment implements
         mBookShelfSrl.setRefreshing(true);
         //条目点击监听
         mAdapter.setItemClickListener((view, position) -> {
+            if (isVisible(mBatchManager)) {
+                return;
+            }
             Recommend.RecommendBooks books = mCollectionBooks.get(position);
             BookReadActivity.startActivity(mContext, books, true);
         });
@@ -133,6 +167,9 @@ public class BookShelfFragment extends BaseFragment implements
 
     @Override
     public boolean onItemLongClick(int position) {
+        if (isVisible(mBatchManager)) {
+            return false;
+        }
         showLongClickDialog(position);
         return false;
     }
@@ -180,6 +217,7 @@ public class BookShelfFragment extends BaseFragment implements
                         showDeleteCacheDialog(removeList);
                         break;
                     case 5://批量管理
+                        showBatchManagerLayout();
                         break;
                 }
                 dialog.dismiss();
@@ -236,11 +274,54 @@ public class BookShelfFragment extends BaseFragment implements
         onRefreshing();
     }
 
+    /**
+     * 显示批量管理布局
+     */
+    private void showBatchManagerLayout() {
+        visible(mBatchManager);
+        for (Recommend.RecommendBooks bean : mAdapter.getAll()) {
+            bean.showCheckBox = true;
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 全选事件点击
+     */
+    @OnClick(R.id.tvSelectAll)
+    public void selectAll() {
+        isSelectAll = !isSelectAll;
+        mSelectALl.setText(isSelectAll ? mContext.getString(R.string.cancel_selected_all) : mContext.getString(R.string.selected_all));
+        for (Recommend.RecommendBooks bean : mAdapter.getAll()) {
+            bean.isSeleted = isSelectAll;
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 删除选中的小说
+     */
+    @OnClick(R.id.tvDelete)
+    public void deleteSelected() {
+        List<Recommend.RecommendBooks> removeList = new ArrayList<>();
+        for (Recommend.RecommendBooks bean : mAdapter.getAll()) {
+            if (bean.isSeleted) {
+                removeList.add(bean);
+            }
+        }
+        if (removeList.isEmpty()) {
+            SnackBarUtils.showSnackbar(mDelete, mContext.getString(R.string.has_not_selected_delete_book));
+        } else {
+            showDeleteCacheDialog(removeList);
+            goneBatchManagerLayoutAndRefreshUI();
+        }
+    }
 
     /**
      * 刷新数据
      */
     private void onRefreshing() {
+        gone(mBatchManager);
         List<Recommend.RecommendBooks> list = CollectionsManager.getInstance().getCollectionListBySort();
         if (list.size() > 0) {
             mBookShelfRv.setVisibility(View.VISIBLE);
@@ -286,5 +367,29 @@ public class BookShelfFragment extends BaseFragment implements
 
     }
 
+    protected void gone(final View... views) {
+        if (views != null && views.length > 0) {
+            for (View view : views) {
+                if (view != null) {
+                    view.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
+
+    protected void visible(final View... views) {
+        if (views != null && views.length > 0) {
+            for (View view : views) {
+                if (view != null) {
+                    view.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+
+    }
+
+    protected boolean isVisible(View view) {
+        return view.getVisibility() == View.VISIBLE;
+    }
 
 }

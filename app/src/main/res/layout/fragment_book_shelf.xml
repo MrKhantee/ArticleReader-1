@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,53 +15,78 @@
             android:layout_height="match_parent"
             android:clickable="true">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/book_shelf_rv"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:fadeScrollbars="true"
-                android:scrollbarFadeDuration="1"/>
+                android:layout_height="match_parent">
 
-            <LinearLayout
-                android:id="@+id/emptyView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="invisible">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/book_shelf_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:fadeScrollbars="true"
+                    android:scrollbarFadeDuration="1"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hapticFeedbackEnabled="true"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/ic_empty"/>
+                <LinearLayout
+                    android:id="@+id/emptyView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
-                <android.support.v7.widget.AppCompatTextView
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hapticFeedbackEnabled="true"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_empty"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/to_add_books"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textColor="@color/colorPrimary"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llBatchManagement"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/to_add_books"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/colorPrimary"/>
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/gray_rect"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/tvSelectAll"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="15dp"
+                        android:text="全选"
+                        android:textColor="@color/common_h1"/>
+
+                    <TextView
+                        android:id="@+id/tvDelete"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="15dp"
+                        android:text="删除"
+                        android:textColor="@color/dark_red"/>
+                </LinearLayout>
+            </RelativeLayout>
         </FrameLayout>
-
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fab"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom|end"-->
-        <!--android:layout_margin="@dimen/fab_margin"-->
-        <!--android:contentDescription="@string/activity_add_package"-->
-        <!--android:tint="@android:color/white"-->
-        <!--app:layout_behavior="com.article.widget.ScrollAwareFABBehaviorDefault"-->
-        <!--app:srcCompat="@drawable/ic_add_white_24dp"/>-->
 </android.support.design.widget.CoordinatorLayout>
