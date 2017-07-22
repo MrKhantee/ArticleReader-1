@@ -51,8 +51,6 @@ public class BookShelfFragment extends BaseFragment implements
     LinearLayout mEmptyView;
     @BindView(R.id.book_shelf_srl)
     SwipeRefreshLayout mBookShelfSrl;
-//    @BindView(R.id.fab)
-//    FloatingActionButton mFab;
 
     private List<Recommend.RecommendBooks> mCollectionBooks;
     private BookShelfAdapter mAdapter;
@@ -116,6 +114,8 @@ public class BookShelfFragment extends BaseFragment implements
 
 //        mPresenter.getCollectionBook();
         onRefreshing();
+
+        mAdapter.setOnMoreIVClickListener(position -> showLongClickDialog(position));
     }
 
     @Override
@@ -237,7 +237,6 @@ public class BookShelfFragment extends BaseFragment implements
     }
 
 
-
     /**
      * 刷新数据
      */
@@ -275,10 +274,10 @@ public class BookShelfFragment extends BaseFragment implements
 
     @Override
     public void showCollectionBook(List<Recommend.RecommendBooks> collectionBooks) {
-            mCollectionBooks.clear();
-            mCollectionBooks.addAll(collectionBooks);
-            mAdapter.addAll(collectionBooks);
-            mAdapter.notifyDataSetChanged();
+        mCollectionBooks.clear();
+        mCollectionBooks.addAll(collectionBooks);
+        mAdapter.addAll(collectionBooks);
+        mAdapter.notifyDataSetChanged();
 
     }
 

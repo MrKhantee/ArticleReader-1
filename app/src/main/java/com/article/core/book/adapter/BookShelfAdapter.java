@@ -2,6 +2,7 @@ package com.article.core.book.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.widget.ImageView;
 
 import com.article.R;
 import com.article.base.BaseRVAdapter;
@@ -36,6 +37,12 @@ public class BookShelfAdapter extends BaseRVAdapter<Recommend.RecommendBooks> {
         mItemLongClickListener = itemLongClickListener;
     }
 
+    private OnMoreIVClickListener mOnMoreIVClickListener;
+
+    public void setOnMoreIVClickListener(OnMoreIVClickListener onMoreIVClickListener) {
+        mOnMoreIVClickListener = onMoreIVClickListener;
+    }
+
     @Override
     protected void onBindData(BaseRVHolder viewHolder, int position, Recommend.RecommendBooks item) {
         if (item.cover != null) {
@@ -56,6 +63,16 @@ public class BookShelfAdapter extends BaseRVAdapter<Recommend.RecommendBooks> {
                 mItemClickListener.onItemClick(v, position);
             }
         });
+        viewHolder.setVisible(R.id.book_shelf_top_label_iv, item.isTop)
+                .setVisible(R.id.book_shelf_select_cb, item.showCheckBox)
+                .setVisible(R.id.book_shelf_unread_iv, FormatUtils.formatZhuiShuDateString(item.updated)
+                        .compareTo(item.recentReadingTime) > 0);
+        ImageView moreIV = viewHolder.getView(R.id.book_shelf_more_iv);
+        moreIV.setOnClickListener(v -> {
+            if (mOnMoreIVClickListener != null) {
+                mOnMoreIVClickListener.onClick(position);
+            }
+        });
         //长按监听
         if (mItemLongClickListener != null) {
             viewHolder.itemView.setOnLongClickListener(v -> mItemLongClickListener.onItemLongClick(position));
@@ -70,5 +87,9 @@ public class BookShelfAdapter extends BaseRVAdapter<Recommend.RecommendBooks> {
 
     public interface OnItemLongClickListener {
         boolean onItemLongClick(int position);
+    }
+
+    public interface OnMoreIVClickListener {
+        void onClick(int position);
     }
 }
