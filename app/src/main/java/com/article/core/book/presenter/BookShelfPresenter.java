@@ -75,9 +75,7 @@ public class BookShelfPresenter extends RxPresenter<BookShelfContract.View>
                 }, throwable -> {
                     LogUtils.e("onError: " + throwable);
                     mView.showError();
-                }, () -> {
-
-                });
+                }, () -> mView.complete());
 
     }
 }

@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.article.R;
@@ -35,6 +36,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
+import static com.article.R.id.emptyView;
+
 /**
  * Created by Amos on 2017/6/9.
  * Desc：
@@ -44,7 +47,7 @@ public class BookShelfFragment extends BaseFragment implements
 
     @BindView(R.id.book_shelf_rv)
     RecyclerView mBookShelfRv;
-    @BindView(R.id.emptyView)
+    @BindView(emptyView)
     LinearLayout mEmptyView;
     @BindView(R.id.book_shelf_srl)
     SwipeRefreshLayout mBookShelfSrl;
@@ -110,6 +113,9 @@ public class BookShelfFragment extends BaseFragment implements
         //长按监听
         mAdapter.setItemLongClickListener(this);
         mBookShelfSrl.setOnRefreshListener(this::onRefreshing);
+
+//        mPresenter.getCollectionBook();
+        onRefreshing();
     }
 
     @Override
@@ -231,15 +237,24 @@ public class BookShelfFragment extends BaseFragment implements
     }
 
 
+
     /**
      * 刷新数据
      */
     private void onRefreshing() {
         List<Recommend.RecommendBooks> list = CollectionsManager.getInstance().getCollectionListBySort();
-        mAdapter.clear();
-        mAdapter.addAll(list);
-        mAdapter.notifyDataSetChanged();
-        mBookShelfSrl.setRefreshing(false);
+        if (list.size() > 0) {
+            mBookShelfRv.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(View.INVISIBLE);
+            mAdapter.clear();
+            mAdapter.addAll(list);
+            mAdapter.notifyDataSetChanged();
+            mBookShelfSrl.setRefreshing(false);
+        } else {
+            mBookShelfSrl.setRefreshing(false);
+            mBookShelfRv.setVisibility(View.INVISIBLE);
+            mEmptyView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -260,10 +275,11 @@ public class BookShelfFragment extends BaseFragment implements
 
     @Override
     public void showCollectionBook(List<Recommend.RecommendBooks> collectionBooks) {
-        mCollectionBooks.clear();
-        mCollectionBooks.addAll(collectionBooks);
-        mAdapter.addAll(collectionBooks);
-        mAdapter.notifyDataSetChanged();
+            mCollectionBooks.clear();
+            mCollectionBooks.addAll(collectionBooks);
+            mAdapter.addAll(collectionBooks);
+            mAdapter.notifyDataSetChanged();
+
     }
 
     @Override

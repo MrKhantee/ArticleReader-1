@@ -47,7 +47,7 @@ public class BookActivityPresenter extends RxPresenter<BookActivityContract.View
                 }
             }
         } else {
-            ToastUtils.showSingleToast("书架空空如也...");
+            ToastUtils.showSingleToast("书架中还没有书，先去收藏吧！");
             mView.syncBookShelfCompleted();
             return;
         }

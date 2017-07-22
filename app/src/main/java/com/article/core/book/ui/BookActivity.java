@@ -146,7 +146,7 @@ public class BookActivity extends BaseActivity
     @Override
     public void configViews() {
         mPresenter.attachView(this);
-        mPresenter.syncBookShelf();
+//        mPresenter.syncBookShelf();
     }
 
     @Override
@@ -266,12 +266,11 @@ public class BookActivity extends BaseActivity
 
     @Override
     public void complete() {
-
     }
 
     @Override
     public void syncBookShelfCompleted() {
-        dismissDialog();
+//        dismissDialog();
         EventManager.refreshCollectionList();
     }
 }
