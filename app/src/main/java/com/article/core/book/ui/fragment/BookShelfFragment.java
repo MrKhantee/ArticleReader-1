@@ -323,7 +323,7 @@ public class BookShelfFragment extends BaseFragment implements
     private void onRefreshing() {
         gone(mBatchManager);
         List<Recommend.RecommendBooks> list = CollectionsManager.getInstance().getCollectionListBySort();
-        if (list.size() > 0) {
+        if (list!=null&&list.size() > 0) {
             mBookShelfRv.setVisibility(View.VISIBLE);
             mEmptyView.setVisibility(View.INVISIBLE);
             mAdapter.clear();

@@ -103,7 +103,8 @@ public abstract class CustomReadView extends View {
                 } else {
                     center = false;
                     calcCornerXY(actiondownX, actiondownY);
-                    if (actiondownX < mScreenWidth / 2) {// 从左翻
+                    if (actiondownX < mScreenWidth / 2) {
+                        // 从左翻
                         BookStatus status = pagefactory.prePage();
                         if (status == BookStatus.NO_PRE_PAGE) {
                             ToastUtils.showSingleToast("没有上一页啦");
@@ -114,7 +115,8 @@ public abstract class CustomReadView extends View {
                         } else {
                             return false;
                         }
-                    } else if (actiondownX >= mScreenWidth / 2) {// 从右翻
+                    } else if (actiondownX >= mScreenWidth / 2) {
+                        // 从右翻
                         BookStatus status = pagefactory.nextPage();
                         if (status == BookStatus.NO_NEXT_PAGE) {
                             ToastUtils.showSingleToast("没有下一页啦");
@@ -143,12 +145,12 @@ public abstract class CustomReadView extends View {
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-
                 long t = System.currentTimeMillis();
                 int ux = (int) e.getX();
                 int uy = (int) e.getY();
 
-                if (center) { // ACTION_DOWN的位置在中间，则不响应滑动事件
+                if (center) {
+                    // ACTION_DOWN的位置在中间，则不响应滑动事件
                     resetTouchPoint();
                     if (Math.abs(ux - actiondownX) < 5 && Math.abs(uy - actiondownY) < 5) {
                         listener.onCenterClick();
@@ -263,7 +265,6 @@ public abstract class CustomReadView extends View {
         BookStatus status = pagefactory.prePage();
         if (status == BookStatus.NO_PRE_PAGE) {
             ToastUtils.showSingleToast("没有上一页啦");
-
             return;
         } else if (status == BookStatus.LOAD_SUCCESS) {
             if (isPrepared) {
@@ -334,19 +335,15 @@ public abstract class CustomReadView extends View {
         if (pagefactory != null) {
             pagefactory.recycle();
         }
-
         if (mCurPageBitmap != null && !mCurPageBitmap.isRecycled()) {
             mCurPageBitmap.recycle();
             mCurPageBitmap = null;
             LogUtils.d("mCurPageBitmap recycle");
         }
-
         if (mNextPageBitmap != null && !mNextPageBitmap.isRecycled()) {
             mNextPageBitmap.recycle();
             mNextPageBitmap = null;
             LogUtils.d("mNextPageBitmap recycle");
         }
     }
-
-
 }

@@ -51,8 +51,8 @@ public class PageWidget extends CustomReadView {
     private float mMaxLength;
     int[] mBackShadowColors;// 背面颜色组
     int[] mFrontShadowColors;// 前面颜色组
-
-    GradientDrawable mBackShadowDrawableLR; // 有阴影的GradientDrawable
+    // 有阴影的GradientDrawable
+    GradientDrawable mBackShadowDrawableLR;
     GradientDrawable mBackShadowDrawableRL;
     GradientDrawable mFolderShadowDrawableLR;
     GradientDrawable mFolderShadowDrawableRL;
@@ -238,8 +238,6 @@ public class PageWidget extends CustomReadView {
             canvas.clipPath(mPath1, Region.Op.INTERSECT);
         } catch (Exception e) {
         }
-
-
         canvas.drawBitmap(mNextPageBitmap, 0, 0, null);
         canvas.rotate(mDegrees, mBezierStart1.x, mBezierStart1.y);
         mBackShadowDrawable.setBounds(leftx, (int) mBezierStart1.y,

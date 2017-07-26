@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -35,12 +36,14 @@ import com.article.core.book.bean.BookMixAToc;
 import com.article.core.book.bean.BookResource;
 import com.article.core.book.bean.ChapterRead;
 import com.article.core.book.bean.Recommend;
+import com.article.core.book.bean.support.BookDownloadQueue;
 import com.article.core.book.contract.BookReadContract;
 import com.article.core.book.manager.CacheManager;
 import com.article.core.book.manager.CollectionsManager;
 import com.article.core.book.manager.EventManager;
 import com.article.core.book.manager.SettingManager;
 import com.article.core.book.presenter.BookReadPresenter;
+import com.article.core.book.service.BookDownloadService;
 import com.article.core.book.ui.fragment.BookResourceDialogFragment;
 import com.article.di.component.AppComponent;
 import com.article.di.component.DaggerBookComponent;
@@ -164,6 +167,9 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
     @BindView(R.id.rlBookReadRoot)
     RelativeLayout mRlBookReadRoot;
 
+    //下载进度条
+    @BindView(R.id.pbBookDownload)
+    ProgressBar mPbBookDownload;
 
     @Inject
     BookReadPresenter mPresenter;
@@ -236,11 +242,13 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
 
     @Override
     public void initToolBar() {
-        mPresenter.attachView(this);
+
     }
 
     @Override
     public void configViews() {
+        mPresenter.attachView(this);
+
         decodeView = getWindow().getDecorView();
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mLlBookReadTop.getLayoutParams();
         params.topMargin = ScreenUtils.getStatusBarHeight(this) - 2;
@@ -516,6 +524,7 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
                 .setItems(new String[]{"后面五十章", "后面全部", "全部"}, (dialog, which) -> {
                     switch (which) {
                         case 0://缓存五十章
+                            BookDownloadService.post(new BookDownloadQueue(bookId, mChapterList, currentChapter + 1, currentChapter + 50));
                             break;
                         case 1://缓存后面全部
                             break;
@@ -621,7 +630,6 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
 
         @Override
         public void onPageChanged(int chapter, int page) {
-
         }
 
         @Override
@@ -640,7 +648,5 @@ public class BookReadActivity extends BaseActivity implements BookReadContract.V
         public void onFlip() {
             hideReadBar();
         }
-
-
     }
 }

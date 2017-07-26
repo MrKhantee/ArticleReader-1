@@ -100,7 +100,6 @@ public class PageFactory {
 
     public PageFactory(Context context, String bookId, List<BookMixAToc.mixToc.Chapters> chaptersList) {
         this(context, ScreenUtils.getScreenWidth(), ScreenUtils.getScreenHeight(),
-                //SettingManager.getInstance().getReadFontSize(bookId),
                 SettingManager.getInstance().getReadFontSize(),
                 bookId, chaptersList);
     }
@@ -129,9 +128,6 @@ public class PageFactory {
         mTitlePaint.setColor(ContextCompat.getColor(AppUtils.getAppContext(), R.color.chapter_title_day));
         timeLen = (int) mTitlePaint.measureText("00:00");
         percentLen = (int) mTitlePaint.measureText("00.00%");
-        // Typeface typeface = Typeface.createFromAsset(context.getAssets(),"fonts/FZBYSK.TTF");
-        // mPaint.setTypeface(typeface);
-        // mNumPaint.setTypeface(typeface);
 
         this.bookId = bookId;
         this.chaptersList = chaptersList;
@@ -232,10 +228,8 @@ public class PageFactory {
             float percent = (float) currentChapter * 100 / chapterSize;
             canvas.drawText(decimalFormat.format(percent) + "%", (mWidth - percentLen) / 2,
                     mHeight - marginHeight, mTitlePaint);
-
             String mTime = dateFormat.format(new Date());
             canvas.drawText(mTime, mWidth - marginWidth - timeLen, mHeight - marginHeight, mTitlePaint);
-
             // 保存阅读进度
             SettingManager.getInstance().saveReadProgress(bookId, currentChapter, curBeginPos, curEndPos);
         }
@@ -375,7 +369,6 @@ public class PageFactory {
             }
             currentPage++;
         }
-        //SettingManager.getInstance().saveReadProgress(bookId, currentChapter, curBeginPos, curEndPos);
         return lines;
     }
 
