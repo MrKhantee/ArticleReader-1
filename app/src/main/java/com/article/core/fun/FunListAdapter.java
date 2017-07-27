@@ -44,7 +44,7 @@ public class FunListAdapter extends RecyclerView.Adapter<FunListAdapter.FunViewH
     public void onBindViewHolder(FunViewHolder holder, int position) {
         FunBean.ItemsBean itemsBean = mItemsBeanList.get(position);
         if (itemsBean.getUser() != null) {
-            Glide.with(mContext).load("https:"+itemsBean.getUser().getMedium())
+            Glide.with(mContext).load("https:" + itemsBean.getUser().getMedium())
                     .transform(new GlideCircleTransform(mContext))
                     .placeholder(R.drawable.anony)
                     .into(holder.mUserAvatarIv);
@@ -56,6 +56,8 @@ public class FunListAdapter extends RecyclerView.Adapter<FunListAdapter.FunViewH
             holder.mImageIv.setVisibility(View.GONE);
         } else if (itemsBean.getFormat().equals("image")) {
             holder.mImageIv.setVisibility(View.VISIBLE);
+            Glide.with(mContext).load("https:" + itemsBean.getHigh_loc())
+                    .into(holder.mImageIv);
         }
         holder.mContentTv.setText(itemsBean.getContent());
         FunBean.ItemsBean.HotCommentBean hot_comment = itemsBean.getHot_comment();
@@ -108,6 +110,16 @@ public class FunListAdapter extends RecyclerView.Adapter<FunListAdapter.FunViewH
         public FunViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+    }
+
+    /**
+     * 加载更多的ViewHolder
+     */
+    class MoreViewHolder extends RecyclerView.ViewHolder {
+
+        public MoreViewHolder(View itemView) {
+            super(itemView);
         }
     }
 }
