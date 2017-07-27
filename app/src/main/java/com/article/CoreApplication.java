@@ -12,6 +12,7 @@ import com.article.di.component.DaggerAppComponent;
 import com.article.di.module.AppModule;
 import com.article.di.module.BookApiModule;
 import com.article.di.module.FunApiModule;
+import com.article.di.module.WelfareApiModule;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -103,6 +104,7 @@ public class CoreApplication extends Application {
                     .appModule(new AppModule(this))
                     .bookApiModule(new BookApiModule())
                     .funApiModule(new FunApiModule())
+                    .welfareApiModule(new WelfareApiModule())
                     .build();
         }
         return mAppComponent;

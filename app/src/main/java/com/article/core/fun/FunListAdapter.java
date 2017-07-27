@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.article.R;
@@ -44,9 +44,9 @@ public class FunListAdapter extends RecyclerView.Adapter<FunListAdapter.FunViewH
     public void onBindViewHolder(FunViewHolder holder, int position) {
         FunBean.ItemsBean itemsBean = mItemsBeanList.get(position);
         if (itemsBean.getUser() != null) {
-            Glide.with(mContext).load(itemsBean.getUser().getThumb())
-                    .placeholder(R.drawable.anony)
+            Glide.with(mContext).load("https:"+itemsBean.getUser().getMedium())
                     .transform(new GlideCircleTransform(mContext))
+                    .placeholder(R.drawable.anony)
                     .into(holder.mUserAvatarIv);
             holder.mUserNameTv.setText(itemsBean.getUser().getLogin());
         } else {
@@ -99,7 +99,7 @@ public class FunListAdapter extends RecyclerView.Adapter<FunListAdapter.FunViewH
         @BindView(R.id.fun_item_count_tv)
         TextView mCountTv;
         @BindView(R.id.fun_item_comment_ll)
-        LinearLayout mCommentLl;
+        RelativeLayout mCommentLl;
         @BindView(R.id.fun_item_comment_user_name_tv)
         TextView mCommentUserNameTv;
         @BindView(R.id.fun_item_comment_content_tv)

@@ -28,7 +28,7 @@ public class FunPresenter extends RxPresenter<FunContract.View>
 
 
     @Override
-    public void getQiuShiBaiKe(String page, String count) {
+    public void getQiuShiBaiKe(int page, int count) {
         String key = StringUtils.creatAcacheKey("qiushibaike-data");
         Flowable<FunBean> compose = mFunApi.getQiuShiBaiKe(page, count).compose(RxUtils.rxCacheBeanHelper(key));
         Disposable disposable = Flowable.concat(RxUtils.rxCreateDiskFlowable(key, FunBean.class), compose)

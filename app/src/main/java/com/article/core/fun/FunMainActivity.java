@@ -32,6 +32,8 @@ public class FunMainActivity extends BaseMVPActivity<FunPresenter> implements Fu
     SwipeRefreshLayout mFunListSrl;
     @BindView(R.id.fun_list_rv)
     RecyclerView mFunListRv;
+    private int page=1;
+    private int pageNum=30;
 
     @Inject
     FunPresenter mFunPresenter;
@@ -64,6 +66,8 @@ public class FunMainActivity extends BaseMVPActivity<FunPresenter> implements Fu
 
     @Override
     public void initToolBar() {
+        mPresenter.attachView(this);
+
         setSupportActionBar(mFunTb);
         mFunTb.setNavigationOnClickListener(v -> finish());
     }
@@ -87,7 +91,7 @@ public class FunMainActivity extends BaseMVPActivity<FunPresenter> implements Fu
     }
 
     private void refresh() {
-        mPresenter.getQiuShiBaiKe("1", "30");
+        mPresenter.getQiuShiBaiKe(1, 30);
     }
 
     private void onLoadMore() {

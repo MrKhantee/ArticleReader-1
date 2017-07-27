@@ -1,6 +1,6 @@
 package com.article.common.api;
 
-import com.article.core.welfare.bean.GankMeiziResult;
+import com.article.core.welfare.bean.GankMeiziBean;
 
 import io.reactivex.Flowable;
 import retrofit2.http.GET;
@@ -20,5 +20,5 @@ public interface WelfareApiService {
      * @return
      */
     @GET("data/福利/{number}/{page}")
-    Flowable<GankMeiziResult> getGankMeizi(@Path("number") int number, @Path("page") int page);
+    Flowable<GankMeiziBean> getGankMeizi(@Path("number") int number, @Path("page") int page);
 }

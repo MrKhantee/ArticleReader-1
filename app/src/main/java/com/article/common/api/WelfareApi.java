@@ -1,10 +1,12 @@
 package com.article.common.api;
 
 import com.article.CoreApplication;
+import com.article.core.welfare.bean.GankMeiziBean;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Flowable;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -26,6 +28,7 @@ public class WelfareApi {
     public static final String BASE_MEIZITU_URL = "http://www.mzitu.com/";
 
     private static OkHttpClient mOkHttpClient;
+    private static WelfareApi instance;
 
     static {
         initOkHttpClient();
@@ -53,6 +56,13 @@ public class WelfareApi {
         }
     }
 
+    public static WelfareApi getInstance() {
+        if (instance == null) {
+            instance = new WelfareApi();
+        }
+        return instance;
+    }
+
     /**
      * Gank妹子Api
      *
@@ -67,5 +77,16 @@ public class WelfareApi {
                 .build();
         WelfareApiService gankMeiziService = mRetrofit.create(WelfareApiService.class);
         return gankMeiziService;
+    }
+
+    /**
+     * 获取干货妹子
+     *
+     * @param number
+     * @param page
+     * @return
+     */
+    public Flowable<GankMeiziBean> getGankMeiZi(int number, int page) {
+        return WelfareApi.getGankMeiziApi().getGankMeizi(number, page);
     }
 }

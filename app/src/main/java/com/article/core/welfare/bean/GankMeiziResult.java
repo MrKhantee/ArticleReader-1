@@ -1,7 +1,5 @@
 package com.article.core.welfare.bean;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -12,6 +10,5 @@ import java.util.List;
 public class GankMeiziResult {
     public boolean error;
 
-    @SerializedName("gankmeiziresults")
-    public List<GankMeiziInfo> gankMeizis;
+    public List<GankMeiziBean> gankMeizis;
 }

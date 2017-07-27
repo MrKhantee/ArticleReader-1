@@ -23,7 +23,7 @@ public interface FunApiService {
      * @return
      */
     @GET("/article/list/suggest")
-    Flowable<FunBean> getQiuShiBaiKe(@Query("page") String page,
-                                     @Query("count") String count);
+    Flowable<FunBean> getQiuShiBaiKe(@Query("page") int page,
+                                     @Query("count") int count);
 
 }

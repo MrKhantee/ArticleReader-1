@@ -1,7 +1,6 @@
 package com.article.core.fun;
 
 import com.article.base.BaseContract;
-import com.article.core.fun.FunBean;
 
 /**
  * Created by Amos on 2017/7/3.
@@ -14,6 +13,6 @@ public interface FunContract {
     }
 
     interface Presenter<T> extends BaseContract.BasePresenter<T> {
-        void getQiuShiBaiKe(String page, String count);
+        void getQiuShiBaiKe(int page, int count);
     }
 }

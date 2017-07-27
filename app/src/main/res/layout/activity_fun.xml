@@ -6,38 +6,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-
-        <android.support.design.widget.AppBarLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/fun_tb"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:layout_scrollFlags="enterAlways|scroll|snap"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
+            app:theme="@style/Theme.ToolBar.Menu"
+            app:title="搞笑段子"/>
+    </android.support.design.widget.AppBarLayout>
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/fun_tb"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"
-                app:layout_scrollFlags="enterAlways|scroll|snap"
-                app:navigationIcon="?attr/homeAsUpIndicator"
-                app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
-                app:theme="@style/Theme.ToolBar.Menu"
-                app:title="搞笑段子"/>
-        </android.support.design.widget.AppBarLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/fun_list_srl"
+        app:layout_behavior="com.article.widget.CustomScrollingViewBehavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/fun_list_srl"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fun_list_rv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/fun_list_rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-        </android.support.v4.widget.SwipeRefreshLayout>
-    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

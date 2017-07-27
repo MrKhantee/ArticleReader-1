@@ -50,7 +50,7 @@ public class FunApi {
      * @param count
      * @return
      */
-    public Flowable<FunBean> getQiuShiBaiKe(String page, String count){
+    public Flowable<FunBean> getQiuShiBaiKe(int page, int count){
         return mFunApiService.getQiuShiBaiKe(page, count);
     }
 }
