@@ -32,8 +32,8 @@ public class FunMainActivity extends BaseMVPActivity<FunPresenter> implements Fu
     SwipeRefreshLayout mFunListSrl;
     @BindView(R.id.fun_list_rv)
     RecyclerView mFunListRv;
-    private int page=1;
-    private int pageNum=30;
+    private int page = 1;
+    private int pageNum = 30;
 
     @Inject
     FunPresenter mFunPresenter;
@@ -80,27 +80,37 @@ public class FunMainActivity extends BaseMVPActivity<FunPresenter> implements Fu
                 android.R.color.holo_green_light);
         mFunListSrl.measure(0, 0);
         mFunListSrl.setRefreshing(true);
-        mFunListSrl.setOnRefreshListener(() -> refresh());
+        mFunListSrl.setOnRefreshListener(this::refresh);
 
+        LinearLayoutManager manager = new LinearLayoutManager(this);
         mFunListRv.setHasFixedSize(true);
-        mFunListRv.setLayoutManager(new LinearLayoutManager(this));
+        mFunListRv.setLayoutManager(manager);
         mFunListRv.setAdapter(mAdapter);
 
-//        mFunPresenter.getQiuShiBaiKe("1", "30");
         refresh();
+
+        mFunListRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+            }
+        });
     }
 
     private void refresh() {
-        mPresenter.getQiuShiBaiKe(1, 30);
+        page = 1;
+        mPresenter.getQiuShiBaiKe(page, pageNum);
     }
 
     private void onLoadMore() {
-
+        page++;
+        mFunPresenter.getQiuShiBaiKe(page, pageNum);
     }
 
     @Override
     public void showError() {
-
+        mFunListSrl.setRefreshing(false);
     }
 
     @Override
@@ -111,7 +121,6 @@ public class FunMainActivity extends BaseMVPActivity<FunPresenter> implements Fu
     @Override
     public void showQiuShi(FunBean funBean) {
         List<FunBean.ItemsBean> items = funBean.getItems();
-//        mAdapter.clear();
         mAdapter.addAll(items);
     }
 }

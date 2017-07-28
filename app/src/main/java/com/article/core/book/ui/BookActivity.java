@@ -23,6 +23,7 @@ import com.article.core.book.contract.BookActivityContract;
 import com.article.core.book.manager.EventManager;
 import com.article.core.book.presenter.BookActivityPresenter;
 import com.article.core.book.ui.activity.BookListActivity;
+import com.article.core.book.ui.activity.SearchActivity;
 import com.article.core.book.ui.activity.TopCategoryActivity;
 import com.article.core.book.ui.activity.TopRankActivity;
 import com.article.core.book.ui.fragment.BookShelfFragment;
@@ -203,6 +204,7 @@ public class BookActivity extends BaseActivity
             case R.id.book_action_sync:
                 break;
             case R.id.book_action_search:
+                SearchActivity.startActivity(BookActivity.this,SearchActivity.INTENT_SEARCH);
                 break;
             case R.id.book_action_scan_local:
                 break;

@@ -1,5 +1,6 @@
 package com.article.common.api;
 
+import com.article.core.book.bean.AutoComplete;
 import com.article.core.book.bean.BookDetail;
 import com.article.core.book.bean.BookListDetail;
 import com.article.core.book.bean.BookListTags;
@@ -13,8 +14,10 @@ import com.article.core.book.bean.CategoryList;
 import com.article.core.book.bean.CategoryListLv2;
 import com.article.core.book.bean.ChangeResource;
 import com.article.core.book.bean.ChapterRead;
+import com.article.core.book.bean.HotWords;
 import com.article.core.book.bean.Recommend;
 import com.article.core.book.bean.RecommendBookList;
+import com.article.core.book.bean.SearchDetail;
 import com.article.core.book.bean.SubRankList;
 import com.article.core.book.bean.TopRankList;
 
@@ -31,11 +34,13 @@ import retrofit2.http.Query;
 public interface BookApiService {
     /**
      * 推荐书籍
+     *
      * @param gender
      * @return
      */
     @GET("/book/recommend")
     Flowable<Recommend> getRecomend(@Query("gender") String gender);
+
     /**
      * 获取所有的排行榜
      * http://api.zhuishushenqi.com/ranking/gender
@@ -219,5 +224,30 @@ public interface BookApiService {
     @GET("/atoc/{sourceId}")
     Flowable<ChangeResource> changeResource(@Path("sourceId") String sourceId, @Query("view") String view);
 
+    /**
+     * 获取大家都在搜
+     *
+     * @return
+     */
+    @GET("/book/hot-word")
+    Flowable<HotWords> getHotWords();
+
+    /**
+     * 关键字自动补全
+     *
+     * @param query
+     * @return
+     */
+    @GET("/book/auto-complete")
+    Flowable<AutoComplete> autoComplete(@Query("query") String query);
+
+    /**
+     * 搜索小说
+     *
+     * @param query
+     * @return
+     */
+    @GET("/book/fuzzy-search")
+    Flowable<SearchDetail> searchBooks(@Query("query") String query);
 
 }

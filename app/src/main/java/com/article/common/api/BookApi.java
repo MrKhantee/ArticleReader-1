@@ -1,6 +1,7 @@
 package com.article.common.api;
 
 import com.article.common.Constant;
+import com.article.core.book.bean.AutoComplete;
 import com.article.core.book.bean.BookDetail;
 import com.article.core.book.bean.BookListDetail;
 import com.article.core.book.bean.BookListTags;
@@ -14,8 +15,10 @@ import com.article.core.book.bean.CategoryList;
 import com.article.core.book.bean.CategoryListLv2;
 import com.article.core.book.bean.ChangeResource;
 import com.article.core.book.bean.ChapterRead;
+import com.article.core.book.bean.HotWords;
 import com.article.core.book.bean.Recommend;
 import com.article.core.book.bean.RecommendBookList;
+import com.article.core.book.bean.SearchDetail;
 import com.article.core.book.bean.SubRankList;
 import com.article.core.book.bean.TopRankList;
 
@@ -237,5 +240,34 @@ public class BookApi {
      */
     public Flowable<BookResource> getBookResource(String view, String book) {
         return mApiService.getBookResource(view, book);
+    }
+
+    /**
+     * 获取大家都在搜
+     *
+     * @return
+     */
+    public Flowable<HotWords> getHotWords() {
+        return mApiService.getHotWords();
+    }
+
+    /**
+     * 关键字自动补全
+     *
+     * @param query
+     * @return
+     */
+    public Flowable<AutoComplete> autoComplete(String query) {
+        return mApiService.autoComplete(query);
+    }
+
+    /**
+     * 查询小说
+     *
+     * @param query
+     * @return
+     */
+    public Flowable<SearchDetail> searchBooks(String query) {
+        return mApiService.searchBooks(query);
     }
 }

@@ -32,20 +32,13 @@ public class FunPresenter extends RxPresenter<FunContract.View>
         String key = StringUtils.creatAcacheKey("qiushibaike-data");
         Flowable<FunBean> compose = mFunApi.getQiuShiBaiKe(page, count).compose(RxUtils.rxCacheBeanHelper(key));
         Disposable disposable = Flowable.concat(RxUtils.rxCreateDiskFlowable(key, FunBean.class), compose)
-
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qiuShiBean -> {
                     if (mView != null && qiuShiBean != null) {
                         mView.showQiuShi((FunBean) qiuShiBean);
                         System.out.println(qiuShiBean);
                     }
-                }, throwable -> {
-                    if (mView != null) {
-                        mView.showError();
-                    }
-                }, () -> {
-                    mView.complete();
-                });
+                }, throwable -> mView.showError(), () -> mView.complete());
         addSubscribe(disposable);
     }
 }

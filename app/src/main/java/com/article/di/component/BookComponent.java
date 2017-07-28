@@ -9,6 +9,7 @@ import com.article.core.book.ui.activity.BookResourceActivity;
 import com.article.core.book.ui.activity.BooksByAuthorActivity;
 import com.article.core.book.ui.activity.BooksByTagActivity;
 import com.article.core.book.ui.activity.RecommendBookListActivity;
+import com.article.core.book.ui.activity.SearchActivity;
 import com.article.core.book.ui.activity.SubCategoryActivity;
 import com.article.core.book.ui.activity.SubOtherRankActivity;
 import com.article.core.book.ui.activity.TopCategoryActivity;
@@ -52,6 +53,8 @@ public interface BookComponent {
 
     BookResourceActivity inject(BookResourceActivity bookResourceActivity);
 
+    SearchActivity inject(SearchActivity searchActivity);
+
     SubRankFragment inject(SubRankFragment subRankFragment);
 
     BookListFragment inject(BookListFragment bookListFragment);
@@ -59,4 +62,6 @@ public interface BookComponent {
     SubCategoryFragment inject(SubCategoryFragment subCategoryFragment);
 
     BookShelfFragment inject(BookShelfFragment shelfFragment);
+
+
 }

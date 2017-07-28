@@ -72,7 +72,7 @@ public class GankMeiZiFragment extends BaseFragment implements GankMeiZiContract
         mGankRv.setLayoutManager(new LinearLayoutManager(mContext));
         mGankRv.setAdapter(mAdapter);
 
-        mPresenter.getGankMeiZi(20, 1);
+        mPresenter.getGankMeiZi(pageNum, page);
     }
 
     @Override
